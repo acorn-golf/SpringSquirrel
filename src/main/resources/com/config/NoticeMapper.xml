@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeMapper">
+
+   <insert id="NoticeInsert" parameterType="NoticeListDTO">
+		insert into
+		NOTICELIST(NOTE_CONTENT,NOTE_NO,NOTE_TITLE,USER_NO,NOTE_DIVISION,NOTE_FILE,notedate,note_vcount)
+		values(#{note_content},NOTE_NO_SQ.nextval,#{note_title},#{user_no},#{note_division},
+		null,sysdate,0)
+	</insert>
+</mapper>

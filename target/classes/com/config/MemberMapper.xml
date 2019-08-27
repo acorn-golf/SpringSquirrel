@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+	<insert parameterType="MemberDTO" id="MemberAdd">
+		insert into
+		memberList(user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,rstartdate,renddate,email,email_chk)
+		values(user_no(),#{phone_id},#{userpw},#{username},#{nickname},#{userssn},
+		#{gender},#{rating},sysdate,null,#{email},'N')
+	</insert>
+	<select id="login" resultType="MemberDTO"
+		parameterType="HashMap">
+		select
+		user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,rstartdate,renddate,email,email_chk
+		from memberList
+		where phone_id = #{phone_id} and userpw = #{userpw}
+	</select>
+	<select id="myPage" resultType="MemberDTO"
+		parameterType="String">
+		select
+		user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,to_char(rstartdate,'yyyy/MM/dd') rstartdate,
+		to_char(renddate,'yyyy/MM/dd') renddate,
+		email,email_chk from
+		memberList
+		where nickname = #{nickname}
+	</select>
+	<update id="myPageUpdate" parameterType="MemberDTO">
+		update memberList
+		set
+		userpw = #{userpw}, email = #{email}
+		where phone_id = #{phone_id}
+	</update>
+	<select id="multiCheck" parameterType="HashMap" resultType="int">
+		select count(*) from memberList
+		<if test="phone_id != null">
+			where phone_id = #{phone_id}
+		</if>
+		<if test="userpw != null">
+			where userpw = #{userpw}
+		</if>
+		<if test="nickname != null">
+			where nickname = #{nickname}
+		</if>
+		<if test="email != null">
+			where email = #{email}
+		</if>
+	</select>
+	<select id="adminMemberSelect" resultType="MemberDTO"
+		parameterType="HashMap">
+		<![CDATA[
+		select user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,to_char(rstartdate,'yyyy/MM/dd') rstartdate, to_char(renddate,'yyyy/MM/dd') renddate,
+		email,email_chk	from (select * from 
+		( select rownum rnum, m.* from memberList m) where rnum <= #{end} ) where rnum >= #{start}  	
+		]]>
+		<if test="member != null">
+			and ${member} like '%'||#{adminSearch}||'%'
+		</if>
+	</select>
+	<update id="adminModified" parameterType="MemberDTO">
+		update memberList
+		set
+		username = #{username}, nickname = #{nickname}, rating = #{rating},
+		rstartdate = sysdate, renddate = add_months(sysdate, #{renddate}),
+		email = #{email}
+		where phone_id = #{phone_id}
+	</update>
+	<select id="getMemberInfo" resultType="MemberDTO"
+		parameterType="int">
+		select user_no,phone_id,username,nickname,gender,
+		rating,rstartdate,renddate,email
+		from memberList
+		where user_no = #{value}
+	</select>
+
+	<update id="updateEmail" parameterType="int">
+		update memberList
+		set
+		EMAIL_CHK='Y'
+		where user_no=#{user_no}
+	</update>
+
+	<select id="getUser" parameterType="int" resultType="MemberDTO">
+		select
+		user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,rstartdate,renddate,email,email_chk
+		from memberList
+		where user_no=#{user_no}
+	</select>
+	<select id="totalRecord" resultType="int">
+		select count(*) from
+		memberList
+	</select>
+
+	<select id="getPhoneUser" parameterType="string"
+		resultType="MemberDTO">
+		select
+		user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,rstartdate,renddate,email,email_chk
+		from memberList
+		where phone_id=#{phone_id}
+	</select>
+
+	<update id="updatePW" parameterType="hashmap">
+		update memberList
+		set userpw
+		= #{userpw}
+		where phone_id = #{phone_id}
+	</update>
+
+	<select id="kakaoLogin" resultType="MemberDTO">
+		select user_no,phone_id,userpw,username,nickname,userssn,gender,
+		rating,rstartdate,renddate,email,email_chk
+		from memberList
+		where kakao_id = #{value}
+	</select>
+
+	<insert id="kakaoMemberAdd" parameterType="MemberDTO">
+		insert into
+		memberList(user_no,username,nickname,
+		<if test="email != null">email,email_chk,</if>
+		<if test="gender != null">gender,</if>
+		kakao_id)
+		values(user_no(),#{username},#{nickname},
+		<if test="email != null">#{email},#{email_chk},</if>
+		<if test="gender != null">#{gender},</if>
+		#{kakao_id})
+	</insert>
+
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GolfccMapper"> <!-- 알아서 유일값 주면 된다 -->
+	<select id="selectCCname" resultType="GolfCcDTO"
+		parameterType="string">
+		select cc_id,cc_name
+		from golfcc
+		where loc_id=#{loc_id}
+	</select>
+
+	<select id="ccGolfScoreList" resultType="CcGolfScoreDTO"
+		parameterType="HashMap">
+		SELECT cc.*,sc."score" ,sc."count"
+		FROM GOLFCC cc
+		left join
+		(SELECT
+		CC_ID,CEIL(avg(SCORE)*2)/2 "score",count(*) "count" from CCSCORE
+		GROUP
+		by CC_ID) sc
+		on cc.CC_ID =sc.CC_ID
+		where '1'='1'
+		<if test="cc_name != null">
+			and cc.CC_name = #{cc_name}
+		</if>
+		<if test="loc_list !=null">
+			and cc.LOC_ID in
+			<foreach item="item" index="index" collection="loc_list"
+				open="(" close=")" separator=",">
+				#{item.value}
+			</foreach>
+		</if>
+		<if test="orderVal != null">
+			order by ${orderVal}
+			<if test="descChk != null">desc</if>
+		</if>
+
+	</select>
+
+	<select id="ccGolfScoreListCount" resultType="int"
+		parameterType="HashMap">
+		SELECT count(*)
+		FROM GOLFCC
+		where '1'='1'
+		<if test="cc_name != null">
+			and cc.CC_name = #{cc_name}
+		</if>
+		<if test="loc_list !=null">
+			and cc.LOC_ID in
+			<foreach item="item" index="index" collection="loc_list"
+				open="(" close=")" separator=",">
+				#{item.value}
+			</foreach>
+		</if>
+
+	</select>
+
+	<select id="getGolfccScoreOne" resultType="CcGolfScoreDTO"
+		parameterType="String">
+		SELECT cc.*,sc."score" ,sc."count"
+		FROM GOLFCC cc
+		left join
+		(SELECT
+		CC_ID,CEIL(avg(SCORE)*2)/2 "score",count(*) "count" from CCSCORE
+        where CC_ID = #{value}
+		GROUP by CC_ID
+		) sc
+		on cc.CC_ID =sc.CC_ID
+        where cc.CC_ID = '${value}'
+
+	</select>
+	<select id="totalRecord" resultType="int">
+		select count(*) from GolfCC	
+	</select>
+	<select id="adminGolfSelect" resultType="GolfCcDTO" parameterType="HashMap">
+		<![CDATA[
+		select cc_id, cc_name, cc_addr1, cc_addr2, cc_phone, cc_url, cc_img
+		from (select * from (select rownum rnum, g.* from golfcc g) 
+		 where rnum <= #{end} ) where rnum >= #{start} 
+		 ]]>
+	</select>
+</mapper>

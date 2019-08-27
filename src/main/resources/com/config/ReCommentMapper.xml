@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReCommentMapper"> <!-- 알아서 유일값 주면 된다 -->
+	<insert id="insertComment" parameterType="ReCommentDTO">
+		insert into RE_COMMENT(RE_NO,RE_CONTENT,SCORE_NO,USER_NO)
+		values(RE_NO_SQ.nextval,#{re_content},#{score_no},#{user_no})
+	</insert>
+	
+	<select id="selectRecomment" parameterType="int" resultType="RecommentViewDTO">
+		SELECT RE_NO,RE_DATE,RE_CONTENT,r.USER_NO user_no,nickname
+		FROM RE_COMMENT r join MEMBERLIST m on r.USER_NO = m.USER_NO
+		where score_no=#{score_no}
+		order by RE_DATE desc
+	</select>
+	
+	<update id="updateComment" parameterType="hashmap">
+		update RE_COMMENT
+		set re_content=#{re_content}
+		where re_no=#{re_no}
+	</update>
+	
+	<delete id="deleteComment" parameterType="string">
+		delete from RE_COMMENT
+		where re_no=#{re_no} 
+	</delete>
+</mapper>

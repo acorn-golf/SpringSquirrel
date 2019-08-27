@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductMapper"> <!-- 알아서 유일값 주면 된다 -->
+	<insert id="productInsert" parameterType="ProductDTO">
+		insert into
+		product(p_id,p_pdate,p_maxpeople,p_hole,p_caddyyn,p_babyn,p_cartyn,p_price,p_content,user_no,cc_id,p_vcount)
+		values('p'||P_ID_SQ.nextval,to_date(#{p_pdate},'yyyy/MM/dd/HH24:mi'),#{p_maxpeople},#{p_hole},#{p_caddyyn},#{p_babyn},#{p_cartyn},#{p_price},#{p_content},#{user_no},#{cc_id},#{p_vcount})
+	</insert>
+	
+
+	<select id="totalRecord" parameterType="hashmap" resultType="int">
+		select count(*)
+		from PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO  JOIN LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_PDATE > sysdate
+		<if test="emergency != null">
+			and ${emergency} <![CDATA[<=]]> 0.5
+		</if>
+		<if test="loc_id != null">
+			<choose>
+				<when test='loc_id.equals("all")'></when>
+				<when test='!loc_id.equals("all")'>
+					and g.loc_id = #{loc_id}
+				</when>
+			</choose>
+		</if>
+		<if test="productDivision != null">
+			<if test="productValue != null">
+				and ${productDivision} like '%'||#{productValue}||'%'
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectProduct" parameterType="hashmap" resultType="ProductListDTO">
+		SELECT CC_NAME,CC_IMG,P_ID,P_PDATE,P_UPLOADDATE,P_MAXPEOPLE,P_HOLE,P_CADDYYN,P_BABYN,P_CARTYN,P_PRICE,P_CONTENT,m.USER_NO user_no,P_VCOUNT,NICKNAME,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,LOC_NAME,g.LOC_ID loc_id,
+		<![CDATA[case when P_PDATE-sysdate <= 0.5 then '긴급'
+		end emergency]]>
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO JOIN LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_PDATE > sysdate
+		<if test="emergency != null">
+			and ${emergency} <![CDATA[<=]]> 0.5
+		</if>
+		<if test="loc_id != null">
+			<choose>
+				<when test='loc_id.equals("all")'></when>
+				<when test='!loc_id.equals("all")'>
+					and g.loc_id = #{loc_id}
+				</when>
+			</choose>
+		</if>
+		<if test="productDivision != null">
+			<if test="productValue != null">
+				and ${productDivision} like '%'||#{productValue}||'%'
+			</if>
+		</if>
+		<if test="productOrderby != null">
+			order by ${productOrderby} asc
+		</if>
+		<if test="productOrderby == null">
+			order by p_pdate asc
+		</if>
+    </select>
+
+	<select id="productRetrieve" parameterType="string" resultType="ProductDTO" >
+	select p_id,p_pdate ,p_uploaddate ,p_maxpeople,p_hole,p_caddyyn,p_babyn,p_cartyn,p_price,p_content,user_no,cc_id,p_vcount
+	from  PRODUCT
+	where p_id = #{value}
+	</select>
+	
+	
+	<update id="productDecrease" parameterType="hashmap">
+	UPDATE PRODUCT
+  SET P_MAXPEOPLE = (P_MAXPEOPLE-#{o_amount})
+  WHERE P_ID = #{p_id}
+	</update>
+	<select id="adminProductSelect" parameterType="hashmap" resultType="ProductListDTO">
+		<![CDATA[		
+		select to_char(p_pdate,'yyyy/MM/dd HH24:mm') p_pdate, cc_name, nickname, phone_id, p_price, loc_name 
+		from (select * from 
+		( select rownum rnum, p.p_pdate, g.cc_name, m.nickname, m.phone_id, l.loc_name, p.p_price 
+		from product p join golfcc g on p.cc_id = g.cc_id join memberList m
+		on p.user_no = m.user_no join location l on l.loc_id = g.loc_id ) 
+		where rnum <= #{end} ) where rnum >= #{start} 
+		]]>
+		<if test="product != null">
+		 and ${product} like '%'||#{adminSearch}||'%'
+		</if>		
+    </select>
+   	<select id="adminTotalRecord" resultType="int">
+		select count(*) from product
+	</select>
+
+</mapper>

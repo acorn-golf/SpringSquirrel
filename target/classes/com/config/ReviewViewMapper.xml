@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewViewMapper"> <!-- 알아서 유일값 주면 된다 -->
+	<select id="reviewList" parameterType="hashmap"
+		resultType="ReviewListDTO">
+		select g.cc_name cc_name,c.score score,c.rv_title rv_title,m.nickname
+		nickname,c.score_date score_date,c.score_no score_no,c.user_no user_no
+		from ccscore c join golfcc g on g.cc_id = c.cc_id join memberlist m on
+		c.user_no=m.user_no
+		where '1'='1'
+		<if test="cc_id != null">
+			and g.cc_id='${cc_id}'
+		</if>
+		<if test="searchName != null">
+			<if test="searchValue != null">
+					<choose>
+						<when test='searchName.equals("rv_title")'> <!-- 이거 적용해보자 -->
+							and rv_title like '%'||#{searchValue}||'%'
+						</when>
+						<when test='searchName.equals("nickname")'>
+							and nickname like '%'||#{searchValue}||'%'
+						</when>
+					</choose>
+				</if>
+		</if>
+		<choose>
+			<when test="orderby != null">
+				<choose>
+					<when test='orderby.equals("score_date")'>
+						order by score_date desc
+					</when>
+					<when test='orderby.equals("score")'>
+						order by score desc
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				order by score_date desc
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="totalRecord" resultType="int"
+		parameterType="hashmap">
+		select count(*)
+		from ccscore c join golfcc g on g.cc_id = c.cc_id join
+		memberlist m on c.user_no=m.user_no
+		where '1'='1'
+		<if test="cc_id != null">
+			and g.cc_id=#{cc_id}
+		</if>
+		<choose>
+			<when test="searchName != null">
+				<if test="searchValue != null">
+					<choose>
+						<when test='searchName.equals("rv_title")'> <!-- 이거 적용해보자 -->
+							and rv_title like '%'||#{searchValue}||'%'
+						</when>
+						<when test='searchName.equals("nickname")'>
+							and nickname like '%'||#{searchValue}||'%'
+						</when>
+					</choose>
+				</if>
+			</when>
+		</choose>
+	</select>
+
+	<select id="selectNick" resultType="ReviewListDTO"
+		parameterType="int">
+		SELECT g.CC_NAME cc_name,c.score score,c.RV_TITLE
+		rv_title,m.NICKNAME nickname,c.SCORE_DATE score_date,c.SCORE_NO
+		score_no,c.USER_NO user_no
+		FROM CCSCORE c join GOLFCC g on g.CC_ID =
+		c.CC_ID join MEMBERLIST m on c.USER_NO=m.USER_NO
+		where
+		score_no=#{score_no}
+		order by c.SCORE_DATE desc
+	</select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderListMapper"> 
+	<select id="selectIsOrder" resultType="IsOrderListDTO" parameterType="hashmap">
+		SELECT CC_NAME,CC_IMG,p.P_ID p_id,P_PDATE,P_UPLOADDATE,P_MAXPEOPLE,P_HOLE,P_CADDYYN,P_BABYN,P_CARTYN,P_PRICE,P_CONTENT,m.USER_NO manager_user_no,P_VCOUNT,NICKNAME,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,
+		case when P_PDATE-sysdate <![CDATA[<=]]> 0.5 then '긴급' 
+		end emergency,g.LOC_ID loc_id
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO join LOCATION l on l.LOC_ID = g.LOC_ID
+		where p.p_id=#{p_id}
+		
+	</select>
+	
+	<insert id="addOrder" parameterType="hashmap">
+	INSERT INTO ORDERLIST(O_NO,O_AMOUNT,O_PRICE,P_ID,USER_NO) VALUES
+	(O_NO_SQ.NEXTVAL,#{o_amount},#{o_price},#{p_id},#{user_no})
+	</insert>
+	
+	<select id="totalRecord" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
+		where o.USER_NO=#{user_no}
+	</select>
+	
+	<select id="selectOrderList" resultType="OrderInfoDTO" parameterType="int">
+		SELECT cc_name,p_price,o_amount,o_price,o_date,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID
+		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
+		where o.USER_NO=#{user_no}
+		order by o_date
+	</select>
+	
+</mapper>

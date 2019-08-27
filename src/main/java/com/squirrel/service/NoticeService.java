@@ -1,0 +1,26 @@
+package com.squirrel.service;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import com.squirrel.dao.NoticeDAO;
+import com.squirrel.dao.ProductDAO;
+import com.squirrel.dto.MemberDTO;
+import com.squirrel.dto.NoticeListDTO;
+import com.squirrel.dto.ProductDTO;
+
+public class NoticeService {
+	@Autowired
+	NoticeDAO dao;
+
+	public int NoticeInsert(NoticeListDTO ndto) {
+
+		int result = 	dao.NoticeInsert(ndto);
+
+		return result;
+	
+		
+	
+	}
+}

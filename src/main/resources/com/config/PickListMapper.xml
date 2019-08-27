@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PickListMapper"> 
+	<insert id="insertPick" parameterType="PickListDTO">
+		insert into PICKLIST(PICK_NO,PICK_AMOUNT,USER_NO,P_ID)
+		values(PICK_NO_SQ.nextval,#{pick_amount},#{user_no},#{p_id})
+	</insert>
+	
+	<select id="totalRecord" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO join PICKLIST pl on pl.P_ID = p.P_ID join LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_PDATE <![CDATA[>]]> sysdate and pl.USER_NO=#{user_no}
+	</select>
+	
+	<select id="selectPickList" resultType="PickListviewDTO" parameterType="int">
+		SELECT CC_NAME,CC_IMG,p.P_ID p_id,P_PDATE,P_UPLOADDATE,P_MAXPEOPLE,P_HOLE,P_CADDYYN,P_BABYN,P_CARTYN,P_PRICE,P_CONTENT,m.USER_NO manager_user_no,P_VCOUNT,NICKNAME,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,
+		case when P_PDATE-sysdate <![CDATA[<=]]> 0.5 then '긴급' 
+		end emergency,pl.USER_NO user_no, g.LOC_ID loc_id,PICK_NO,PICK_AMOUNT
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO join PICKLIST pl on pl.P_ID = p.P_ID join LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_PDATE <![CDATA[>]]> sysdate and pl.USER_NO=#{user_no}
+	</select>
+	
+	<delete id="deletePick" parameterType="list">
+		delete from PICKLIST
+		where PICK_NO in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

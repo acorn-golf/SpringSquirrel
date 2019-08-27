@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- jdbc.properties 등록 -->
+	<!-- dtd의 순서에 의해 envireoments태그 전에 기재 -->
+	<properties resource="com/squirrel/config/jdbc.properties"></properties>
+	
+	<typeAliases>
+		<typeAlias type="com.squirrel.dto.ProductDTO" alias="ProductDTO"/>
+		<typeAlias type="com.squirrel.dto.GolfCcDTO" alias="GolfccDTO"/>
+		<typeAlias type="com.squirrel.dto.LocationDTO" alias="LocationDTO"/>
+		<typeAlias type="com.squirrel.dto.MemberDTO" alias="MemberDTO"/>
+		<typeAlias type="com.squirrel.dto.NoticeListDTO" alias="NoticeListDTO"/>
+		<typeAlias type="com.squirrel.dto.ReviewDTO" alias="ReviewDTO"/>
+		<typeAlias type="com.squirrel.dto.CcScoreDTO" alias="CcScoreDTO"/>
+		<typeAlias type="com.squirrel.dto.ReCommentDTO" alias="ReCommentDTO"/>
+		<typeAlias type="com.squirrel.dto.PickListDTO" alias="PickListDTO"/>
+		<typeAlias type="com.squirrel.dto.OrderListDTO" alias="OrderListDTO"/>
+		<typeAlias type="com.squirrel.dto.view.ReviewListDTO" alias="ReviewListDTO"/>
+		<typeAlias type="com.squirrel.dto.view.CcGolfScoreDTO" alias="CcGolfScoreDTO"/>
+		<typeAlias type="com.squirrel.dto.view.ProductListDTO" alias="ProductListDTO"/>
+		<typeAlias type="com.squirrel.dto.view.RecommentViewDTO" alias="RecommentViewDTO"/>
+		<typeAlias type="com.squirrel.dto.view.PickListviewDTO" alias="PickListviewDTO"/>
+		<typeAlias type="com.squirrel.dto.view.IsOrderListDTO" alias="IsOrderListDTO"/>
+		<typeAlias type="com.squirrel.dto.view.OrderInfoDTO" alias="OrderInfoDTO"/>
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" /> <!-- 트랜잭션을 핸들링해주는 매니저 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${oracle.jdbc}" /> <!-- ${ 가져다 쓸 것 기재 } -->
+				<property name="url" value="${oracle.url}" />
+				<property name="username" value="${oracle.userid}" />
+				<property name="password" value="${oracle.passwd}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/squirrel/config/ProductMapper.xml" />
+		<mapper resource="com/squirrel/config/GolfccMapper.xml" />
+		<mapper resource="com/squirrel/config/LocationMapper.xml" />
+		<mapper resource="com/squirrel/config/MemberMapper.xml" />
+		<mapper resource="com/squirrel/config/NoticeMapper.xml" />
+		<mapper resource="com/squirrel/config/ReviewMapper.xml" />
+		<mapper resource="com/squirrel/config/ReviewViewMapper.xml" />
+		<mapper resource="com/squirrel/config/ReCommentMapper.xml" />
+		<mapper resource="com/squirrel/config/PickListMapper.xml" />
+		<mapper resource="com/squirrel/config/OrderListMapper.xml" />
+	</mappers>
+</configuration>
