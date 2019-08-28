@@ -7,13 +7,14 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.GolfCcDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.view.CcGolfScoreDTO;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
-
+@Repository
 public class GolfccDAO {
 
 	@Autowired
