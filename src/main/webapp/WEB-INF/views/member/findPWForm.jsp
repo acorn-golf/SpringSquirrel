@@ -9,7 +9,7 @@
 <title>비밀번호찾기</title>
 </head>
 <body>
-<jsp:include page="/show/main.jsp" flush="false"/>
+<jsp:include page="../show/main.jsp" flush="false"/>
 
 <jsp:include page="sub/findPWForm.jsp" flush="true" />
 </body>

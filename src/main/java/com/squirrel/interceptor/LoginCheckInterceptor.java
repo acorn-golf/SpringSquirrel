@@ -16,7 +16,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// System.out.println("preHandle");
+
+		if (!(handler instanceof HandlerMethod))
+			return true;
+
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		Loginchk loginchk = handlerMethod.getMethodAnnotation(Loginchk.class);
 		if (loginchk == null) {
@@ -34,25 +37,25 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			boolean chk = false;
 
 			switch (loginchk.role()) {
-			
+
 			case USER:
-				chk =chk || (dto.getRating().equals("U"));
+				chk = chk || (dto.getRating().equals("U"));
 
 			case MANAGER:
-				chk =chk || (dto.getRating().equals("M"));
-				
+				chk = chk || (dto.getRating().equals("M"));
+
 			case ADMIN:
 				chk = chk || (dto.getRating().equals("A"));
 
 			default:
 				break;
 			}
-			
-			if(chk)
+
+			if (chk)
 				return true;
 			else
 				return false;
-			//나중에 에러 메세지를 통해 매세지또한 보내주기
+			// 나중에 에러 메세지를 통해 매세지또한 보내주기
 
 			// return true;
 		}

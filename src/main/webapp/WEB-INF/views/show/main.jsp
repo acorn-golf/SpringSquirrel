@@ -4,8 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
-<jsp:include page="top/top.jsp"/>
 
+<jsp:include page="top/top.jsp"/>
 
 <%-- <c:if test="${empty login}">
 <a href="memberuiservlet">회원 가입</a>

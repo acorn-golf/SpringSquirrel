@@ -9,7 +9,7 @@
 	<!-- /////시작//// -->
 	<!-- 1. jdbc.properties -->
 	<context:property-placeholder
-		location="classpath:com/config/jdbc.properties" />
+		location="classpath:com/squirrel/config/jdbc.properties" />
 
 	<!-- 2. DBCP2 -->
 	<bean id="dataSource"

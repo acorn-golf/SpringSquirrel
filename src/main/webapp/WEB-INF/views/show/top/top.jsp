@@ -5,8 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
-<!DOCTYPE html>
-<head>
+
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,9 +14,9 @@
 
 
 <link rel="stylesheet" type="text/css"
-	href="/teamSquirrel/show/top/assets/css/style.min.css" />
+	href="css/style.min.css" />
 <link rel="stylesheet" type="text/css"
-	href="/teamSquirrel/show/top/assets/css/modules.css" />
+	href="css/modules.css" />
 
 <!-- Canonical URL usage -->
 <link rel="canonical" href="https://aperitif.io/">
@@ -102,30 +102,30 @@ START MODULE AREA 2: Menu 1
 
 					<!-- 반복 준비    -->
 					<%
-					{
-						Object test = session.getAttribute("login");
-						MemberDTO tmpdto = null;
-						if (test != null)
-							tmpdto = (MemberDTO) test;
-						if (tmpdto != null)
-							System.out.print("으아아 좀 : " + tmpdto.getRating());
-					}
+						{
+							Object test = session.getAttribute("login");
+							MemberDTO tmpdto = null;
+							if (test != null)
+								tmpdto = (MemberDTO) test;
+							if (tmpdto != null)
+								System.out.print("으아아 좀 : " + tmpdto.getRating());
+						}
 					%>
 					<c:choose>
 						<c:when test="${empty login}">
-							<c:import var="menuInfo" url="/show/top/sub/mainNot_login.xml"
+							<c:import var="menuInfo" url="/xml/mainNot_login.xml"
 								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'U'}">
-							<c:import var="menuInfo" url="/show/top/sub/mainRatingUser.xml"
+							<c:import var="menuInfo" url="/xml/mainRatingUser.xml"
 								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'M'}">
 							<c:import var="menuInfo"
-								url="/show/top/sub/mainRatingManager.xml" charEncoding="UTF-8" />
+								url="/xml/mainRatingManager.xml" charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'A'}">
-							<c:import var="menuInfo" url="/show/top/sub/mainRatingAdmin.xml"
+							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml"
 								charEncoding="UTF-8" />
 						</c:when>
 					</c:choose>
@@ -148,6 +148,7 @@ START MODULE AREA 2: Menu 1
 								</ul>
 							</c:if></li>
 					</x:forEach>
+
 				</ul>
 			</nav>
 		</div>
@@ -157,7 +158,4 @@ END MODULE AREA 2: Menu 1
 -->
 
 	<script type="text/javascript"
-		src="/teamSquirrel/show/top/assets/js/index.js"></script>
-</body>
-
-</html>
+		src="js/index.js"></script>

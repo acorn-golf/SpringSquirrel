@@ -10,7 +10,7 @@ $(document).ready(function() {
 	
 	
 	
-	
+/* 	
 	$("#likeAdd").on("click", function() { //ajax
 		$.ajax({
 			type : "post",
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		}); //ajax 종료
 		
 	}); //likeAdd 버튼이벤트 종료
-	
+	 */
 	
 });//onload 이벤트 종료
 </script>
