@@ -67,4 +67,11 @@
 			ref="sessionFactory" />
 	</bean>
 	<!-- /////종료////// -->
+	<bean id="aesManager" class="com.squirrel.util.aes.AESManager">
+		<property name="aes256Util" ref="aes256" />
+	</bean>
+		<bean id="aes256" class="com.squirrel.util.aes.AES256Util">
+		<constructor-arg name="key" value="1q2w3e4r5t6y7u8i"/>
+	</bean>
+
 </beans>
