@@ -68,10 +68,20 @@
 	</bean>
 	<!-- /////종료////// -->
 	<bean id="aesManager" class="com.squirrel.util.aes.AESManager">
-		<property name="aes256Util" ref="aes256" />
+		<property name="aesMap">
+			<map>
+				<entry key="email">
+					<ref bean="aes256_email" />
+				</entry>
+			</map>
+		</property>
 	</bean>
-		<bean id="aes256" class="com.squirrel.util.aes.AES256Util">
-		<constructor-arg name="key" value="1q2w3e4r5t6y7u8i"/>
+	
+	<bean id="aes256_email" class="com.squirrel.util.aes.AES256Util">
+		<constructor-arg name="key" value="1q2w3e4r5t6y7u8i" />
 	</bean>
 
+
+	<bean id="curlUtil" class="com.squirrel.util.curl.CurlUtil"/>
+	
 </beans>
