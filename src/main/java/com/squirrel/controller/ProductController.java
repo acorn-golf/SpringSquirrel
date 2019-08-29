@@ -91,7 +91,7 @@ public class ProductController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/productList")
+	@RequestMapping(value = "/productList", method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView productList(@RequestParam Map<String, String> reqParam, HttpSession session) {
 		System.out.println(reqParam);
 		boolean ReSearchChk = false;

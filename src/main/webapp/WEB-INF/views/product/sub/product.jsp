@@ -31,7 +31,7 @@
 			}
 		});
 		$("#gomain").on("click", function() {
-			location.href = "main.jsp";
+			location.href = "/golfhi/";
 		});
 		
 		
