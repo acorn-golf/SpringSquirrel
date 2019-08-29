@@ -25,7 +25,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		if (loginchk == null) {
 			return true;
 		}
-		// 어노테이션이 없는 경우 아래 작업 미실행
+		// �뼱�한글
+	
 
 		HttpSession session = request.getSession();
 		MemberDTO dto = (MemberDTO) session.getAttribute("login");
@@ -55,7 +56,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			else
 				return false;
-			// 나중에 에러 메세지를 통해 매세지또한 보내주기
+			// �굹以묒뿉 �뿉�윭 硫붿꽭吏�瑜� �넻�빐 留ㅼ꽭吏��삉�븳
 
 			// return true;
 		}

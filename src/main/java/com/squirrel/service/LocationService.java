@@ -16,7 +16,6 @@ public class LocationService {
 	LocationDAO dao;
 	
 	public List<LocationDTO> locationList() {
-
 		return dao.locationList();
 	}
 	

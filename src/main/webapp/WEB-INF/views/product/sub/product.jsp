@@ -11,7 +11,7 @@
 			if($("#loc").val()!="지역선택"){
 				$.ajax({
 					type:"get",
-					url:"SelectGolfCCServlet",
+					url:"productSelectGolfCC",
 					data:{
 						loc_ID:$("#loc").val()
 					},
@@ -49,7 +49,7 @@
 	<option>골프장선택</option>
 </select><br>
 티업일자 : <input type="text" name="date"><br>
-티업시간 : <input type="text" name="time"><br>
+티업시간 : <input type="text" name="time"><br> <!-- jQuery로 date + time 해서 hidden태그로 productDTO의 p_date에다가 넣자 -->
 <!-- P_UPLOADDATE는 default가 sysdate -->
 그린피 : <input type="text" name="p_price">만원<br>
 <input type="checkbox" name="p_babyn">식사포함&nbsp;&nbsp;&nbsp;

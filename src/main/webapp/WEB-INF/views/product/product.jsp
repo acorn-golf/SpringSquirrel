@@ -9,9 +9,7 @@
 <title>상품등록페이지</title>
 </head>
 <body>
-<%-- <jsp:include page="common/top.jsp" flush="true" /><br>
-<jsp:include page="common/menu.jsp" flush="true" /> --%>
-고정페이지~~
+<jsp:include page="../show/main.jsp"/>
 <hr>
 <jsp:include page="sub/product.jsp" flush="true" />
 </body>
