@@ -33,7 +33,7 @@ public class MemberController {
 		int result = service.MemberAdd(mDTO);
 		switch (result) {
 		case 0:
-			destination = "memberAdd";
+			destination = "redirect:member/memberForm";
 			break;
 		case 1:
 			session.setAttribute("login", mDTO);
