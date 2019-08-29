@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -13,7 +14,8 @@ import javax.crypto.NoSuchPaddingException;
 public class AESManager {
 
 	//static private AESManager myAes;
-	private AES256Util aes256Util;
+	//private AES256Util  aes256Util;
+	private HashMap<String, AES256Util> aesMap;
 //	static {
 //		myAes = new AESManager("1q2w3e4r5t6y7u8i");
 //	}
@@ -29,11 +31,23 @@ public class AESManager {
 //	}
 	
 	
+	
 
 
-	public String enCodeText(String text) {
+	public String enCodeText(String aesname,String text) {
 		
 		String result = "";
+		AES256Util aes256Util = null;
+		if(!aesMap.containsKey(aesname))
+			try {
+				aesMap.put(aesname, new AES256Util(aesname));
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		aes256Util = aesMap.get(aesname);
+		
 		
 		try {
 			result = aes256Util.aesEncode(text);
@@ -63,17 +77,30 @@ public class AESManager {
 		return result;
 	}
 	
-	public AES256Util getAes256Util() {
-		return aes256Util;
+
+	public HashMap<String, AES256Util> getAesMap() {
+		return aesMap;
 	}
 
-	public void setAes256Util(AES256Util aes256Util) {
-		this.aes256Util = aes256Util;
+
+	public void setAesMap(HashMap<String, AES256Util> aesMap) {
+		this.aesMap = aesMap;
 	}
 
-	public String deCodeText(String str)
+
+	public String deCodeText(String aesname,String str)
 	{
-		String result ="";
+		String result = "";
+		AES256Util aes256Util = null;
+		if(!aesMap.containsKey(aesname))
+			try {
+				aesMap.put(aesname, new AES256Util(aesname));
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		aes256Util = aesMap.get(aesname);
 		
 		try {
 			result = aes256Util.aesDecode(str);
