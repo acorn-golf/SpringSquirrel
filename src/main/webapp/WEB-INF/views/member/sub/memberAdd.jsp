@@ -219,7 +219,7 @@ function audioCaptcha() {
 		$("#phoneid").on("keyup",function(){
 			$.ajax({
 				type:"post",
-				url:"MultiCheckServlet",
+				url:"/multiCheck",
 				data: { phoneid : $("#phoneid").val()},				
 				dataType:"text",
 				success : function(data,status,xhr){	
