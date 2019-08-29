@@ -33,11 +33,11 @@ public class MemberController {
 		int result = service.MemberAdd(mDTO);
 		switch (result) {
 		case 0:
-			destination = "memberUI";
+			destination = "memberAdd";
 			break;
 		case 1:
 			session.setAttribute("login", mDTO);
-			destination = "email/isEmailchk.jsp";
+			destination = "email/isEmailchk";
 			break;
 		}
 		return destination;

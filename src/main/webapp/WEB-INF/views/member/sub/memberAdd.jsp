@@ -12,17 +12,17 @@ var captchachk = false;
 
 function changeCaptcha() {
 
-	  $('#catpcha').html('<img src="/teamSquirrel/CaptCha?rand='+ Math.random() + '"/>');
+	  $('#catpcha').html('<img src="../captcha?rand='+ Math.random() + '"/>');
 	 }
 
 function winPlayer(objUrl) {
-	  $('#audiocatpch').html(' <bgsound src="' + objUrl + '">');
+	  $('#audiocatpcha').html(' <bgsound src="' + objUrl + '">');
 	 }
 	 
 function audioCaptcha() {
 
 	   var uAgent = navigator.userAgent;
-	   var soundUrl = '/teamSquirrel/AudioCaptCha';
+	   var soundUrl = '../audioCaptcha';
 	   if (uAgent.indexOf('Trident') > -1 || uAgent.indexOf('MSIE') > -1) {
 	       //IE일 경우 호출
 	       winPlayer(soundUrl+'?agent=msie&rand='+ Math.random());
@@ -48,13 +48,12 @@ function audioCaptcha() {
 		           alert('이미지에 보이는 숫자 또는 스피커를 통해 들리는 숫자를 입력해 주세요.');
 		      } else {
 		           $.ajax({
-		               url: '/teamSquirrel/CaptchaConfirm',
+		               url: '../captchaConfirm',
 		               type: 'POST',
 		               dataType: 'text',
 		               data: 'captchaAnswer=' + $('#captchaAnswer').val(),
 		               async: false,  
 		               success: function(data) {
-		            	   console.log(data);
 		            	   if( data == 0 ){
 		            		   alert("입력값이 일치합니다.");  
 		            		   captchachk = true;
@@ -62,15 +61,13 @@ function audioCaptcha() {
 		            		   captchachk = false;
 		                       alert("입력값이 일치하지않습니다. 다시 입력하셔야합니다.");
 		                       $('#reLoad').click();
-		                       $('#captchaAnswer').val('');
-		                       
-		            	   }
-		            	   
+		                       $('#captchaAnswer').val('');		                       
+		            	   }		            	   
 		              }
 		         });
-		      }
-		 
+		      }		 
 		 });
+		  
 		var RegexEmail = /\w+\@\w+\.[a-zA-Z\.]{2,5}$/; 
 		var RegexName = /^(가|간|갈|감|강|견|경|계|고|곡|공|곽|관|교|구|국|궉|권|근|금|기|길|김|나|난|남|남궁|낭|내|노|뇌|다|단|담|당|대|도|독|독고|돈|동|동방|두|등|등정|라|란|랑|려|로|뢰|류|리|림|마|만|망절|매|맹|명|모|목|묘|무|무본|묵|문|미|민|박|반|방|배|백|번|범|변|보|복|봉|부|비|빈|빙|사|사공|산|삼|상|서|서문|석|선우|설|섭|성|소|손|송|수|순|승|시|신|심|아|안|애|야|양|어|어금|엄|여|연|염|엽|영|예|오|옥|온|옹|완|왕|요|용|우|운|원|위|유|육|윤|은|음|이|인|임|자|장|전|점|정|제|제갈|조|종|좌|주|증|지|진|차|창|채|천|초|총|최|추|탁|탄|탕|태|판|팽|편|평|포|표|풍|피|필|하|학|한|함|해|허|현|형|호|홍|화|황|황목|황보|후)[가-힣]{1,4}$/; 
 		var RegexNick = /^[a-zA-Z0-9가-힣_-]{2,8}$/; 
@@ -86,73 +83,37 @@ function audioCaptcha() {
 		
 		$("form").on("submit",function(event){			
 
-				if ( $("#phoneid").val() == ""){		
-					
-					alert("아이디를 입력해주세요.");
-					$("#phoneid").focus();
-					return false;
-					
-				}else if( !RegexPhone.test($.trim($("#phoneid").val())) ){
+				if( !RegexPhone.test($.trim($("#phone_id").val())) ){
 					
 					alert("아이디형식 오류");					
-					$("#phoneid").val("");
-					$("#phoneid").focus();
-					return false;
+					$("#phone_id").val("");
+					$("#phone_id").focus();
+					return false;				
 					
-				}else if ( $("#password").val() == "" ){	
-					
-					alert("비밀번호를 입력해주세요.");
-					$("#password").focus();
-					return false;
-					
-				}else if ( !RegexPassword.test($.trim($("#password").val())) ){
+				}else if ( !RegexPassword.test($.trim($("#userpw").val())) ){
 					
 					alert("비밀번호형식 오류");
-					$("#password").val("");
-					$("#password").focus();
+					$("#userpw").val("");
+					$("#userpw").focus();
 					return false;
 					
-				}else if ( $("#phoneid").val() == $("#password").val() ){
+				}else if ( $("#phone_id").val() == $("#userpw").val() ){
 					
 					alert("ID와 비밀번호가 동일합니다.");
-					$("#password").val("");
-					$("#password").focus();
+					$("#userpw").val("");
+					$("#userpw").focus();
 					return false;					
-				
-				}else if ( $("#repassword").val() == ""){
-					
-					alert("비밀번호 확인하셔야합니다.");
-					$("#repassword").focus();
-					return false;
-					
-					
-				}else if ( $("#username").val() == ""){
-					
-					alert("이름을 입력해주세요.");
-					$("#username").focus();
-					return false;
 					
 				}else if ( !RegexName.test($.trim($("#username").val())) ){
 					
 					alert("이름형식 오류");
 					$("#username").focus();
-					return false;
-					
-				}else if ( $("#nickname").val() == ""){
-					
-					alert("별명을 입력해주세요.");
-					$("#nickname").focus();
-					return false;
+					return false;								
 
 				}else if ( !RegexNick.test($.trim($("#nickname").val())) ){
 
 					alert("별명형식 오류");
 					$("#nickname").focus();
-					return false;
-				}else if ( $("#userssn").val() == ""){
-					
-					alert("생년월일을 입력해주세요.")
-					$("#userssn").focus();
 					return false;
 					
 				}else if ( !RegexBirth.test($.trim($("#userssn").val())) ){
@@ -165,27 +126,13 @@ function audioCaptcha() {
 				}else if ( $(":radio[name='gender']:checked").length < 1 ){
 					
 					alert("성별을을 입력해주세요");
-					return false;	
+					return false;					
 				
-					
-				}else if ( $("#email").val() == ""){
-					
-					alert("Email을 입력해주세요.");
-					$("#email").focus();
-					return false;
-
 				}else if ( !RegexEmail.test($.trim($("#email").val())) ){
 					
 					alert("email형식 오류");					
 					$("#email").val("");
 					$("#email").focus();
-					return false;
-					
-				}else if ( $("#captchaAnswer").val() == "" ){
-					
-					alert("자동가입 인증 오류.");
-					$('#reLoad').click();
-					$("#captchaAnswer").focus();
 					return false;
 					
 				}else if ( captchachk == false ){
@@ -196,12 +143,12 @@ function audioCaptcha() {
 					return false;
 				}
 							
-					this.action="/teamSquirrel/MemberAddServlet";
+					$(this).attr("action","../memberAdd");
 							 
 		});
 		
-		$("#password").on("keyup",function(){
-			if($("#password").val().length < 7 || $("#phoneid").val() == $("#password").val()){
+		$("#userpw").on("keyup",function(){
+			if($("#userpw").val().length < 7 || $("#phone_id").val() == $("#userpw").val()){
 				$("#confirmpw").text("사용 불가").css("color","red");
 			}else{
 				$("#confirmpw").text("사용 가능").css("color","green");
@@ -209,86 +156,94 @@ function audioCaptcha() {
 		});
 		
 		$("#repassword").on("keyup",function(){
-			if($("#password").val()==($("#repassword").val())){				
+			if($("#userpw").val()==($("#repassword").val())){				
 				$("#matchedpw").text("비밀번호 일치").css("color","green");
 			}else{
 				$("#matchedpw").text("비밀번호 불일치").css("color","red");
 			};
 		});		
 		
-		$("#phoneid").on("keyup",function(){
-			$.ajax({
-				type:"post",
-				url:"/multiCheck",
-				data: { phoneid : $("#phoneid").val()},				
-				dataType:"text",
-				success : function(data,status,xhr){	
-					if(data == 0){
-						if ( !RegexPhone.test($.trim($("#phoneid").val())) ){
-							$("#idchk").text("사용 불가").css("color","red");
+		$("#phone_id").on("keyup",function(){
+			if( $("#phone_id").val().length > 9){
+				$.ajax({
+					type:"post",
+					url:"../multiCheck",
+					data: { phone_id : $("#phone_id").val()},				
+					dataType:"text",
+					success : function(data,status,xhr){	
+						console.log(data);
+						if(data == 0){
+							if ( !RegexPhone.test($.trim($("#phone_id").val())) ){
+								$("#idchk").text("사용 불가").css("color","red");
+							}else{
+								$("#idchk").text("사용 가능").css("color","green");
+								idchk = true;
+							}												
 						}else{
-							$("#idchk").text("사용 가능").css("color","green");
-							idchk = true;
-						}												
-					}else{
-						idchk = false;
-						$("#idchk").text("사용 불가").css("color","red");
-							$("form").on("submit",function(event){							
-								if(!idchk){
-									alert("아이디가 중복입니다.");
-									event.preventDefault();
-									$("#phoneid").val("");
-									$("#phoneid").focus();
-									$("#idchk").text("<---");
-								}					
-							});
-						}					
-					},
-				error : function(xhr,status,error){
-					console.log(xhr);
-					console.log(status);
-					console.log(error);					
-				}										
-			});				
+							idchk = false;
+							$("#idchk").text("사용 불가").css("color","red");
+								$("form").on("submit",function(event){							
+									if(!idchk){
+										alert("아이디가 중복입니다.");
+										event.preventDefault();
+										$("#phone_id").val("");
+										$("#phone_id").focus();
+										$("#idchk").text("<---");
+									}					
+								});
+							}					
+						},
+					error : function(xhr,status,error){
+						console.log(xhr);
+						console.log(status);
+						console.log(error);					
+					}										
+				});	
+			}else {
+				$("#idchk").text("");
+			}
 		});		
 
 		$("#nickname").on("keyup",function(event){
-			$.ajax({
-				type:"post",
-				url:"MultiCheckServlet",
-				data: {nickname : $("#nickname").val()},
-				dataType:"text",
-				success : function(data,status,xhr){	
-					if(data == 0){						
-						$("#nickchk").text("사용 가능").css("color","green");
-						nickchk = true;
-					}else{
-						nickchk = false;
-						$("#nickchk").text("사용 불가").css("color","red");
-							$("form").on("submit",function(event){							
-								if(!nickchk){
-									alert("별명이 중복입니다.");
-									event.preventDefault();
-									$("#nickname").val("");
-									$("#nickname").focus();
-									$("#nickchk").text("<--");
-									
-								}							
-							});
-						}					
-					},
-				error : function(xhr,status,error){
-					console.log(xhr);
-					console.log(status);
-					console.log(error);
-				}										
-			});				
+			if( $("#nickname").val().length > 1 ){
+				$.ajax({
+					type:"post",
+					url:"../multiCheck",
+					data: {nickname : $("#nickname").val()},
+					dataType:"text",
+					success : function(data,status,xhr){	
+						if(data == 0){						
+							$("#nickchk").text("사용 가능").css("color","green");
+							nickchk = true;
+						}else{
+							nickchk = false;
+							$("#nickchk").text("사용 불가").css("color","red");
+								$("form").on("submit",function(event){							
+									if(!nickchk){
+										alert("별명이 중복입니다.");
+										event.preventDefault();
+										$("#nickname").val("");
+										$("#nickname").focus();
+										$("#nickchk").text("<--");										
+									}							
+								});
+							}					
+						},
+					error : function(xhr,status,error){
+						console.log(xhr);
+						console.log(status);
+						console.log(error);
+					}										
+				});		
+			}else{
+				$("#nickchk").text("");
+			}
 		});	
 		
 		$("#email").on("keyup",function(){
 			$.ajax({
 				type:"post",
-				url:"MultiCheckServlet",
+				url:"../multiCheck",
 				data: { email : $("#email").val()},				
 				dataType:"text",
 				success : function(data,status,xhr){	
@@ -321,12 +276,12 @@ function audioCaptcha() {
 
 </script>
 
-<form method="post" class="form_main">
+<form method="get" class="form_main">
 <input type="hidden" id="rating" name="rating" value="U">
 <table>
 <tr>
 <th>아이디:</th>
-<td><input class="inputmadd" type="text" id="phoneid" name="phoneid" maxlength="11" required></td>
+<td><input class="inputmadd" type="text" id="phone_id" name="phone_id" maxlength="11" required></td>
 <td class="confirm"><span id="idchk"></span></td>
 </tr>
 <tr>
@@ -337,12 +292,12 @@ function audioCaptcha() {
 </tr>
 <tr>
 <th>비밀번호:</th>
-<td><input class="inputmadd" type="password" id="password" name="password" maxlength="20"></td>
+<td><input class="inputmadd" type="password" id="userpw" name="userpw" maxlength="20" required></td>
 <td class="confirm"><span id="confirmpw"></span></td>
 </tr>
 <tr>
 <th>비밀번호확인:</th>
-<td><input class="inputmadd" type="password" id="repassword" name="repassword" maxlength="20"></td>
+<td><input class="inputmadd" type="password" id="repassword" maxlength="20" required></td>
 <td class="confirm"><span id="matchedpw"></span></td>
 </tr>
 <tr>
@@ -353,11 +308,11 @@ function audioCaptcha() {
 </tr>
 <tr>
 <th>이름:</th>
-<td><input class="inputmadd" type="text" id="username" name="username"></td>
+<td><input class="inputmadd" type="text" id="username" name="username" required></td>
 </tr>
 <tr>
 <th>닉네임:</th>
-<td><input class="inputmadd" type="text" id="nickname" name="nickname"></td>
+<td><input class="inputmadd" type="text" id="nickname" name="nickname" required></td>
 <td class="confirm"><span id="nickchk"></span></td>
 </tr>
 <tr>
@@ -368,7 +323,7 @@ function audioCaptcha() {
 </tr>
 <tr>
 <th>생년월일:</th>
-<td><input class="inputmadd" type="text" id="userssn" name="userssn" placeholder="예) 20190101"></td>
+<td><input class="inputmadd" type="text" id="userssn" name="userssn" maxlength="8" placeholder="예) 20190101" required></td>
 </tr>
 <tr>
 <th class="text_right">남<input type="radio" id="male" value="male" name="gender"></th>
@@ -386,7 +341,7 @@ function audioCaptcha() {
   <td colspan="2" class="text_center"><div id="catpcha">Wait...</div></td>
 </tr>
 <tr>
-  <td colspan="2" class="text_center"><div id="audiocatpch" style="display: none;"></div></td>
+  <td colspan="2" class="text_center"><div id="audiocatpcha" style="display: none;"></div></td>
 </tr>
 <tr>
 <td colspan="2" class="text_center">
