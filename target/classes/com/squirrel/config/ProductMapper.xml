@@ -6,7 +6,7 @@
 	<insert id="productInsert" parameterType="ProductDTO">
 		insert into
 		product(p_id,p_pdate,p_maxpeople,p_hole,p_caddyyn,p_babyn,p_cartyn,p_price,p_content,user_no,cc_id,p_vcount)
-		values('p'||P_ID_SQ.nextval,to_date(#{p_pdate},'yyyy/MM/dd/HH24:mi'),#{p_maxpeople},#{p_hole},#{p_caddyyn},#{p_babyn},#{p_cartyn},#{p_price},#{p_content},#{user_no},#{cc_id},#{p_vcount})
+		values('p'||P_ID_SQ.nextval,to_date(#{p_pdate},'yyyy-MM-dd/HH24:mi'),#{p_maxpeople},#{p_hole},#{p_caddyyn},#{p_babyn},#{p_cartyn},#{p_price},#{p_content},#{user_no},#{cc_id},#{p_vcount})
 	</insert>
 	
 

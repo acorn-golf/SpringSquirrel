@@ -3,14 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script type="text/javascript" src="/teamSquirrel/jquery-3.4.1.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		/* if($(".loc").val()=='${loc_id}'){
 			$(this).attr("selected","selected");
 		}
 		$("#location").on("change",function(){
-			location.href="ProductListServlet?loc_id="+${loc_id};
+			location.href="productList?loc_id="+${loc_id};
 		}); */
 		if(${emergency != null}){
 			$("input[type='checkbox']").attr("checked","checked");
@@ -19,7 +20,8 @@
 	});
 </script>
 
-<form action="ProductListServlet" method="post">
+<form action="productList" method="post">
+<%System.out.print(request.getRequestURI());  %>
 
 	<select name="loc_id" id="location">
 		<option value="all" class="loc">전체</option>
@@ -89,9 +91,9 @@
 						<c:set var="maxBlock" value="${maxBlock}" />
 						<c:set var="minBlock" value="${minBlock+1}" /> 
 						<c:if test="${curPage != 1}">
-							<a href="ProductListServlet?curPage=1">◀◀</a>&nbsp;&nbsp;
+							<a href="productList?curPage=1">◀◀</a>&nbsp;&nbsp;
 								<c:if test="${curPage>showBlock}">
-									<a href="ProductListServlet?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
+									<a href="productList?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
 								</c:if>
 						</c:if> &nbsp;&nbsp; 
 						<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
@@ -100,15 +102,15 @@
 									<span style="color: red">${i}</span>
 								</c:when>
 								<c:when test="${curPage != i}">
-									<a href="ProductListServlet?curPage=${i}">${i}</a>&nbsp;
+									<a href="productList?curPage=${i}">${i}</a>&nbsp;
 								</c:when>
 							</c:choose>
 						</c:forEach>&nbsp;&nbsp; 
 						<c:if test="${curPage != totalPage}">
 							<c:if test="${curPage<=showBlock*perBlock}">
-								<a href="ProductListServlet?curPage=${maxBlock+1}">▷</a>
+								<a href="productList?curPage=${maxBlock+1}">▷</a>
 							</c:if>
-							<a href="ProductListServlet?curPage=${totalPage}">▶▶</a>
+							<a href="productList?curPage=${totalPage}">▶▶</a>
 						</c:if>
 					</td>
 				</tr>

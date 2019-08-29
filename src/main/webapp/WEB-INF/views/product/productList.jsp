@@ -9,7 +9,10 @@
 <body>
 <%-- <jsp:include page="common/top.jsp" flush="true" /><br>
 <jsp:include page="common/menu.jsp" flush="true" /> --%>
-<jsp:include page="../show/main.jsp" flush="false"/>
+<%System.out.println(request.getRequestURI());  %>
+<%-- <jsp:include page="show/main" flush="false"/>--%>
+<%System.out.println("에러1");  %>
 <jsp:include page="sub/productList.jsp" flush="true" />
+<%System.out.println("에러2");  %>
 </body>
 </html>
