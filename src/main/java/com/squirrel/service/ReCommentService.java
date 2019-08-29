@@ -5,12 +5,13 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import com.squirrel.dao.ReCommentDAO;
 import com.squirrel.dto.ReCommentDTO;
 import com.squirrel.dto.view.RecommentViewDTO;
 
+@Service
 public class ReCommentService {
 
 	@Autowired

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.squirrel.dao.OrderListDAO;
 import com.squirrel.dao.ProductDAO;
@@ -11,6 +12,7 @@ import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.view.IsOrderListDTO;
 import com.squirrel.dto.view.OrderInfoDTO;
 
+@Service
 public class OrderListService {
 
 	@Autowired

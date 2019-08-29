@@ -6,12 +6,14 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;
 import com.squirrel.dto.view.PickListviewDTO;
 import com.squirrel.dto.view.ProductListDTO;
 
+@Repository
 public class PickDAO {
 
 	@Autowired

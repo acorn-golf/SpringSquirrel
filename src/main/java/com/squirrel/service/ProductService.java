@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.squirrel.dao.ProductDAO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.ProductDTO;
 import com.squirrel.dto.view.ProductListDTO;
 
+@Service
 public class ProductService {
 
 	@Autowired

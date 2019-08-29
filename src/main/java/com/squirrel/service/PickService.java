@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import com.squirrel.dao.PickDAO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;
 import com.squirrel.dto.view.PickListviewDTO;
 
+@Service
 public class PickService {
 
 	@Autowired

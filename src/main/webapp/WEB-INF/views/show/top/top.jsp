@@ -14,9 +14,9 @@
 
 
 <link rel="stylesheet" type="text/css"
-	href="css/style.min.css" />
+	href="/golfhi/css/style.min.css" />
 <link rel="stylesheet" type="text/css"
-	href="css/modules.css" />
+	href="/golfhi/css/modules.css" />
 
 <!-- Canonical URL usage -->
 <link rel="canonical" href="https://aperitif.io/">
