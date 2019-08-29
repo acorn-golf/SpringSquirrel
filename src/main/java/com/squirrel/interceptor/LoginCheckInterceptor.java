@@ -17,6 +17,8 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
+		request.setCharacterEncoding("UTF-8");
+		
 		if (!(handler instanceof HandlerMethod))
 			return true;
 
