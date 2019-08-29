@@ -12,28 +12,23 @@ import javax.crypto.NoSuchPaddingException;
 
 public class AESManager {
 
-	static private AESManager myAes;
+	//static private AESManager myAes;
 	private AES256Util aes256Util;
-	static {
-		myAes = new AESManager("1q2w3e4r5t6y7u8i");
-	}
+//	static {
+//		myAes = new AESManager("1q2w3e4r5t6y7u8i");
+//	}
 
-	public AESManager(String key) {
-		// TODO Auto-generated constructor stub
-		try {
-			aes256Util = new AES256Util(key);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public AESManager(String key) {
+//		// TODO Auto-generated constructor stub
+//		try {
+//			aes256Util = new AES256Util(key);
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	
-	
-	public static AESManager getMyAes() {
-		return myAes;
-	}
-
 
 
 	public String enCodeText(String text) {
@@ -68,6 +63,14 @@ public class AESManager {
 		return result;
 	}
 	
+	public AES256Util getAes256Util() {
+		return aes256Util;
+	}
+
+	public void setAes256Util(AES256Util aes256Util) {
+		this.aes256Util = aes256Util;
+	}
+
 	public String deCodeText(String str)
 	{
 		String result ="";

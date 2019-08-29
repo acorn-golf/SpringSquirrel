@@ -25,14 +25,19 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		if (loginchk == null) {
 			return true;
 		}
-		// �뼱�한글
-	
+		// 어노테이션이 없는 경우 아래 작업 미실행
 
 		HttpSession session = request.getSession();
 		MemberDTO dto = (MemberDTO) session.getAttribute("login");
 
 		if (dto == null) {
-			response.sendRedirect("../loginForm");
+			String mesg = "";
+			mesg+="<script type=\"text/javascript\">";
+			mesg+="alert('로그인 해주세요');";
+			mesg+="</script>";
+			response.setContentType("text/html;charset=UTF-8");
+			response.getWriter().print(mesg);
+			response.sendRedirect("loginForm");
 			return false;
 		} else {
 			boolean chk = false;
@@ -54,24 +59,32 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 
 			if (chk)
 				return true;
-			else
-				return false;
-			// �굹以묒뿉 �뿉�윭 硫붿꽭吏�瑜� �넻�빐 留ㅼ꽭吏��삉�븳
+			else {
+				String mesg = "";
+				mesg+="<script type=\"text/javascript\">";
+				mesg+="alert('권한이 없습니다');";
+				mesg+="</script>";
+				response.setContentType("text/html;charset=UTF-8");
+				response.getWriter().print(mesg);
+				response.sendRedirect("main");
+				return false; 
+			}
+			// 나중에 에러 메세지를 통해 매세지또한 보내주기
 
 			// return true;
 		}
 	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		System.out.println("postHandle");
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		System.out.println("afterCompletion");
-	}
+//
+//	@Override
+//	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+//			ModelAndView modelAndView) throws Exception {
+//
+//	}
+//
+//	@Override
+//	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+//			throws Exception {
+//	
+//	}
 
 }
