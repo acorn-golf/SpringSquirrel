@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.MemberDTO;
 
+@Repository
 public class MemberDAO {
 
 	@Autowired
@@ -16,91 +18,79 @@ public class MemberDAO {
 	
 	public int MemberAdd( MemberDTO dto) {
 		
-		int confirm = template.insert("MemberMapper.MemberAdd",dto);
-		
-		return confirm;
+		return template.insert("MemberMapper.MemberAdd",dto);
 	}
 
 	public MemberDTO login( HashMap<String, String> map) {
 		
-		MemberDTO dto = template.selectOne("MemberMapper.login", map);
-		return dto;
+		return template.selectOne("MemberMapper.login", map);		
 	}
 
 	public MemberDTO myPage( String nickname) {
 		
-		MemberDTO dto = template.selectOne("MemberMapper.myPage", nickname);
-		return dto;
+		return template.selectOne("MemberMapper.myPage", nickname);
 	}
 
 	public int myPageUpdate( MemberDTO dto) {
 		
-		int confirm = template.update("MemberMapper.myPageUpdate",dto);
-		
-		return confirm;
+		return template.update("MemberMapper.myPageUpdate",dto);
 	}
 
 	public int multiCheck( HashMap<String, String> map) {
-
-		int confirm = template.selectOne("MemberMapper.multiCheck",map);
 		
-		return confirm;
+		return template.selectOne("MemberMapper.multiCheck",map);
 	}
 
 	public List<MemberDTO> adminMemberSelect( HashMap<String, Object> map) {
-			
-		List<MemberDTO> list = template.selectList("MemberMapper.adminMemberSelect",map);
 	
-		return list;
+		return template.selectList("MemberMapper.adminMemberSelect",map);
 	}
 
 	public int adminModified( MemberDTO userdto) {
 		
-		int confirm = template.update("MemberMapper.adminModified",userdto);
-		
-		return confirm;
+		return template.update("MemberMapper.adminModified",userdto);
 	}
 
 	public MemberDTO getMemberInfo( int user_no) {
-		// TODO Auto-generated method stub
-		MemberDTO dto = template.selectOne("MemberMapper.getMemberInfo", user_no);
-		return dto;
+
+		return template.selectOne("MemberMapper.getMemberInfo", user_no);
 	}
 
 	public int updateEmail( int user_no) {
+		
 		return template.update("MemberMapper.updateEmail", user_no);
 		
 	}
 
 	public MemberDTO getUser( int user_no) {
-		MemberDTO dto = template.selectOne("MemberMapper.getUser", user_no);
-		return dto;
+
+		return  template.selectOne("MemberMapper.getUser", user_no);
 	}
 
 
 	public int totalRecord() {
-		int totalRecord = template.selectOne("MemberMapper.totalRecord");
-		return totalRecord;
+	
+		return template.selectOne("MemberMapper.totalRecord");
   }
 
 	public MemberDTO getPhoneUser( String phone_id) {
-		MemberDTO dto = template.selectOne("MemberMapper.getPhoneUser", phone_id);
-		return dto;
+
+		return template.selectOne("MemberMapper.getPhoneUser", phone_id);
 
 	}
 
 	public int updatePW( HashMap<String, String> map) {
-		int confirm = template.update("MemberMapper.updatePW", map);
-		return confirm;
+	
+		return template.update("MemberMapper.updatePW", map);
 	}
 
 	public MemberDTO kakaoLogin( String string) {
-		// TODO Auto-generated method stub
+	
 		return template.selectOne("kakaoLogin",string);
 	}
 
 	public int kakaoMemberAdd( MemberDTO dto) {
-		// TODO Auto-generated method stub
+		
 		return template.insert("kakaoMemberAdd", dto);
 	}
 

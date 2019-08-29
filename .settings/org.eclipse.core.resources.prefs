@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
+
+encoding//src/main/java/com/squirrel/service/MemberService.java=UTF-8
 encoding//src/main/java/com/squirrel/interceptor/LoginCheckInterceptor.java=UTF-8
 encoding/<project>=UTF-8
+
