@@ -276,7 +276,7 @@ function audioCaptcha() {
 
 </script>
 
-<form method="get" class="form_main">
+<form method="post" class="form_main">
 <input type="hidden" id="rating" name="rating" value="U">
 <table>
 <tr>

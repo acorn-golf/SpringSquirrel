@@ -96,7 +96,7 @@
 	</Menu>
 	<Menu>
 		<name>로그아웃</name>
-		<url>/teamSquirrel/LogoutServlet</url>
+		<url>member/LogoutServlet</url>
 	</Menu>
 	<Menu>
 		<name>마이페이지</name>
