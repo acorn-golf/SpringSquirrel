@@ -1,11 +1,14 @@
 package com.squirrel.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.service.MemberService;
@@ -38,6 +41,28 @@ public class MemberController {
 			break;
 		}
 		return destination;
-
 	}
+	
+	@RequestMapping("/multiCheck")
+	@ResponseBody
+	public int multiCheck(@RequestParam HashMap<String, String> map) {
+		
+		int confirm = service.multiCheck(map);
+		
+		return confirm;
+	}
+/*	String phone_id = request.getParameter("phoneid");
+	String userpw = request.getParameter("password");
+	String nickname = request.getParameter("nickname");
+	String email = request.getParameter("email");
+	
+	MemberService service = new MemberService();
+	HashMap<String, String> map = new HashMap<String, String>();
+	map.put("phone_id", phone_id);
+	map.put("userpw", userpw);	
+	map.put("nickname", nickname);
+	map.put("email", email);		
+	int confirm = service.multiCheck(map);	
+	response.getWriter().print(confirm);;*/
+	
 }
