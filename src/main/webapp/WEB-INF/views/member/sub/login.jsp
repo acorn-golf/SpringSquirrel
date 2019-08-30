@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-		
+<script type="text/javascript">		
 	$(document).ready(function(){
 		
 		$("#phone_id").click(function(){
@@ -21,7 +20,10 @@
 				$.ajax({
 					type : "POST",
 					url : "../multiCheck",
-					data : 'phone_id=' + $('#phone_id').val(),
+					data : { 
+						phone_id: $('#phone_id').val(),
+						userpw: $('#userpw').val()
+							 },
 					datatype : "text",
 					success : function(data){
 						if(data == 0){
@@ -50,7 +52,7 @@
 				});					
 			}
 			
-			if( $("#phone_id").val() == "" || $("#userpw").val() == ""){
+/* 			if( $("#phone_id").val() == "" || $("#userpw").val() == ""){
 				
 				if( $("#phone_id").val() == "" ){
 					$("#phone_id").focus();
@@ -59,7 +61,7 @@
 					$("#userpw").focus();
 					$("#pwchk").text("비밀번호를 입력하세요").css("color","red");										
 				}
-			}
+			} */
 		});
 		
 		$("#findPW").on("click",function(){
