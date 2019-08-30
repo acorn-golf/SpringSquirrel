@@ -16,7 +16,7 @@
 			if($("#loc").val()!="지역선택"){
 				$.ajax({
 					type:"get",
-					url:"SelectGolfCCServlet",
+					url:"productSelectGolfCC",
 					data:{
 						loc_ID:$("#loc").val()
 					},
@@ -36,24 +36,24 @@
 		});
 	});
 </script>
-<form action="InsertReviewServlet" method="get" name="insertReviewForm">
+<form action="insertReview" method="get" name="insertReviewForm" class="form_main">
 <%-- <input type="hidden" name="cc_id" value="${cc_id}"> --%>
-	<table>
+	<table class="line_table">
 		<tr>
-			<td><select id="loc">
+			<td class="line_td"><select id="loc">
 					<option selected="selected">지역선택</option>
 					<c:forEach var="loc" items="${LocationList}" varStatus="status">
 						<option value="${loc.loc_id }">${loc.loc_name }</option>
 					</c:forEach>
 			</select></td>
-			<td> 
+			<td class="line_td"> 
 				<select name="cc_id" id="defaultgolf"> <!-- 지역을 선택할 때 마다 골프장select박스 내용이나온다, ajax : SelectGolfCCServlet CC_NAME을 받아 CC_ID추출  -->
 					<option>골프장선택</option>
 				</select></td>
 		</tr>
 		<tr>
-			<th>평점</th>
-			<td><select name="score">
+			<th class="line_th">평점</th>
+			<td class="line_td"><select name="score">
 				<option>0</option>
 				<option>1</option>
 				<option>2</option>
@@ -63,15 +63,15 @@
 			</select></td>
 		</tr>
 		<tr>
-			<th>후기 제목</th>
-			<td><input type="text" name="rv_title" id="rv_title"></td>
+			<th class="line_th">후기 제목</th>
+			<td class="line_td"><input type="text" name="rv_title" id="rv_title"></td>
 		</tr>
 		<tr>
-			<th>후기 내용</th>
-			<td><textarea rows="20" cols="30" name="rv_content" id="rv_content"></textarea></td>
+			<th class="line_th">후기 내용</th>
+			<td class="line_td"><textarea rows="20" cols="30" name="rv_content" id="rv_content"></textarea></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right"><input type="button" id="cancle" value="취소">&nbsp;
+			<td colspan="2" align="right" class="line_td"><input type="button" id="cancle" value="취소">&nbsp;
 			<input type="submit" value="등록"></td>
 		</tr>
 	</table>

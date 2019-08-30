@@ -102,6 +102,13 @@ public class CcScoreDTO {
 	public void setRv_vcount(int rv_vcount) {
 		this.rv_vcount = rv_vcount;
 	}
+
+	@Override
+	public String toString() {
+		return "CcScoreDTO [score_no=" + score_no + ", score=" + score + ", cc_id=" + cc_id + ", score_date="
+				+ score_date + ", user_no=" + user_no + ", rv_title=" + rv_title + ", rv_content=" + rv_content
+				+ ", rv_vcount=" + rv_vcount + "]";
+	}
 	
 	
 }
