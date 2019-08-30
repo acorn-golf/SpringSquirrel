@@ -101,16 +101,7 @@ START MODULE AREA 2: Menu 1
 				<ul class="AP_Menu_List">
 
 					<!-- 반복 준비    -->
-					<%
-						{
-							Object test = session.getAttribute("login");
-							MemberDTO tmpdto = null;
-							if (test != null)
-								tmpdto = (MemberDTO) test;
-							if (tmpdto != null)
-								System.out.print("으아아 좀 : " + tmpdto.getRating());
-						}
-					%>
+
 					<c:choose>
 						<c:when test="${empty login}">
 							<c:import var="menuInfo" url="/xml/mainNot_login.xml"

@@ -96,10 +96,10 @@
 	</Menu>
 	<Menu>
 		<name>로그아웃</name>
-		<url>member/logout</url>
+		<url>logout</url>
 	</Menu>
 	<Menu>
 		<name>마이페이지</name>
-		<url>/teamSquirrel/MyPageServlet</url>
+		<url>/golfhi/myPage</url>
 	</Menu>
 </Menus>
