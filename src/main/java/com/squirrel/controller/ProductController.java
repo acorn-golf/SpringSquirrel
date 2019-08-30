@@ -177,5 +177,6 @@ public class ProductController {
 		return mav;
 	}
 
+	// 한뉘야 여기다가 상품자세히보기 ㄱㄱ
 }
 

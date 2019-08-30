@@ -57,6 +57,7 @@
 				<value>com.squirrel.dto.view.PickListviewDTO</value>
 				<value>com.squirrel.dto.view.IsOrderListDTO</value>
 				<value>com.squirrel.dto.view.OrderInfoDTO</value>
+				<value>com.squirrel.dto.view.PickOrderListDTO</value>
 
 			</list>
 		</property>
