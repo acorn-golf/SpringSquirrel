@@ -77,4 +77,9 @@ public class PickListController {
 		return mav;
 	}
 	
+//	@RequestMapping(value = "/insertPickList")
+//	public String insertPickList() {
+//		
+//	}
+	
 }

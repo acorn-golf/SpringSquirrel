@@ -43,7 +43,7 @@ public class ReviewController {
 		int n = revService.insertReview(dto);
 		
 		return "redirect:/";
-		 // 원래는 리뷰게시판 보여주는 메서드로 보내야하는데 여긴 viewResolver에 의해 .jsp가 붙어서 그래서 임시로 메인으로 보냄
+		 // 원래는 리뷰게시판 보여주는 메서드로 보내야함, 임시로 메인으로 보냄
 	}
 	
 //	@RequestMapping(value = "")
