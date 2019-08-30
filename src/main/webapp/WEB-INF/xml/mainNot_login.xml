@@ -3,7 +3,7 @@
 <Menus>
 	<Menu>
 		<name>회원가입</name>
-		<url>/golfhi/member/memberForm</url>
+		<url>/golfhi/memberForm</url>
 	</Menu>
 	<Menu>
 		<name>로그인</name>

@@ -21,7 +21,10 @@
 				$.ajax({
 					type : "POST",
 					url : "../multiCheck",
-					data : 'phone_id=' + $('#phone_id').val(),
+					data : { 
+						phone_id: $('#phone_id').val(),
+						userpw: $('#userpw').val()
+							 },
 					datatype : "text",
 					success : function(data){
 						if(data == 0){
@@ -50,7 +53,7 @@
 				});					
 			}
 			
-			if( $("#phone_id").val() == "" || $("#userpw").val() == ""){
+/* 			if( $("#phone_id").val() == "" || $("#userpw").val() == ""){
 				
 				if( $("#phone_id").val() == "" ){
 					$("#phone_id").focus();
@@ -59,7 +62,7 @@
 					$("#userpw").focus();
 					$("#pwchk").text("비밀번호를 입력하세요").css("color","red");										
 				}
-			}
+			} */
 		});
 		
 		$("#findPW").on("click",function(){
