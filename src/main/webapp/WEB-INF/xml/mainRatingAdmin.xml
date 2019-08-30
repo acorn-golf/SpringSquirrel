@@ -75,7 +75,7 @@
 
 		<sub_Menu>
 			<name>로그아웃</name>
-			<url>member/LogoutServlet</url>
+			<url>member/logout</url>
 		</sub_Menu>
 
 		<sub_Menu>
