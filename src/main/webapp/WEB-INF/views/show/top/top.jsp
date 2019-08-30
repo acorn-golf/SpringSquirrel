@@ -13,10 +13,8 @@
 <title>golf-hi</title>
 
 
-<link rel="stylesheet" type="text/css"
-	href="/golfhi/css/style.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="/golfhi/css/modules.css" />
+<link rel="stylesheet" type="text/css" href="/golfhi/css/style.min.css" />
+<link rel="stylesheet" type="text/css" href="/golfhi/css/modules.css" />
 
 <!-- Canonical URL usage -->
 <link rel="canonical" href="https://aperitif.io/">
@@ -121,8 +119,8 @@ START MODULE AREA 2: Menu 1
 								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'M'}">
-							<c:import var="menuInfo"
-								url="/xml/mainRatingManager.xml" charEncoding="UTF-8" />
+							<c:import var="menuInfo" url="/xml/mainRatingManager.xml"
+								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'A'}">
 							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml"
@@ -131,7 +129,8 @@ START MODULE AREA 2: Menu 1
 					</c:choose>
 					<!-- 로그인한 유저에 따라 보여줄 정보를 다르게 표기. 판단은   여기서 -->
 
-
+					<c:import var="aaaa" url="/mainMenuXml"
+						charEncoding="UTF-8" />
 					<x:parse xml="${menuInfo}" var="output" />
 
 					<x:forEach select="$output//Menu" var='Menu'>
@@ -157,5 +156,4 @@ START MODULE AREA 2: Menu 1
 END MODULE AREA 2: Menu 1
 -->
 
-	<script type="text/javascript"
-		src="/golfhi/js/index.js"></script>
+	<script type="text/javascript" src="/golfhi/js/index.js"></script>
