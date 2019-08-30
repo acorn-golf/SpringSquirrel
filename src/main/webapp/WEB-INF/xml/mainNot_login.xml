@@ -1,9 +1,10 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Menus>
 	<Menu>
 		<name>회원가입</name>
-		<url>/golfhi/memberForm</url>
+		<url>/golfhi/member/memberForm</url>
 	</Menu>
 	<Menu>
 		<name>로그인</name>
@@ -52,3 +53,4 @@
 		<url></url>
 	</Menu>
 </Menus>
+
