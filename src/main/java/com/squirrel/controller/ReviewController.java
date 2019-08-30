@@ -1,5 +1,4 @@
 package com.squirrel.controller;
-
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -39,14 +38,15 @@ public class ReviewController {
 	public String insertReview(CcScoreDTO dto, HttpSession session) {
 //		MemberDTO mDTO = (MemberDTO)session.getAttribute("login");
 //		dto.setUser_no(mDTO.getUser_no());
-		dto.setUser_no(28); // Å×½ºÆ®¿ë ÀÓ½ÃÀ¯Àúpk
+		dto.setUser_no(28); // í…ŒìŠ¤íŠ¸ìš© ì„ì‹œìœ ì €pk
 		int n = revService.insertReview(dto);
 		
 		return "redirect:/";
-		 // ¿ø·¡´Â ¸®ºä°Ô½ÃÆÇ º¸¿©ÁÖ´Â ¸Ş¼­µå·Î º¸³»¾ßÇÏ´Âµ¥ ¿©±ä viewResolver¿¡ ÀÇÇØ .jsp°¡ ºÙ¾î¼­ ±×·¡¼­ ÀÓ½Ã·Î ¸ŞÀÎÀ¸·Î º¸³¿
+		 // ì›ë˜ëŠ” ë¦¬ë·°ê²Œì‹œíŒ ë³´ì—¬ì£¼ëŠ” ë©”ì„œë“œë¡œ ë³´ë‚´ì•¼í•˜ëŠ”ë° ì—¬ê¸´ viewResolverì— ì˜í•´ .jspê°€ ë¶™ì–´ì„œ ê·¸ë˜ì„œ ì„ì‹œë¡œ ë©”ì¸ìœ¼ë¡œ ë³´ëƒ„
 	}
 	
 //	@RequestMapping(value = "")
 //	public 
+
 	
 }
