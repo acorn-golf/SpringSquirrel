@@ -39,8 +39,8 @@
 		<if test="phone_id != null">
 			where phone_id = #{phone_id}
 		</if>
-		<if test="userpw != null">
-			where userpw = #{userpw}
+		<if test="phone_id != null &amp;&amp; userpw != null">
+			where phone_id = #{phone_id} and userpw = #{userpw}
 		</if>
 		<if test="nickname != null">
 			where nickname = #{nickname}

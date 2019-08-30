@@ -3,45 +3,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-		
+<script type="text/javascript">		
 	$(document).ready(function(){
 		
-		$("#phoneid").click(function(){
+		$("#phone_id").click(function(){
 			$("#idchk").text("");			
 		});
 
-		$("#password").click(function(){
+		$("#userpw").click(function(){
 			$("#pwchk").text("");			
 		});
 		
 		$("form").on("submit",function(event){
 			event.preventDefault();
-			if(  $("#phoneid").val() != ""  ){
+			if(  $("#phone_id").val() != ""  ){
 				$.ajax({
-					type : "post",
-					url : "/teamSquirrel/MultiCheckServlet",
-					data : 'phoneid=' + $('#phoneid').val(),
+					type : "POST",
+					url : "../multiCheck",
+					data : { 
+						phone_id: $('#phone_id').val(),
+						userpw: $('#userpw').val()
+							 },
 					datatype : "text",
 					success : function(data){
 						if(data == 0){
 							$("#idchk").text("아이디가 틀렸네요.").css("color","red");
-							$("#phoneid").val("");
-							$("#phoneid").focus();
-							$("#password").val("");
+							$("#phone_id").val("");
+							$("#phone_id").focus();
+							$("#userpw").val("");
 							$("#pwchk").text("")
-						}else if(  $("#password").val() != ""  ){
+						}else if(  $("#userpw").val() != ""  ){
 							$.ajax({
-								type : "post",
-								url : "/teamSquirrel/MultiCheckServlet",
-								data : 'password=' + $('#password').val(),
+								type : "POST",
+								url : "../multiCheck",
+								data : 'userpw=' + $('#userpw').val(),
 								datatype : "text",
 								success : function(data){
 									if(data == 0){
 										$("#pwchk").text("비밀번호가 틀렸네요.").css("color","red");
-										$("#password").val("");
+										$("#userpw").val("");
 									}else{
-										location.href="/teamSquirrel/LoginServlet?phoneid="+$('#phoneid').val()+"&password="+$('#password').val();
+										$("form").unbind("submit");
 									}
 								}						
 							});
@@ -50,16 +52,16 @@
 				});					
 			}
 			
-			if( $("#phoneid").val() == "" || $("#password").val() == ""){
+/* 			if( $("#phone_id").val() == "" || $("#userpw").val() == ""){
 				
-				if( $("#phoneid").val() == "" ){
-					$("#phoneid").focus();
+				if( $("#phone_id").val() == "" ){
+					$("#phone_id").focus();
 					$("#idchk").text("아이디를 입력하세요").css("color","red");
-				}else if( $("#password").val() == "" ){
-					$("#password").focus();
+				}else if( $("#userpw").val() == "" ){
+					$("#userpw").focus();
 					$("#pwchk").text("비밀번호를 입력하세요").css("color","red");										
 				}
-			}
+			} */
 		});
 		
 		$("#findPW").on("click",function(){
@@ -68,16 +70,16 @@
 		
 	});
 </script>
-<form method="post" class="form_login">
+<form method="POST" class="form_login" action="login">
 <table>
 <tr>
 <th> 아이디: </th>
-<td><input type="text" class="login" id="phoneid" name="phoneid" placeholder="핸드폰번호 일껄요?" maxlength="11"></td>
+<td><input type="text" class="login" id="phone_id" name="phone_id" placeholder="핸드폰번호 일껄요?" maxlength="11" required></td>
 <td class="confirm"><span id="idchk"></span></td>
 </tr>
 <tr>
 <th> 비밀번호: </th>
-<td><input type="password" class="login" id="password" name="password"></td>
+<td><input type="password" class="login" id="userpw" name="userpw" required></td>
 <td class="confirm"><span id="pwchk"></span></td>
 </tr>
 <tr>

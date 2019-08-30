@@ -18,7 +18,7 @@ alert('${mesg}');
 <title>Squirrel Team Project</title>
 </head>
 <body>
-<jsp:include page="show/main.jsp"/>
+<jsp:include page="show/main.jsp" flush="true"/>
 <hr>
 </body>
 </html>

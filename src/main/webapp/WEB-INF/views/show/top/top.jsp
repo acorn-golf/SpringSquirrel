@@ -158,4 +158,4 @@ END MODULE AREA 2: Menu 1
 -->
 
 	<script type="text/javascript"
-		src="js/index.js"></script>
+		src="/golfhi/js/index.js"></script>

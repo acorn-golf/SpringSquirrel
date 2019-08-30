@@ -17,7 +17,7 @@
 		</sub_Menu>
 	</Menu>
 
-	<Menu>
+		<Menu>
 		<name>전체상품</name>
 		<url>/golfhi/productList</url>
 		<sub_Menu>
@@ -77,8 +77,8 @@
 	</Menu>
 
 	<Menu> <!-- 찜목록 -->
-		<name>장바구니</name>
-		<url>/golfhi/pickListView</url>
+		<name>찜목록</name>
+		<url>/teamSquirrel/PickListViewServlet</url>
 	</Menu>
 
 	<Menu> <!-- 공지사항 -->
@@ -102,7 +102,7 @@
 	</Menu>
 	<Menu>
 		<name>로그아웃</name>
-		<url>/teamSquirrel/LogoutServlet</url>
+		<url>/member/logout</url>
 	</Menu>
 
 	<Menu>

@@ -11,28 +11,24 @@
 	<script type="text/javascript">
 		var con_email = confirm("이메일 인증을 하시면 비밀번호 찾기 시 임시번호를 받을 수 있습니다\n 인증하시겠습니까?");
 		if (con_email == true) {
-			location.href='/teamSquirrel/SendMailServlet';
+			location.href='../sendMail';
 		} else if (con_email == false) {
 			alert('이메일 인증은 마이페이지에서 가능합니다');
-			location.href='/teamSquirrel/main.jsp';
+			location.href='/golfhi/';
 		}
 	</script>
 </c:if>
 <c:if test="${login.email_chk eq 'Y' }">
 	<script type="text/javascript">
-		location.href='/teamSquirrel/main.jsp';
+		location.href='/golfhi/';
 	</script>
 </c:if>
 <c:if test="${login == null}">
 	<script type="text/javascript">
-		location.href='/teamSquirrel/main.jsp';
+		location.href='/golfhi/';
 	</script>
 </c:if>
 </head>
 <body>
-	<%-- <jsp:include page="common/top.jsp" flush="true" /><br>
-<jsp:include page="common/menu.jsp" flush="true" /> --%>
-	<jsp:include page="../show/main.jsp" flush="false" />
-
 </body>
 </html>

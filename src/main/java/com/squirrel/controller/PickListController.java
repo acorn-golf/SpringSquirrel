@@ -26,9 +26,9 @@ public class PickListController {
 	public ModelAndView pickListView(@RequestParam Map<String, String> map, HttpSession session) {
 //		MemberDTO user = (MemberDTO)session.getAttribute("login");
 //		int user_no = user.getUser_no();
-		int user_no = 3; // È®ÀÎÀ» À§ÇÑ ÀÓ½Ãpk
+		int user_no = 3; // í™•ì¸ì„ ìœ„í•œ ì„ì‹œpk
 		boolean ReSearchChk = false;
-		int curPage; // ÇöÀçÆäÀÌÁö
+		int curPage; // í˜„ì¬í˜ì´ì§€
 		{
 			String curPageStr = map.get("curPage");
 			if (curPageStr == null) {
@@ -49,7 +49,7 @@ public class PickListController {
 			totalPage++;
 		}
 
-		int showBlock = 5; // º¸¿©ÁÙ ÆäÀÌÁö 1,2,3,4,5 // 6,7,8,9,10
+		int showBlock = 5; // ë³´ì—¬ì¤„ í˜ì´ì§€ 1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
 		if (curPage == totalPage || totalPage < minBlock+showBlock) {
@@ -83,3 +83,4 @@ public class PickListController {
 //	}
 	
 }
+

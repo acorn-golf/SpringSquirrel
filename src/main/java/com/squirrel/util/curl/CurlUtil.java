@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -21,12 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CurlUtil {
 
 	private ObjectMapper mapper = new ObjectMapper();
-
-	static public CurlUtil my = new CurlUtil();
-
-	static public CurlUtil Getmy() {
-		return my;
-	}
 
 //	public String curlReturnJsonStr(String urlStr, boolean postChk, Map<String, String> parameter,
 //			BiFunction<Integer, Map<String, Object>, Map<String, Object>> resultFun) {
@@ -56,28 +51,30 @@ public class CurlUtil {
 //		return JsonStr;
 //	}
 
-	
-	
-	
+	public CurlUtil() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public <T> T curlReturnClass(String urlStr, boolean postChk, Map<String, String> parameter,
-			BiFunction<Integer,T, T> resultFun,Class<T> requiredType) throws CurlException, IOException {
+			java.util.Map<String, String> harderSet, BiFunction<Integer, T, T> resultFun, Class<T> requiredType)
+			throws CurlException, IOException {
 		T result = null;
 		StringBuffer buffer = null;
 		HttpURLConnection con = null;
 		int ResponseCode = 0;
-		
+
 		try {
-			con = curl(urlStr, postChk, parameter);
+			con = curl(urlStr, postChk, parameter,harderSet);
 			ResponseCode = con.getResponseCode();
 			buffer = connectionStrBuffer(con);
-			result = mapper.readValue(buffer.toString(),requiredType);
-			
+			result = mapper.readValue(buffer.toString(), requiredType);
+
 			result = resultFun.apply(con.getResponseCode(), result);
-			
-			
+
 		} catch (IOException e) {
 			// TODO: handle exception
-			//직접 만든 에러 추가하여, 에러 파라미터 넘길것 ( 통신코드, 반환값 그거)
+			// 직접 만든 에러 추가하여, 에러 파라미터 넘길것 ( 통신코드, 반환값 그거)
 			java.util.Map<String, Object> returnParmeter = null;
 			try {
 				returnParmeter = mapper.readValue(buffer.toString(),
@@ -90,31 +87,28 @@ public class CurlUtil {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			throw new CurlException("잘못된 전송", ResponseCode,returnParmeter);
+			throw new CurlException("잘못된 전송", ResponseCode, returnParmeter);
 		}
-		
-		
-		
+
 		return result;
 	}
-	
-	
-	
+
 	public Map<String, Object> curlReturnMap(String urlStr, boolean postChk, Map<String, String> parameter,
+			java.util.Map<String, String> harderSet,
 			BiFunction<Integer, Map<String, Object>, Map<String, Object>> resultFun) {
 		Map<String, Object> result = null;
 		StringBuffer buffer = null;
 		HttpURLConnection con = null;
 		try {
 
-			con = curl(urlStr, postChk, parameter);
+			con = curl(urlStr, postChk, parameter, harderSet);
 			buffer = connectionStrBuffer(con);
 
 			java.util.Map<String, Object> returnParmeter = mapper.readValue(buffer.toString(),
 					new TypeReference<java.util.Map<String, Object>>() {
 					});
-			if(resultFun!=null)
-			result = resultFun.apply(con.getResponseCode(), returnParmeter);
+			if (resultFun != null)
+				result = resultFun.apply(con.getResponseCode(), returnParmeter);
 			else
 				result = returnParmeter;
 //
@@ -129,14 +123,8 @@ public class CurlUtil {
 		return result;
 	}
 
-	
-	
-	
-	
-	
-	
-	private HttpURLConnection curl(String urlStr, boolean postChk, java.util.Map<String, String> parameter)
-			throws IOException {
+	private HttpURLConnection curl(String urlStr, boolean postChk, java.util.Map<String, String> parameter,
+			java.util.Map<String, String> harderSet) throws IOException {
 
 		BufferedReader br = null;
 		StringBuffer paramBuffer = new StringBuffer();
@@ -149,9 +137,22 @@ public class CurlUtil {
 			url = new URL(urlStr);
 			con = (HttpURLConnection) url.openConnection();
 
+			StringBuilder postData = new StringBuilder();
+			for (Map.Entry<String, String> param : parameter.entrySet()) {
+				if (postData.length() != 0)
+					postData.append('&');
+				postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+				postData.append('=');
+				postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+			}
+			byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
 			con.setRequestMethod("POST");
-			for (String key : parameter.keySet())
-				con.setRequestProperty(key, parameter.get(key));
+			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			con.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+			con.setDoOutput(true);
+			con.getOutputStream().write(postDataBytes); // POST 호출
+
 		} else {
 
 			boolean firstChk = true;
@@ -167,6 +168,9 @@ public class CurlUtil {
 
 			}
 
+			for (String key : harderSet.keySet())
+				con.setRequestProperty(key, harderSet.get(key));
+
 			url = new URL(urlStr + "?" + paramBuffer.toString());
 			con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
@@ -174,35 +178,25 @@ public class CurlUtil {
 
 		// 결과값 출력
 
-
 		return con;
 
 	}
 
-	
-	
-
-	
-	
-	
-	
 	private StringBuffer connectionStrBuffer(HttpURLConnection con) {
 		BufferedReader bufferedreader = null;
 		StringBuffer buffer = new StringBuffer();
 		try {
-			bufferedreader  = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			bufferedreader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
-			while((inputLine = bufferedreader.readLine()) != null)
-			{
+			while ((inputLine = bufferedreader.readLine()) != null) {
 				buffer.append(inputLine);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return buffer;
 	}
-
 
 }
