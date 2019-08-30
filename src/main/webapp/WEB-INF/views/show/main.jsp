@@ -5,7 +5,7 @@
 
 
 
-<jsp:include page="top/top.jsp"/>
+<jsp:include page="top/top.jsp" flush="true"/>
 
 <%-- <c:if test="${empty login}">
 <a href="memberuiservlet">회원 가입</a>

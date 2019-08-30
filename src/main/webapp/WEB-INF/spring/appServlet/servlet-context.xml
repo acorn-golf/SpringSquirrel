@@ -12,8 +12,7 @@
  
   
     <mvc:view-controller path="/" view-name="main"/>
-    <mvc:view-controller path="/show/main" view-name="show/main"/>
-    <mvc:view-controller path="/member/login" view-name="member/login"/>
+    <mvc:view-controller path="/member/loginForm" view-name="member/loginForm"/>
     <mvc:view-controller path="/member/memberForm" view-name="member/memberForm"/>
 
     

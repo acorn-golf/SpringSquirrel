@@ -102,7 +102,7 @@
 	</Menu>
 	<Menu>
 		<name>로그아웃</name>
-		<url>/teamSquirrel/LogoutServlet</url>
+		<url>/member/logout</url>
 	</Menu>
 
 	<Menu>
