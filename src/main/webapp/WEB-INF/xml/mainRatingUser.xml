@@ -19,30 +19,30 @@
 
 	<Menu>
 		<name>전체상품</name>
-		<url>/teamSquirrel/ProductListServlet</url>
+		<url>/golfhi/productList</url>
 		<sub_Menu>
 			<name>경기</name>
-			<url>/teamSquirrel/ProductListServlet?loc_id=gg</url>
+			<url>/golfhi/productList?loc_id=gg</url>
 		</sub_Menu>
 		<sub_Menu>
 			<name>충청도</name>
-			<url>/teamSquirrel/ProductListServlet?loc_id=cc</url>
+			<url>/golfhi/productList?loc_id=cc</url>
 		</sub_Menu>
 		<sub_Menu>
 			<name>강원도</name>
-			<url>/teamSquirrel/ProductListServlet?loc_id=gw</url>
+			<url>/golfhi/productList?loc_id=gw</url>
 		</sub_Menu>
 		<sub_Menu>
 			<name>경상도</name>
-			<url>/teamSquirrel/ProductListServlet?loc_id=gs</url>
+			<url>/golfhi/productList?loc_id=gs</url>
 		</sub_Menu>
 		<sub_Menu>
 			<name>전라도</name>
-			<url>/teamSquirrel/ProductListServlet?loc_id=jl</url>
+			<url>/golfhi/productList?loc_id=jl</url>
 		</sub_Menu>
 		<sub_Menu>
 			<name>제주도</name>
-			<url>/teamSquirrel/ProductListServlet?loc_id=jj</url>
+			<url>/golfhi/productList?loc_id=jj</url>
 		</sub_Menu>
 	</Menu>
 
@@ -77,8 +77,8 @@
 	</Menu>
 
 	<Menu> <!-- 찜목록 -->
-		<name>찜목록</name>
-		<url>/teamSquirrel/PickListViewServlet</url>
+		<name>장바구니</name>
+		<url>/golfhi/pickListView</url>
 	</Menu>
 
 	<Menu> <!-- 공지사항 -->

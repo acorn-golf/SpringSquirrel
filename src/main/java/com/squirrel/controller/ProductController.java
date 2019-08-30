@@ -67,7 +67,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/productInsert")
-	public String productInsert(ProductDTO dto, HttpSession session, RedirectAttributes model) { 
+	public String productInsert(ProductDTO dto, HttpSession session) { 
 		MemberDTO mDTO = (MemberDTO) session.getAttribute("login");
 		// dto.setUser_no(mDTO.getUser_no());
 		dto.setUser_no(3); // 임시 확인을 위함
@@ -83,12 +83,8 @@ public class ProductController {
 			dto.setP_cartyn("Y");
 		}
 		int n = proService.productInsert(dto);
-		String insertMesg = "등록되었습니다";
-		if (n == 0) {
-			insertMesg = "등록에 실패하였습니다";
-		}
-		model.addFlashAttribute("mesg", insertMesg);
-		return "redirect:/";
+		
+		return "redirect:/productList"; // 상품이 등록되었으면 등록성공/실패 여부를 메시지로 띄우고 productList로 감
 	}
 
 	@RequestMapping(value = "/productList", method = {RequestMethod.GET,RequestMethod.POST})
