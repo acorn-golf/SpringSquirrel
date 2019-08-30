@@ -19,12 +19,7 @@ public class ProductService {
 	ProductDAO dao;
 
 	public int productInsert(ProductDTO dto) {
-
-		int result;
-		result = dao.productInsert(dto);
-
-		return result;
-
+		return dao.productInsert(dto);
 	}
 
 	public ProductDTO productRetrieve(String p_id) {
