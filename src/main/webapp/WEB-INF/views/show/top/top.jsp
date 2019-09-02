@@ -100,6 +100,33 @@ START MODULE AREA 2: Menu 1
 
 					<c:import var="menuInfo" url="/mainMenuXml" charEncoding="UTF-8" />
 
+<<<<<<< HEAD
+=======
+					<!-- 반복 준비    -->
+
+					<c:choose>
+						<c:when test="${empty login}">
+							<c:import var="menuInfo" url="/xml/mainNot_login.xml"
+								charEncoding="UTF-8" />
+						</c:when>
+						<c:when test="${login.rating eq'U'}">
+							<c:import var="menuInfo" url="/xml/mainRatingUser.xml"
+								charEncoding="UTF-8" />
+						</c:when>
+						<c:when test="${login.rating eq'M'}">
+							<c:import var="menuInfo"
+								url="/xml/mainRatingManager.xml" charEncoding="UTF-8" />
+						</c:when>
+						<c:when test="${login.rating eq'A'}">
+							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml"
+								charEncoding="UTF-8" />
+						</c:when>
+					</c:choose>
+					<!-- 로그인한 유저에 따라 보여줄 정보를 다르게 표기. 판단은   여기서 -->
+
+
+>>>>>>> refs/remotes/origin/master
+>>>>>>> refs/heads/tmp_han
 					<x:parse xml="${menuInfo}" var="output" />
 
 					<x:forEach select="$output//Menu" var='Menu'>
