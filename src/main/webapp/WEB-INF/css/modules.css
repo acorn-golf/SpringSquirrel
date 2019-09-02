@@ -286,8 +286,8 @@ label {
   }
 }
 input {
-  /* width: 100%; */
-  /* max-width: 18em; */
+  width: 100%;
+  max-width: 18em;
   font-size: 1em;
   font-family: sans-serif;
 }

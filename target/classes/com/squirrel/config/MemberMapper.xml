@@ -19,14 +19,14 @@
 		where phone_id = #{phone_id} and userpw = #{userpw}
 	</select>
 	<select id="myPage" resultType="MemberDTO"
-		parameterType="String">
+		parameterType="int">
 		select
 		user_no,phone_id,userpw,username,nickname,userssn,gender,
 		rating,to_char(rstartdate,'yyyy/MM/dd') rstartdate,
 		to_char(renddate,'yyyy/MM/dd') renddate,
 		email,email_chk from
 		memberList
-		where nickname = #{nickname}
+		where user_no = #{user_no}
 	</select>
 	<update id="myPageUpdate" parameterType="MemberDTO">
 		update memberList
@@ -36,7 +36,7 @@
 	</update>
 	<select id="multiCheck" parameterType="HashMap" resultType="int">
 		select count(*) from memberList
-		<if test="phone_id != null">
+		<if test="phone_id != null &amp;&amp; userpw == ''">
 			where phone_id = #{phone_id}
 		</if>
 		<if test="phone_id != null &amp;&amp; userpw != null">
@@ -130,5 +130,4 @@
 		<if test="gender != null">#{gender},</if>
 		#{kakao_id})
 	</insert>
-
 </mapper>

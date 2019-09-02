@@ -47,8 +47,8 @@
 				}										
 			});				
 		});	 
-		$("#password").on("keyup",function(){
-			if($("#password").val().length < 7){
+		$("#userpw").on("keyup",function(){
+			if($("#userpw").val().length < 7){
 				$("#confirmpw").text("사용 불가").css("color","red");
 			}else{
 				$("#confirmpw").text("사용 가능").css("color","green");
@@ -56,25 +56,18 @@
 		});
 		
 		$("#repassword").on("keyup",function(){
-			if($("#password").val()==($("#repassword").val())){			
+			if($("#userpw").val()==($("#repassword").val())){			
 				$("#matchedpw").text("비밀번호 일치").css("color","green");
 			}else{
 				$("#matchedpw").text("비밀번호 불일치").css("color","red");
 			};
 		});
-		$("form").on("click",function(event){
-			
-			if($("#repassword").val()==""&&$("#password").val()==""){
-				event.preventDefault();
-			}else{
-				this.action="/teamSquirrel/MyPageUpdateServlet";
-			}
-		});
+
 		if(${login.gender} == 1){
 			$("#male").attr("checked","checked");
 		}else{
 			$("#female").attr("checked","checked");
-		}
+		}		
 		$("[type='radio']").attr("disabled","true");
 		
 		$("input[type='button']").on("click",function(){
@@ -85,7 +78,8 @@
 
 </script>
 
-<form method="post" class="form_main">
+<form method="post" class="form_main" action="myPageUpdate">
+<input type="hidden" id="user_no" name="user_no" value="${login.user_no}">
 <input type="hidden" id="rating" name="rating" value="${login.rating}">
 <input type="hidden" id="rstartdate" name="rstartdate" value="${login.rstartdate}">
 <input type="hidden" id="renddate" name="renddate" value="${login.renddate}">
@@ -94,17 +88,17 @@
 <table>
 <tr>
 <th>아이디:</th>
-<td><input class="myupdate" type="text" id="phoneid" name="phoneid" value="${login.phone_id}" readonly></td>
+<td><input class="myupdate" type="text" id="phone_id" name="phone_id" value="${login.phone_id}" readonly></td>
 <td class="confirm"><span id="idchk"></span></td>
 </tr>
 <tr>
 <th><font class="red">*</font>비밀번호:</th>
-<td><input class="myupdate" type="password" id="password" name="password"></td>
+<td><input class="myupdate" type="password" id="userpw" name="userpw" required></td>
 <td class="confirm"><span id="confirmpw"></span></td>
 </tr>
 <tr>
 <th><font class="red">*</font>비밀번호확인:</th>
-<td><input class="myupdate" type="password" id="repassword" name="repassword"></td>
+<td><input class="myupdate" type="password" id="repassword" name="repassword" required></td>
 <td class="confirm"><span id="matchedpw"></span></td>
 </tr>
 <tr>
