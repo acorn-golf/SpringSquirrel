@@ -38,4 +38,9 @@
 		where pl.PICK_NO=#{pick_no}
 		
 	</select>
+	
+	<delete id="deletePickList" parameterType="hashmap">
+		delete from PICKLIST
+		where PICK_NO = #{pick_no}
+	</delete>
 </mapper>

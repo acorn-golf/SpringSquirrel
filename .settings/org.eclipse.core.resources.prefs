@@ -3,3 +3,4 @@ encoding//src/main/java/com/squirrel/controller/PickListController.java=UTF-8
 encoding//src/main/java/com/squirrel/controller/ProductController.java=UTF-8
 encoding//src/main/java/com/squirrel/interceptor/LoginCheckInterceptor.java=UTF-8
 encoding//src/main/java/com/squirrel/service/MemberService.java=UTF-8
+encoding//src/main/java/com/squirrel/service/OrderListService.java=UTF-8

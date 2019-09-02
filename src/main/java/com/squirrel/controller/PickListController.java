@@ -27,10 +27,9 @@ public class PickListController {
 	
 	@RequestMapping(value = "/pickListView")
 	public ModelAndView pickListView(@RequestParam Map<String, String> map, HttpSession session) {
-//		MemberDTO user = (MemberDTO)session.getAttribute("login");
-//		int user_no = user.getUser_no();
-		System.out.println("호출됬니?");
-		int user_no = 3; // 확인을 위한 임시pk
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+		//int user_no = 3; // 확인을 위한 임시pk
 		boolean ReSearchChk = false;
 		int curPage; 
 		{
