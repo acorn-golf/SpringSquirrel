@@ -39,11 +39,11 @@ public class ReviewController {
 	public String insertReview(CcScoreDTO dto, HttpSession session) {
 //		MemberDTO mDTO = (MemberDTO)session.getAttribute("login");
 //		dto.setUser_no(mDTO.getUser_no());
-		dto.setUser_no(28); // í…ŒìŠ¤íŠ¸ìš© ì„ì‹œìœ ì €pk
+		dto.setUser_no(28); // È®ÀÎÀ» À§ÇÑ ÀÓ½Ãpk
 		int n = revService.insertReview(dto);
 		
 		return "redirect:/";
-		 // ì›ë˜ëŠ” ë¦¬ë·°ê²Œì‹œíŒ ë³´ì—¬ì£¼ëŠ” ë©”ì„œë“œë¡œ ë³´ë‚´ì•¼í•˜ëŠ”ë° ì—¬ê¸´ viewResolverì— ì˜í•´ .jspê°€ ë¶™ì–´ì„œ ê·¸ë˜ì„œ ì„ì‹œë¡œ ë©”ì¸ìœ¼ë¡œ ë³´ëƒ„
+		 // ¸®ºä°Ô½ÃÆÇ ¸Ş¼­µå·Î º¸³¾°ÍÀÌ´Ù Áö±İÀº ÀÓ½Ã·Î mainÀ¸·Î º¸³¿
 	}
 	
 //	@RequestMapping(value = "")

@@ -29,4 +29,13 @@
 			#{item}
 		</foreach>
 	</delete>
+	
+	<select id="selectPickofNo" parameterType="hashmap" resultType="PickOrderListDTO">
+		SELECT CC_NAME,CC_IMG,pl.PICK_NO pick_no,p.P_ID p_id,P_PDATE,P_UPLOADDATE,p.P_MAXPEOPLE p_maxpeople,pl.PICK_AMOUNT pick_amount,P_HOLE,P_CADDYYN,P_BABYN,P_CARTYN,P_PRICE,P_CONTENT,m.USER_NO manager_user_no,P_VCOUNT,NICKNAME,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,
+		case when P_PDATE-sysdate <![CDATA[<=]]> 0.5 then '긴급' 
+		end emergency,g.LOC_ID loc_id
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO join LOCATION l on l.LOC_ID = g.LOC_ID join PICKLIST pl on pl.P_ID = p.P_ID
+		where pl.PICK_NO=#{pick_no}
+		
+	</select>
 </mapper>

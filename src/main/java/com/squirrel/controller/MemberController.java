@@ -23,7 +23,7 @@ public class MemberController {
 	@Autowired
 	MemberService service;
 
-	@RequestMapping("/memberAdd")
+	@RequestMapping(value="/memberAdd")
 	public String memberAdd(MemberDTO mDTO, HttpSession session) {
 
 		String gender = mDTO.getGender();
@@ -47,7 +47,7 @@ public class MemberController {
 		return destination;
 	}
 	
-	@RequestMapping("/multiCheck")
+	@RequestMapping(value="/multiCheck")
 	@ResponseBody
 	public int multiCheck(@RequestParam HashMap<String, String> map) {
 		
@@ -59,30 +59,47 @@ public class MemberController {
 	@RequestMapping(value="/member/login", method=RequestMethod.POST)
 	public String login(@RequestParam HashMap<String, String> map, HttpSession session) {
 		
-		MemberDTO mDTO = service.login(map);
-		String  destination = null;		
+		MemberDTO mDTO = service.login(map);	
+		String destination = null;
 		
-		if( mDTO == null){
-			destination = "redirect:member/loginForm";
-		}else {
-			session.setAttribute("login", mDTO);
-			destination = "redirect:/";
-		}
+			if( mDTO == null ) {
+				destination = "redirect:member/loginForm";
+			}else {
+				session.setAttribute("login", mDTO);
+				destination = "redirect:/";
+			}
+				
 		
 		return destination;
 	}
-/*	String phone_id = request.getParameter("phoneid");
-	String userpw = request.getParameter("password");
-	String nickname = request.getParameter("nickname");
-	String email = request.getParameter("email");
 	
-	MemberService service = new MemberService();
-	HashMap<String, String> map = new HashMap<String, String>();
-	map.put("phone_id", phone_id);
-	map.put("userpw", userpw);	
-	map.put("nickname", nickname);
-	map.put("email", email);		
-	int confirm = service.multiCheck(map);	
-	response.getWriter().print(confirm);;*/
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:/";
+	}
 	
+	@RequestMapping(value="/myPage")
+	public String myPage(HttpSession session) {
+		
+		MemberDTO mDTO = (MemberDTO)session.getAttribute("login");
+		System.out.println(mDTO);
+		mDTO = service.myPage(mDTO.getUser_no());
+		session.setAttribute("login", mDTO);
+		
+		return "member/myPage";
+	}
+	
+	@RequestMapping(value="/myPageUpdate")
+	public String myPageUpdate(HttpSession session, MemberDTO mDTO) {
+		
+		service.myPageUpdate(mDTO);
+		
+		mDTO = service.myPage(mDTO.getUser_no());
+		session.setAttribute("login", mDTO);
+		
+		return "redirect:/myPage";
+	}
 }
