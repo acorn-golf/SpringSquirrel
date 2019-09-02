@@ -25,9 +25,9 @@ public class MemberService {
 		return dao.login(map);
 	}
 
-	public MemberDTO myPage(String nickname) {
+	public MemberDTO myPage(int user_no) {
 
-		return dao.myPage(nickname);
+		return dao.myPage(user_no);
 	}
 
 	public int myPageUpdate(MemberDTO dto) {
@@ -76,7 +76,7 @@ public class MemberService {
 		return dao.getPhoneUser(phone_id);
 
 	}
-	
+
 	public MemberDTO kakaoLogin(String string) {
 
 		return dao.kakaoLogin(string);

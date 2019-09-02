@@ -97,7 +97,9 @@ START MODULE AREA 2: Menu 1
         <rect y="12" width="30" height="6" />
       </svg>
 				<ul class="AP_Menu_List">
+
 					<c:import var="menuInfo" url="/mainMenuXml" charEncoding="UTF-8" />
+
 					<x:parse xml="${menuInfo}" var="output" />
 
 					<x:forEach select="$output//Menu" var='Menu'>

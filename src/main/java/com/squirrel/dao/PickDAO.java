@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;
+import com.squirrel.dto.view.IsOrderListDTO;
 import com.squirrel.dto.view.PickListviewDTO;
+import com.squirrel.dto.view.PickOrderListDTO;
 import com.squirrel.dto.view.ProductListDTO;
 
 @Repository
@@ -43,9 +45,14 @@ public class PickDAO {
 		return pdto;
 	}
 
-	public int deletePick( List<String> list) {
+	public int deletePick( List<Integer> list) {
 		return template.delete("PickListMapper.deletePick", list);
 		
+	}
+
+	public PickOrderListDTO selectPickofNo(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return template.selectOne("PickListMapper.selectPickofNo", map);
 	}
 
 }

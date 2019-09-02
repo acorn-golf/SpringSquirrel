@@ -3,7 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script type="text/javascript" src="/teamSquirrel/jquery-3.4.1.js"></script>
+<c:if test="${pickMesg != null|| not mesg eq ''}">
+<script type="text/javascript">
+alert('${pickMesg}');
+</script>
+</c:if>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
 		// 전체선택
@@ -27,23 +34,27 @@
 				event.preventDefault();
 				alert('하나 이상 체크해라');
 			}else{
-				$("form[name='deletePick']").attr({"action":"DeletePickServlet","method":"post"});
+				$("form[name='myForm']").attr({"action":"deletePick","method":"post"});
 			}
 		});
 		
-		$(".order").on("click",function(){
-			var p_id = $(this).nextAll("input[name='p_id']").val();
-			var g_amount = $(this).nextAll("input[name='g_amount']").val();
-			location.href="IsOrderServlet?p_id="+p_id+"&g_amount="+g_amount;
-			//$("form[name='order']").attr({"action":"IsOrderServlet","method":"post"})
-			console.log($(this).nextAll("input[name='p_id']").val());
-			console.log($(this).nextAll("input[name='g_amount']").val());
+		
+		$(".order").on("click",function(event){
+			
+			var pick_no = $(this).attr("data-pick_no");
+			$("#pick_no"+pick_no).attr("checked","checked");
+			console.log(pick_no);
+			console.log($("#pick_no"+pick_no).val());
+			$("form[name='myForm']").attr({"action":"orderConfirm","method":"get"});
 		});
+		
+		//$(this).attr("data-pick_no")
+		
 		
 	});
 </script>
 <h3 style="margin-left:200px">장바구니</h3>
-<form name="deletePick" class="form_main">
+<form name="myForm" class="form_main">
 	<table class="line_table">
 		<tr>
 			<td class="line_td"><input type="checkbox" id="chkall"><font size="2">전체선택</font></td>
@@ -60,7 +71,7 @@
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="pList" items="${pickList}">
-					<input type="hidden" name="pick_no" value="${pList.pick_no}">
+					
 					<tr>
 						<td class="line_td"><input type="checkbox" name="check" class="check"
 							value="${pList.pick_no}" id="check${pList.pick_no}"></td>
@@ -89,10 +100,10 @@
 								test="${pList.emergency eq '긴급'}">
 								<b style="color: red">[${pList.emergency}]</b>
 							</c:if></td>
-						<td class="orderVal" style="border-bottom: 1px solid #444444;"><input type="button" value="구매하기"
-							class="order"> <input type="hidden" name="p_id"
-							value="${pList.p_id}"> <input type="hidden"
-							name="g_amount" value="${pList.pick_amount}"></td>
+						<td class="orderVal" style="border-bottom: 1px solid #444444">
+							<button class="order" data-pick_no="${pList.pick_no}">구매하기</button>
+							<input type="checkbox" hidden="true" id="pick_no${pList.pick_no}" name="pick_no" value="${pList.pick_no}">
+						</td>
 					</tr>
 				</c:forEach>
 
@@ -131,4 +142,3 @@
 	</table>
 	<button id="delete">삭제</button>
 </form>
-

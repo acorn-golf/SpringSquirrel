@@ -1,5 +1,6 @@
 package com.squirrel.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
+import com.squirrel.dto.PickListDTO;
 import com.squirrel.dto.view.PickListviewDTO;
 import com.squirrel.service.PickService;
 
@@ -29,7 +32,7 @@ public class PickListController {
 		System.out.println("호출됬니?");
 		int user_no = 3; // 확인을 위한 임시pk
 		boolean ReSearchChk = false;
-		int curPage; // 현재페이지
+		int curPage; 
 		{
 			String curPageStr = map.get("curPage");
 			if (curPageStr == null) {
@@ -50,7 +53,7 @@ public class PickListController {
 			totalPage++;
 		}
 
-		int showBlock = 5; // 보여줄 페이지 1,2,3,4,5 // 6,7,8,9,10
+		int showBlock = 5; //보여질 페이지번호 수  1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
 		if (curPage == totalPage || totalPage < minBlock+showBlock) {
@@ -78,10 +81,35 @@ public class PickListController {
 		return mav;
 	}
 	
-//	@RequestMapping(value = "/insertPickList")
-//	public String insertPickList() {
-//		
-//	}
+	// 한뉘야 상품 자세히보기에서 장바구니담을 때 여기다가 보내면됨
+	@RequestMapping(value = "/insertPickList")
+	public String insertPickList(@RequestParam Map<String, String> map, HttpSession session, RedirectAttributes data) {
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+		PickListDTO dto = new PickListDTO();
+		dto.setP_id(map.get("p_id"));
+		dto.setPick_amount(Integer.parseInt(map.get("g_amount")));
+		dto.setUser_no(user_no);
+		int n = pickService.insertPick(dto);
+		String mesg = "장바구니에 추가하였습니다";
+		if(n==0) {
+			mesg = "장바구니에 담지 못했습니다";
+		}
+		data.addFlashAttribute("pickMesg", mesg);
+		return "redirect:/pickListView"; // 원래 있었던 상품 자세히 보기로 보내고 메시지 날려야하는 데 임시로 장바구니 리스트로보냄
+	}
+	
+	@RequestMapping(value = "deletePick")
+	public String deletePick(@RequestParam("check") List<Integer> list, RedirectAttributes data) {
+		int n = pickService.deletePick(list);
+		String mesg = "삭제되었습니다";
+		if(n==0) {
+			mesg = "삭제실패";
+		}
+		data.addFlashAttribute("pickMesg", mesg);
+		return "redirect:/pickListView";
+	}
+	
 	
 }
 
