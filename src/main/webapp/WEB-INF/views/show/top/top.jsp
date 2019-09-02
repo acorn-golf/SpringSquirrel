@@ -13,10 +13,8 @@
 <title>golf-hi</title>
 
 
-<link rel="stylesheet" type="text/css"
-	href="/golfhi/css/style.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="/golfhi/css/modules.css" />
+<link rel="stylesheet" type="text/css" href="/golfhi/css/style.min.css" />
+<link rel="stylesheet" type="text/css" href="/golfhi/css/modules.css" />
 
 <!-- Canonical URL usage -->
 <link rel="canonical" href="https://aperitif.io/">
@@ -100,28 +98,7 @@ START MODULE AREA 2: Menu 1
       </svg>
 				<ul class="AP_Menu_List">
 
-					<!-- 반복 준비    -->
-
-					<c:choose>
-						<c:when test="${empty login}">
-							<c:import var="menuInfo" url="/xml/mainNot_login.xml"
-								charEncoding="UTF-8" />
-						</c:when>
-						<c:when test="${login.rating eq'U'}">
-							<c:import var="menuInfo" url="/xml/mainRatingUser.xml"
-								charEncoding="UTF-8" />
-						</c:when>
-						<c:when test="${login.rating eq'M'}">
-							<c:import var="menuInfo"
-								url="/xml/mainRatingManager.xml" charEncoding="UTF-8" />
-						</c:when>
-						<c:when test="${login.rating eq'A'}">
-							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml"
-								charEncoding="UTF-8" />
-						</c:when>
-					</c:choose>
-					<!-- 로그인한 유저에 따라 보여줄 정보를 다르게 표기. 판단은   여기서 -->
-
+					<c:import var="menuInfo" url="/mainMenuXml" charEncoding="UTF-8" />
 
 					<x:parse xml="${menuInfo}" var="output" />
 
@@ -131,7 +108,6 @@ START MODULE AREA 2: Menu 1
 								select="string($Menu/sub_Menu)" /> <c:if
 								test="${not empty test}">
 								<ul>
-
 									<x:forEach select="$Menu/sub_Menu" var='sub'>
 										<li><a href='<x:out select="url"/>' data-theme="_bgpd"><x:out
 													select="name" /> </a></li>
@@ -148,5 +124,4 @@ START MODULE AREA 2: Menu 1
 END MODULE AREA 2: Menu 1
 -->
 
-	<script type="text/javascript"
-		src="/golfhi/js/index.js"></script>
+	<script type="text/javascript" src="/golfhi/js/index.js"></script>

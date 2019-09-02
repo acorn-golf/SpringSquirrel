@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Menus>
+
+	<Menu> <!-- 구매내역 -->
+		<name>구매내역</name>
+		<url></url>
+
+		<sub_Menu>
+			<name>예약정보</name>
+			<url></url>
+		</sub_Menu>
+
+		<sub_Menu>
+			<name>완료된 구매내역</name>
+			<url></url>
+		</sub_Menu>
+	</Menu>
+
+		<Menu>
+		<name>전체상품</name>
+		<url>/golfhi/productList</url>
+		<sub_Menu>
+			<name>경기</name>
+			<url>/golfhi/productList?loc_id=gg</url>
+		</sub_Menu>
+		<sub_Menu>
+			<name>충청도</name>
+			<url>/golfhi/productList?loc_id=cc</url>
+		</sub_Menu>
+		<sub_Menu>
+			<name>강원도</name>
+			<url>/golfhi/productList?loc_id=gw</url>
+		</sub_Menu>
+		<sub_Menu>
+			<name>경상도</name>
+			<url>/golfhi/productList?loc_id=gs</url>
+		</sub_Menu>
+		<sub_Menu>
+			<name>전라도</name>
+			<url>/golfhi/productList?loc_id=jl</url>
+		</sub_Menu>
+		<sub_Menu>
+			<name>제주도</name>
+			<url>/golfhi/productList?loc_id=jj</url>
+		</sub_Menu>
+	</Menu>
+
+	<Menu> <!-- 관심상품 -->
+		<name>관심상품</name>
+		<url></url>
+	</Menu>
+
+	<Menu> <!-- 평점게시판 -->
+		<name>평점게시판</name>
+		<url>/teamSquirrel/ReviewListServlet</url>
+
+		<sub_Menu>
+			<name>전체 보기</name>
+			<url>/teamSquirrel/ReviewListServlet</url>
+		</sub_Menu>
+
+		<sub_Menu>
+			<name>최신 리뷰 보기</name>
+			<url></url>
+		</sub_Menu>
+
+		<sub_Menu>
+			<name>평점 남기기</name>
+			<url>/teamSquirrel/InsertReviewServlet</url>
+		</sub_Menu>
+
+		<sub_Menu>
+			<name>관심골프장</name>
+			<url></url>
+		</sub_Menu>
+	</Menu>
+
+	<Menu> <!-- 찜목록 -->
+		<name>찜목록</name>
+		<url>/teamSquirrel/PickListViewServlet</url>
+	</Menu>
+
+	<Menu> <!-- 공지사항 -->
+		<name>공지사항</name>
+		<url></url>
+
+		<sub_Menu>
+			<name>전체보기</name>
+			<url></url>
+		</sub_Menu>
+
+		<sub_Menu>
+			<name>공지사항</name>
+			<url></url>
+		</sub_Menu>
+
+		<sub_Menu>
+			<name>이벤트</name>
+			<url></url>
+		</sub_Menu>
+	</Menu>
+	<Menu>
+		<name>로그아웃</name>
+		<url>/member/logout</url>
+	</Menu>
+
+	<Menu>
+		<name>마이페이지</name>
+		<url>/teamSquirrel/MyPageServlet</url>
+	</Menu>
+
+</Menus>
