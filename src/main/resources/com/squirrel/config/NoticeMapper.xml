@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		null,sysdate,0)
 	</insert>
 	
-	<select id="NoteView">
+	<select id="NoteView" resultType="NoticeListDTO">
 	select *
 	from NOTICELIST
 	</select>
