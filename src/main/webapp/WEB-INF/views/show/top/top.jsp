@@ -111,19 +111,19 @@ START MODULE AREA 2: Menu 1
 					%>
 					<c:choose>
 						<c:when test="${empty login}">
-							<c:import var="menuInfo" url="/xml/mainNot_login.xml"
+							<c:import var="menuInfo" url="/xml/mainNot_login.xml?a=a"
 								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'U'}">
-							<c:import var="menuInfo" url="/xml/mainRatingUser.xml"
+							<c:import var="menuInfo" url="/xml/mainRatingUser.xml?a=a"
 								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'M'}">
-							<c:import var="menuInfo" url="/xml/mainRatingManager.xml"
+							<c:import var="menuInfo" url="/xml/mainRatingManager.xml?a=a"
 								charEncoding="UTF-8" />
 						</c:when>
 						<c:when test="${login.rating eq'A'}">
-							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml"
+							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml?a=a"
 								charEncoding="UTF-8" />
 						</c:when>
 					</c:choose>
@@ -131,6 +131,8 @@ START MODULE AREA 2: Menu 1
 
 					<c:import var="aaaa" url="/mainMenuXml"
 						charEncoding="UTF-8" />
+						${aaaa}
+						
 					<x:parse xml="${menuInfo}" var="output" />
 
 					<x:forEach select="$output//Menu" var='Menu'>
