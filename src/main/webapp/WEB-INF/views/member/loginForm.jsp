@@ -13,6 +13,7 @@
 	<hr>
 	<jsp:include page="sub/login.jsp" />
 
+
 	<a id="kakao-login-btn"></a>
 	<a href="http://developers.kakao.com/logout"></a>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -26,17 +27,19 @@
 			success : function(authObj) {
 				$.ajax({
 					type : "post",
-					url : "/teamSquirrel/Oauth",
+					url : "<c:url value="/Oauth/kakao"/>",
 					data : {
 						access_token : authObj.access_token
 					},
 					datatype : "json",
 					success : function(data) {
-						var loginInfo = JSON.parse(data);
 						console.dir(data);
+						console.log(data);
+						var loginInfo = data;
+						
 						if (loginInfo.errer_code == 0) {
 							alert("정상적으로 로그인 되었습니다.");
-							location.href = "/teamSquirrel/main.jsp";
+							location.href = "<c:url value="/"/>";
 						}
 						else //-401일 경우 재발급 진행해야되니 나중에 유의할것.
 							{

@@ -23,34 +23,6 @@ public class CurlUtil {
 
 	private ObjectMapper mapper = new ObjectMapper();
 
-//	public String curlReturnJsonStr(String urlStr, boolean postChk, Map<String, String> parameter,
-//			BiFunction<Integer, Map<String, Object>, Map<String, Object>> resultFun) {
-//		Map<String, Object> result = null;
-//		HttpURLConnection con = null;
-//		try {
-//
-//			if (resultFun != null)
-//				result = curl(urlStr, postChk, parameter, resultFun);
-//			else
-//				result = curl(urlStr, postChk, parameter, (code, returnparameter) -> {
-//					return returnparameter;
-//				});
-//		} catch (IOException e) {
-//
-//			e.printStackTrace();
-//		}
-//
-//		String JsonStr = null;
-//		try {
-//			JsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
-//		} catch (JsonProcessingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return JsonStr;
-//	}
-
 	public CurlUtil() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -65,7 +37,7 @@ public class CurlUtil {
 		int ResponseCode = 0;
 
 		try {
-			con = curl(urlStr, postChk, parameter,harderSet);
+			con = curl(urlStr, postChk, parameter, harderSet);
 			ResponseCode = con.getResponseCode();
 			buffer = connectionStrBuffer(con);
 			result = mapper.readValue(buffer.toString(), requiredType);
@@ -138,13 +110,15 @@ public class CurlUtil {
 			con = (HttpURLConnection) url.openConnection();
 
 			StringBuilder postData = new StringBuilder();
-			for (Map.Entry<String, String> param : parameter.entrySet()) {
-				if (postData.length() != 0)
-					postData.append('&');
-				postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-				postData.append('=');
-				postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-			}
+			
+			if (parameter != null)
+				for (Map.Entry<String, String> param : parameter.entrySet()) {
+					if (postData.length() != 0)
+						postData.append('&');
+					postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+					postData.append('=');
+					postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+				}
 			byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
 			con.setRequestMethod("POST");
@@ -157,25 +131,26 @@ public class CurlUtil {
 
 			boolean firstChk = true;
 
-			for (String parameterName : parameter.keySet()) {
+			if (parameter != null)
+				for (String parameterName : parameter.keySet()) {
 
-				if (firstChk) { // urlBuffer.append("?"); firstChk = !firstChk; } else
-					paramBuffer.append("&");
+					if (firstChk) { // urlBuffer.append("?"); firstChk = !firstChk; } else
+						paramBuffer.append("&");
+					}
+					paramBuffer.append(parameterName);
+					paramBuffer.append("=");
+					paramBuffer.append(parameter.get(parameterName));
+
 				}
-				paramBuffer.append(parameterName);
-				paramBuffer.append("=");
-				paramBuffer.append(parameter.get(parameterName));
-
-			}
-
-			for (String key : harderSet.keySet())
-				con.setRequestProperty(key, harderSet.get(key));
 
 			url = new URL(urlStr + "?" + paramBuffer.toString());
 			con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 		}
 
+		if (harderSet != null)
+			for (String key : harderSet.keySet())
+				con.setRequestProperty(key, harderSet.get(key));
 		// 결과값 출력
 
 		return con;
