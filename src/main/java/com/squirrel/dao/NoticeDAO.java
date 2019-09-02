@@ -1,5 +1,7 @@
 package com.squirrel.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +22,9 @@ public class NoticeDAO {
 
 			return template.insert("NoticeMapper.NoticeInsert", ndto);
 	}
+
+		public List<NoticeListDTO> notelist() {
+			// TODO Auto-generated method stub
+			return template.selectList("NoticeMapper.NoteView");
+		}
 }

@@ -130,5 +130,4 @@
 		<if test="gender != null">#{gender},</if>
 		#{kakao_id})
 	</insert>
-
 </mapper>

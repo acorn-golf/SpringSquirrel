@@ -49,7 +49,7 @@
 	</Menu>
 	<Menu>
 		<name>공지사항</name>
-		<url></url>
+		<url>/golfhi/noteView</url>
 	</Menu>
 </Menus>
 
