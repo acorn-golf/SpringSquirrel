@@ -97,42 +97,7 @@ START MODULE AREA 2: Menu 1
         <rect y="12" width="30" height="6" />
       </svg>
 				<ul class="AP_Menu_List">
-
-					<!-- 반복 준비    -->
-					<%
-						{
-							Object test = session.getAttribute("login");
-							MemberDTO tmpdto = null;
-							if (test != null)
-								tmpdto = (MemberDTO) test;
-							if (tmpdto != null)
-								System.out.print("으아아 좀 : " + tmpdto.getRating());
-						}
-					%>
-					<c:choose>
-						<c:when test="${empty login}">
-							<c:import var="menuInfo" url="/xml/mainNot_login.xml?a=a"
-								charEncoding="UTF-8" />
-						</c:when>
-						<c:when test="${login.rating eq'U'}">
-							<c:import var="menuInfo" url="/xml/mainRatingUser.xml?a=a"
-								charEncoding="UTF-8" />
-						</c:when>
-						<c:when test="${login.rating eq'M'}">
-							<c:import var="menuInfo" url="/xml/mainRatingManager.xml?a=a"
-								charEncoding="UTF-8" />
-						</c:when>
-						<c:when test="${login.rating eq'A'}">
-							<c:import var="menuInfo" url="/xml/mainRatingAdmin.xml?a=a"
-								charEncoding="UTF-8" />
-						</c:when>
-					</c:choose>
-					<!-- 로그인한 유저에 따라 보여줄 정보를 다르게 표기. 판단은   여기서 -->
-
-					<c:import var="aaaa" url="/mainMenuXml"
-						charEncoding="UTF-8" />
-						${aaaa}
-						
+					<c:import var="menuInfo" url="/mainMenuXml" charEncoding="UTF-8" />
 					<x:parse xml="${menuInfo}" var="output" />
 
 					<x:forEach select="$output//Menu" var='Menu'>
@@ -141,7 +106,6 @@ START MODULE AREA 2: Menu 1
 								select="string($Menu/sub_Menu)" /> <c:if
 								test="${not empty test}">
 								<ul>
-
 									<x:forEach select="$Menu/sub_Menu" var='sub'>
 										<li><a href='<x:out select="url"/>' data-theme="_bgpd"><x:out
 													select="name" /> </a></li>
