@@ -19,6 +19,16 @@
 			<name>거래 내역</name>
 			<url></url>
 		</sub_Menu>
+		
+		<sub_Menu>
+			<name>예약정보</name>
+			<url>/golfhi/orderList</url>
+		</sub_Menu>
+		
+		<sub_Menu>
+			<name>완료된 구매내역</name>
+			<url></url>
+		</sub_Menu>
 	</Menu>
 
 	<Menu>
@@ -51,7 +61,7 @@
 	</Menu>
 
 	<Menu> <!-- 관심상품 -->
-		<name>관심상품</name>
+		<name>관심골프장</name>
 		<url></url>
 	</Menu>
 
@@ -70,9 +80,9 @@
 		</sub_Menu>
 	</Menu>
 
-	<Menu> <!-- 찜목록 -->
-		<name>찜목록</name>
-		<url>/teamSquirrel/PickListViewServlet</url>
+	<Menu> <!-- 장바구니 -->
+		<name>장바구니</name>
+		<url>/golfhi/pickListView</url>
 	</Menu>
 
 	<Menu> <!-- 공지사항 -->

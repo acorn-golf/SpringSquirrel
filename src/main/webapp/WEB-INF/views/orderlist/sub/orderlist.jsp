@@ -16,12 +16,15 @@
 		});
 	});
 </script>
-<h3 style="margin-left:200px">주문 상품 확인</h3>
-<form action="AddOrderServlet" method="post" class="form_main">
+
+<form action="addOrder" method="get" class="form_main">
+<h3>주문 상품 확인</h3>
 <input type="hidden" name="p_id" value="${dto.p_id}">
 <c:if test="${pick_no != null}">
 	<input type="hidden" name="pick_no" value="${pick_no}">
 </c:if>
+
+<input type="hidden" name="o_price" value="${amount * dto.p_price}">
 
 <table class="line_table">
 	<tr>

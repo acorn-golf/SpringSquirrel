@@ -47,4 +47,11 @@ public class OrderListDAO {
 		return pdto;
 	}
 
+	public int deletePickList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return template.delete("PickListMapper.deletePickList", map);
+	}
+
+	
+
 }

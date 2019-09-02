@@ -53,12 +53,14 @@ alert('${pickMesg}');
 		
 	});
 </script>
-<h3 style="margin-left:200px">장바구니</h3>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
 <form name="myForm" class="form_main">
+<h3>장바구니</h3>
 	<table class="line_table">
 		<tr>
 			<td class="line_td"><input type="checkbox" id="chkall"><font size="2">전체선택</font></td>
-			<th colspan="2" class="line_th">골프장</th>
+			<th colspan="2" class="line_th" align="center">골프장</th>
 			<th class="line_th">티업시간</th>
 			<th class="line_th">그린피</th>
 			<th class="line_th">구매</th>
@@ -109,31 +111,33 @@ alert('${pickMesg}');
 
 				<tr>
 					<td colspan="6" align="center">
+					<ul class="pagination justify-content-center" style="margin-top:10px">
 					<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
 					<c:set var="maxBlock" value="${maxBlock}" /> 
 					<c:set var="minBlock" value="${minBlock+1}" /> 
 					<c:if test="${curPage != 1}">
-							<a href="pickListView?curPage=1">◀◀</a>&nbsp;&nbsp;
+							<li class="page-item"><a class="page-link" href="pickListView?curPage=1"><<</a></li>
 							<c:if test="${curPage>showBlock}">
-								<a href="pickListView?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
+								<li class="page-item"><a class="page-link" href="pickListView?curPage=${minBlock-1}"><</a></li>
 							</c:if>
-					</c:if> &nbsp;&nbsp; 
+					</c:if>
 					<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
 							<c:choose>
 								<c:when test="${curPage eq i}">
-									<span style="color: red">${i}</span>
+									<li class="page-item disabled"><a class="page-link" href="pickListView?curPage=${i}">${i}</a></li>
 								</c:when>
 								<c:when test="${curPage != i}">
-									<a href="pickListView?curPage=${i}">${i}</a>&nbsp;
+									<li class="page-item"><a class="page-link" href="pickListView?curPage=${i}">${i}</a></li>
 								</c:when>
 							</c:choose>
-					</c:forEach>&nbsp;&nbsp; 
+					</c:forEach>
 					<c:if test="${curPage != totalPage}">
 							<c:if test="${curPage<=showBlock*perBlock}">
 								<a href="pickListView?curPage=${maxBlock+1}">▷</a>
 							</c:if>
 								<a href="pickListView?curPage=${totalPage}">▶▶</a>
 							</c:if>
+					</ul>
 					</td>
 				</tr>
 			</c:otherwise>

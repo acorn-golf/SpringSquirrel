@@ -19,7 +19,7 @@
 		
 	});
 </script>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <form action="productList" method="post" style="margin-left:200px">
 <%System.out.print(request.getRequestURI());  %>
 	<div style="margin-left: 200px">
@@ -87,31 +87,33 @@
 
 				<tr>
 					<td colspan="4" align="center" style="border-bottom: 1px solid #444444">
+						<ul class="pagination justify-content-center" style="margin-top:10px">
 						<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
 						<c:set var="maxBlock" value="${maxBlock}" />
 						<c:set var="minBlock" value="${minBlock+1}" /> 
 						<c:if test="${curPage != 1}">
-							<a href="productList?curPage=1">◀◀</a>&nbsp;&nbsp;
+							<li class="page-item"><a class="page-link" href="productList?curPage=1"><<</a></li>
 								<c:if test="${curPage>showBlock}">
-									<a href="productList?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
+									<li class="page-item"><a class="page-link" href="productList?curPage=${minBlock-1}"><</a></li>
 								</c:if>
-						</c:if> &nbsp;&nbsp; 
+						</c:if>
 						<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
 							<c:choose>
 								<c:when test="${curPage eq i}">
-									<span style="color: red">${i}</span>
+									<li class="page-item disabled"><a class="page-link" href="productList?curPage=${i}">${i}</a></li>
 								</c:when>
 								<c:when test="${curPage != i}">
-									<a href="productList?curPage=${i}">${i}</a>&nbsp;
+									<li class="page-item"><a class="page-link" href="productList?curPage=${i}">${i}</a></li>
 								</c:when>
 							</c:choose>
-						</c:forEach>&nbsp;&nbsp; 
+						</c:forEach>
 						<c:if test="${curPage != totalPage}">
 							<c:if test="${curPage<=showBlock*perBlock}">
-								<a href="productList?curPage=${maxBlock+1}">▷</a>
+								<li class="page-item"><a class="page-link" href="productList?curPage=${maxBlock+1}">></a></li>
 							</c:if>
-							<a href="productList?curPage=${totalPage}">▶▶</a>
+							<li class="page-item"><a class="page-link" href="productList?curPage=${totalPage}">>></a></li>
 						</c:if>
+						</ul>
 					</td>
 				</tr>
 			</c:otherwise>

@@ -32,6 +32,7 @@
 		});
 		$("#gomain").on("click", function() {
 			location.href = "/golfhi/";
+			//$("form").attr("action","/golfhi/");
 		});
 		
 		
@@ -141,7 +142,7 @@
 	</table>
 
 	<br> <input type="button" value="메인으로" id="gomain">&nbsp;
-	<input type="submit" value="등록">
+	<button>등록</button>
 	<!-- 이전버튼 누를 시 전화면으로 돌아간다->자바스크립트로 찝어서 해당갈 곳으로 src 해주면 될듯 -->
 	<!-- USER_NO는 form에서 보낼 때 해당 서블릿에서 세션으로 받을것 -->
 	<!-- p_id - 시퀀스자동넘버링

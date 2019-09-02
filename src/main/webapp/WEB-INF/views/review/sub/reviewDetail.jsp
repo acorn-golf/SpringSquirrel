@@ -48,7 +48,7 @@
 					console.log(status);
 				}
 			});
-			location.href = "ReviewDetailServlet?score_no=" + $
+			location.href = "reviewDetail?score_no=" + $
 			{
 				reviewdetail.score_no
 			}
@@ -92,7 +92,7 @@
 						console.log(status);
 					}
 				});
-				location.href="ReviewDetailServlet?score_no="+${reviewdetail.score_no}+"&user_no="+${reviewdetail.user_no};
+				location.href="reviewDetail?score_no="+${reviewdetail.score_no}+"&user_no="+${reviewdetail.user_no};
 			});
 			$("#cancel"+re_no).on("click",function(){
 				var re_no = $(this).parent().children("input[type='hidden']").val();
@@ -129,7 +129,7 @@
 						console.log(status);
 					}
 				});
-				location.href="ReviewDetailServlet?score_no="+${reviewdetail.score_no}+"&user_no="+${reviewdetail.user_no};
+				location.href="reviewDetail?score_no="+${reviewdetail.score_no}+"&user_no="+${reviewdetail.user_no};
 		 });
 	}
 </script>

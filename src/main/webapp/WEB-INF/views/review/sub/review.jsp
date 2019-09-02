@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script type="text/javascript" src="/teamSquirrel/jquery-3.4.1.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#insertReview").on("click", function() {
@@ -14,7 +15,7 @@
 		});
 		/* $(".radio").on("click",function(){
 			$(".radio").each(function(idx,ele){
-				//location.href="ReviewListServlet?orderby="+$(ele).val();
+				//location.href="reviewList?orderby="+$(ele).val();
 				var ${orderby} = String.valueOf(${orderby});
 				if($(ele).val()==${orderby}){
 					console.log("hi");
@@ -24,7 +25,7 @@
 	});
 </script>
 
-<form name="ReviewListForm" action="ReviewListServlet" method="post">
+<form name="ReviewListForm" action="reviewList" method="get">
 	<input type="hidden" name="cc_id" value="${cc_id}">
 	<!-- 후기글쓰기 할 때 갖고갈 파라미터 -->
 
@@ -58,7 +59,7 @@
 						<td class="line_td">${dto.cc_name}</td>
 						<td class="line_td">${dto.score}</td>
 						<td class="line_td"><a
-							href="ReviewDetailServlet?score_no=${dto.score_no}&user_no=${dto.user_no}">${dto.rv_title}</a></td>
+							href="reviewDetail?score_no=${dto.score_no}&user_no=${dto.user_no}">${dto.rv_title}</a></td>
 						<td class="line_td">${dto.nickname}</td>
 						<td class="line_td">${dto.score_date}</td>
 					</tr>
@@ -71,9 +72,9 @@
 					<c:set var="maxBlock" value="${maxBlock}" /> 
 					<c:set var="minBlock" value="${minBlock+1}" /> 
 					<c:if test="${curPage != 1}">
-							<a href="ReviewListServlet?curPage=1">◀◀</a>&nbsp;&nbsp;
+							<a href="reviewList?curPage=1">◀◀</a>&nbsp;&nbsp;
 							<c:if test="${curPage>showBlock}">
-								<a href="ReviewListServlet?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
+								<a href="reviewList?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
 							</c:if>
 					</c:if> &nbsp;&nbsp; 
 					<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
@@ -82,16 +83,16 @@
 									<span style="color: red">${i}</span>
 								</c:when>
 								<c:when test="${curPage != i}">
-									<a href="ReviewListServlet?curPage=${i}">${i}</a>&nbsp;
+									<a href="reviewList?curPage=${i}">${i}</a>&nbsp;
 								</c:when>
 							</c:choose>
 					</c:forEach>&nbsp;
 					<c:set var="i" value="${Math.floor(totalPage/showBlock)}" />
 						<c:if test="${curPage != totalPage}">
 							<c:if test="${curPage<=showBlock*perBlock}">
-								<a href="ReviewListServlet?curPage=${maxBlock+1}">▷</a>
+								<a href="reviewList?curPage=${maxBlock+1}">▷</a>
 							</c:if>
-							<a href="ReviewListServlet?curPage=${totalPage}">▶▶</a>
+							<a href="reviewList?curPage=${totalPage}">▶▶</a>
 						</c:if>
 					</td>
 				</tr>

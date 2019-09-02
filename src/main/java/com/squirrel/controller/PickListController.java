@@ -27,9 +27,9 @@ public class PickListController {
 	
 	@RequestMapping(value = "/pickListView")
 	public ModelAndView pickListView(@RequestParam Map<String, String> map, HttpSession session) {
-//		MemberDTO user = (MemberDTO)session.getAttribute("login");
-//		int user_no = user.getUser_no();
-		int user_no = 3; // 확인을 위한 임시pk
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+		//int user_no = 3; // 확인을 위한 임시pk
 		boolean ReSearchChk = false;
 		int curPage; 
 		{
@@ -85,6 +85,7 @@ public class PickListController {
 	public String insertPickList(@RequestParam Map<String, String> map, HttpSession session, RedirectAttributes data) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();
+		//int user_no = 3; // 확인을 위한 임시pk
 		PickListDTO dto = new PickListDTO();
 		dto.setP_id(map.get("p_id"));
 		dto.setPick_amount(Integer.parseInt(map.get("g_amount")));

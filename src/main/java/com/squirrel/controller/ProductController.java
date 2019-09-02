@@ -69,8 +69,8 @@ public class ProductController {
 	@RequestMapping(value = "/productInsert")
 	public String productInsert(ProductDTO dto, HttpSession session) { 
 		MemberDTO mDTO = (MemberDTO) session.getAttribute("login");
-		// dto.setUser_no(mDTO.getUser_no());
-		dto.setUser_no(3); // 임시 확인을 위함
+		dto.setUser_no(mDTO.getUser_no());
+		//dto.setUser_no(3); // 임시 확인을 위함
 		dto.setP_pdate(dto.getP_pdate().replace('T', '/'));
 		if (dto.getP_babyn() == null) {
 			dto.setP_babyn("N");
