@@ -9,8 +9,8 @@
 <body>
 <%-- <jsp:include page="common/top.jsp" flush="true" /><br>
 <jsp:include page="common/menu.jsp" flush="true" /> --%>
-<jsp:include page="../show/main.jsp"/>
-<hr>
+<jsp:include page="../show/main.jsp" flush="false"/>
+
 <jsp:include page="sub/insertReviewForm.jsp" flush="true" />
 </body>
 </html>

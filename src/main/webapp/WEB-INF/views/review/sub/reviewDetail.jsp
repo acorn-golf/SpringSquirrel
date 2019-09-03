@@ -2,8 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<script type="text/javascript" src="/teamSquirrel/jquery-3.4.1.js"></script>
+<c:if test="${message != null}">
+<script>alert('${message}');</script>
+</c:if>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
 
@@ -15,24 +18,24 @@
 		
 		$("#updateReviewDeatil").on("click", function() {
 			$("form").attr({
-				"action" : "UpdateReviewformServlet",
+				"action" : "updateReviewform",
 				"method" : "post"
 			});
 		});
 		$("#deleteReviewDeatil").on("click", function() {
 			$("form").attr({
-				"action" : "DeleteReviewDeatilServlet",
+				"action" : "deleteReviewDeatil",
 				"method" : "post"
 			});
 		});
 		$("#ReviewList").on("click", function() {
-			location.href = "ReviewListServlet";
+			location.href = "reviewList";
 		});
 
 		$("#insert").on("click", function() {
 			$.ajax({
 				type : "post",
-				url : "InsertCommentServlet",
+				url : "insertComment",
 				data : {
 					score_no : $("#score_no").val(),
 					user_no : $("#login_user_no").val(),
@@ -78,7 +81,7 @@
 				console.log($("input[name='content"+re_no+"']").val());
 				$.ajax({
 					type:"post",
-					url:"UpdateCommentServlet",
+					url:"updateComment",
 					data:{
 						re_no : $(this).parent().children("input[type='hidden']").val(),
 						re_content : $("input[name='content"+re_no+"']").val()
@@ -116,7 +119,7 @@
 			 console.log(re_no);
 			 $.ajax({
 					type:"post",
-					url:"DeleteCommentServlet",
+					url:"deleteComment",
 					data:{
 						re_no : $(this).parent().children("input[type='hidden']").val()
 					},
@@ -135,32 +138,33 @@
 </script>
 
 <%-- ${user_no eq sessionScope.login.user_no} --%>
-<form>
+<form class="form_main">
+<h3>게시글</h3>
 	<input type="hidden" name="score_no" value="${reviewdetail.score_no}"
 		id="score_no"> <input type="hidden" name="login_user_no"
 		value="${login.user_no}" id="login_user_no"> <input
 		type="hidden" name="review_user_no" value="${reviewdetail.user_no}"
 		id="review_user_no">
-	<table border="1">
+	<table class="line_table">
 		<tr>
-			<th>작성자</th>
-			<td>${nickname}</td>
-			<th>평점</th>
-			<td>${reviewdetail.score}</td>
+			<th class="line_th">작성자</th>
+			<td class="line_td">${nickname}</td>
+			<th class="line_th">평점</th>
+			<td class="line_td">${reviewdetail.score}</td>
 		</tr>
 		<tr>
-			<th>작성일</th>
-			<td>${reviewdetail.score_date}</td>
-			<th>조회수</th>
-			<td>${reviewdetail.rv_vcount}</td>
+			<th class="line_th">작성일</th>
+			<td class="line_td">${reviewdetail.score_date}</td>
+			<th class="line_th">조회수</th>
+			<td class="line_td">${reviewdetail.rv_vcount}</td>
 		</tr>
 		<tr>
-			<th>제목</th>
-			<td colspan="3">${reviewdetail.rv_title}</td>
+			<th class="line_th">제목</th>
+			<td colspan="3" class="line_td">${reviewdetail.rv_title}</td>
 		</tr>
 		<tr>
-			<th>내용</th>
-			<td colspan="3">${reviewdetail.rv_content}</td>
+			<th class="line_th">내용</th>
+			<td colspan="3" class="line_td">${reviewdetail.rv_content}</td>
 		</tr>
 	</table>
 	<c:choose>
@@ -174,26 +178,29 @@
 	<input type="button" value="목록" id="ReviewList"> <br> <br>
 	<!-- 댓글등록 -->
 	<table>
-		<tr>
-			<td>댓글<textarea name="re_content" cols="30" rows="2"
-					id="re_content"></textarea>
-				<button id="insert">등록</button></td>
+		<tr style="background-color: #CCFFCC">
+			<td>댓글</td>
+			<td><textarea name="re_content" cols="30" rows="1" style="height: 30px"
+					id="re_content"></textarea></td>
+			<td align="left"><button id="insert">등록</button></td>
 		</tr>
 	</table>
 </form>
 <!-- 댓글보기 -->
-<form action="#" method="post" name="dmlForm">
-<table id="recommentTable">
+<form action="#" method="post" name="dmlForm" class="form_main">
+<table id="recommentTable" class="line_table">
 
 	<c:forEach var="rlist" items="${recommentList}">
 		
-		<tr>
-			<td>${rlist.re_date}</td>
-			<td><div class="user_content" id="content${rlist.re_no}">${rlist.re_content}</div></td>
-			<td>${rlist.nickname}</td>
+		<tr style="background-color: #CCFFCC">
+			<td class="line_td">
+				<font>작성자 : <b>${rlist.nickname}</b></font><br>
+				<font size="2" color="#4374D9">작성일 : ${rlist.re_date}</font>
+			</td>
+			<td class="line_td"><div class="user_content" id="content${rlist.re_no}">${rlist.re_content}</div></td>
 			<c:if test="${rlist.user_no == login.user_no || login.rating eq 'A'}">
 
-				<td><div class="upordel" id="upordel${rlist.re_no}">
+				<td class="line_td"><div class="upordel" id="upordel${rlist.re_no}">
 						<input type="button" class="update" value="수정">
 						<input type="button" class="delete" value="삭제">
 						<input type="hidden" name="hidden_re_no" value="${rlist.re_no}"
