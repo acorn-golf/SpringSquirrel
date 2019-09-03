@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Page</title>
+<title>Admin Page</title>
 </head>
 <body>
 <jsp:include page="../show/main.jsp"/>
