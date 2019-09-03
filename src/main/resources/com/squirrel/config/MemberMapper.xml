@@ -51,12 +51,13 @@
 	</select>
 	<select id="adminMemberSelect" resultType="MemberDTO"
 		parameterType="HashMap">
-		<![CDATA[
+		
 		select user_no,phone_id,userpw,username,nickname,userssn,gender,
 		rating,to_char(rstartdate,'yyyy/MM/dd') rstartdate, to_char(renddate,'yyyy/MM/dd') renddate,
 		email,email_chk	from (select * from 
-		( select rownum rnum, m.* from memberList m) where rnum <= #{end} ) where rnum >= #{start}  	
-		]]>
+		( select rownum rnum, m.* from memberList m)
+		<![CDATA[ where rnum <= #{end} ) where rnum >= #{start} ]]> 	
+		
 		<if test="member != null">
 			and ${member} like '%'||#{adminSearch}||'%'
 		</if>

@@ -6,8 +6,8 @@
 
 <form method="get" class="form_main">
 <table class="line_table">
-<c:if test="${adminSelect eq 'member' || adminSelect eq 'none'}">
-<c:forEach var="member" items="${list}" varStatus="status">
+<c:if test="${adminSelect eq 'member'}">
+<c:forEach var="member" items="${mList}" varStatus="status">
 <c:if test="${status.first}">
 <tr>
 <th class="line_th">아이디</th>
@@ -84,12 +84,9 @@
 						<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${i}">${i}</a>&nbsp;
 					</c:when>
 				</c:choose>	
-		</c:forEach>
-			
+		</c:forEach>			
 				<c:if test="${endPage != curPage && lastPage != endPage && startPage != endPage}">		
 				<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${lastPage+1}">▷</a>&nbsp;&nbsp;</c:if>
-				<%-- test="${endPage == lastPage || curPage < endPage}">
-				<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${startPage+lastPage-1}">▷</a> --%>
 				<c:if test="${curPage != endPage && curPage != 0}">	<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${endPage}">▶▶</a></c:if>
 </tr>
 </c:if>
