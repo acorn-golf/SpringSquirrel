@@ -69,6 +69,12 @@ public class ReCommentDTO {
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
+
+	@Override
+	public String toString() {
+		return "ReCommentDTO [re_no=" + re_no + ", re_date=" + re_date + ", re_content=" + re_content + ", score_no="
+				+ score_no + ", user_no=" + user_no + "]";
+	}
 	
 	
 	

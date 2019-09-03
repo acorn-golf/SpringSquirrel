@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.annotation.Loginchk;
+import com.annotation.Loginchk.Role;
 import com.squirrel.dto.CcScoreDTO;
 import com.squirrel.dto.LocationDTO;
 import com.squirrel.dto.MemberDTO;
@@ -39,7 +41,7 @@ public class ReviewController {
 	@Autowired
 	ReCommentService recService;
 
-	@RequestMapping(value = "/insertReviewForm") // 리뷰 보여주는 폼
+	@RequestMapping(value = "/insertReviewForm") // 리뷰등록 보여주는 폼
 	public ModelAndView insertReviewForm() {
 		List<LocationDTO> list = locService.locationList();
 		ModelAndView mav = new ModelAndView();
@@ -156,10 +158,11 @@ public class ReviewController {
 	}
 
 	@RequestMapping(value = "/reviewDetail") // 리뷰게시판 게시글 자세히 보기
+	@Loginchk(role = Role.USER)
 	public ModelAndView reviewDetail(@RequestParam HashMap<String, String> map, HttpServletRequest request,
 			HttpServletResponse response) {
 		//String score_no = map.get("score_no");
-		String score_no = "140"; // test용 임시 score_no
+		String score_no = "160"; // test용 임시 score_no
 		//String user_no = map.get("user_no");
 //		if (score_no == null && user_no == null) {
 //
@@ -196,7 +199,7 @@ public class ReviewController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/updateReviewform") // 리뷰게시판에서의 수정 폼
+	@RequestMapping(value = "/updateReviewform") // 리뷰게시판에서의 게시글 수정 폼
 	public ModelAndView updateReviewform(@RequestParam("score_no") int score_no) {
 				
 		CcScoreDTO cdto = revService.selectDetail(score_no);
@@ -208,6 +211,23 @@ public class ReviewController {
 		mav.addObject("nickname", nickname);
 		mav.setViewName("review/updateReviewform");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/updateReviewDetail") // 게시글 수정
+	public String updateReviewDetail(CcScoreDTO cdto, RedirectAttributes ra) {
+		int n = revService.updateReview(cdto);
+		String message = "수정되었습니다";
+		if(n==0) {
+			message = "수정 실패";
+		}
+		ra.addFlashAttribute("message", message);
+		return "redirect:/reviewDetail";
+	}
+	
+	@RequestMapping(value = "/deleteReviewDeatil") // 게시글 삭제
+	public String deleteReviewDeatil(@RequestParam("score_no") int score_no) {
+		int n = revService.deleteReview(score_no);
+		return "redirect:/reviewList";
 	}
 
 }
