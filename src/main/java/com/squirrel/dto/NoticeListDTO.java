@@ -23,7 +23,29 @@ public class NoticeListDTO {
 	private String note_division;
 	private String note_file;
 	private int note_vcount;
+	private String nickname;
 	
+	
+	
+
+
+
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	@Override
+	public String toString() {
+		return "NoticeListDTO [note_content=" + note_content + ", note_no=" + note_no + ", note_title=" + note_title
+				+ ", user_no=" + user_no + ", notedate=" + notedate + ", note_division=" + note_division
+				+ ", note_file=" + note_file + ", note_vcount=" + note_vcount + ", nickname=" + nickname + "]";
+	}
+
 	public NoticeListDTO() {
 		super();
 		// TODO Auto-generated constructor stub

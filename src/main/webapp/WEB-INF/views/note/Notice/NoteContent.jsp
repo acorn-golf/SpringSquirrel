@@ -15,20 +15,13 @@
 		<tr>
 		    <th>글번호</th>
 			<th>작성자</th>
-			<th>제목</th>
-			<th>날짜</th>
+			<th>내용</th>
 		</tr>
-		<c:forEach items="${NoteView}" var="note">
+		<c:forEach items="${NoteContent}" var="note">
 			<tr>
 			    <td>${note.note_no}</td>
 				<td>${note.nickname}</td>
-				<td><a
-					href="
-					<c:url value="NoteContent">
-						<c:param name="note_no" value="${note.note_no}"/>
-					</c:url>"
-				>${note.note_title}</a></td>
-				<td>${note.notedate}</td>
+				<td>${note.note_content}</td>
 			</tr>
 		</c:forEach>
 
