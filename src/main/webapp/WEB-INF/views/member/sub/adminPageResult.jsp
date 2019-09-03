@@ -7,7 +7,7 @@
 <form method="get" class="form_main">
 <table class="line_table">
 <c:if test="${adminSelect eq 'member'}">
-<c:forEach var="member" items="${mList}" varStatus="status">
+<c:forEach var="mList" items="${mList}" varStatus="status">
 <c:if test="${status.first}">
 <tr>
 <th class="line_th">아이디</th>
@@ -18,13 +18,13 @@
 </tr>
 </c:if>
 <tr>
-<td class="line_td" ><a href="/teamSquirrel/AdminModifiedUIServlet?phoneid=${member.phone_id}">${member.phone_id}</a></td>
-<td class="line_td" style="background-color: lightblue">${member.username}</td>
-<td class="line_td" style="background-color: lightgreen">${member.nickname}</td>
+<td class="line_td" ><a href="/golfhi/adminModified?phoneid=${mList.phone_id}">${mList.phone_id}</a></td>
+<td class="line_td" style="background-color: lightblue">${mList.username}</td>
+<td class="line_td" style="background-color: lightgreen">${mList.nickname}</td>
 <td class="text_center line_td" 
-<c:if test="${member.rating eq 'A'}">style="background-color: #00ff00"</c:if>
-<c:if test="${member.rating eq 'M'}">style="background-color: #7fffd4"</c:if>>${member.rating}</td>
-<td class="line_td">${member.email}</td>
+<c:if test="${mList.rating eq 'A'}">style="background-color: #00ff00"</c:if>
+<c:if test="${mList.rating eq 'M'}">style="background-color: #7fffd4"</c:if>>${mList.rating}</td>
+<td class="line_td">${mList.email}</td>
 </tr>
 </c:forEach>
 </c:if>
@@ -50,7 +50,7 @@
 </tr>
 </c:forEach>
 </c:if>
-<c:if test="${adminSelect eq 'ccinfo'}">
+<c:if test="${adminSelect eq 'golfcc'}">
 <c:forEach var="gList" items="${gList}" varStatus="status">
 <c:if test="${status.first}">
 <tr>
@@ -72,8 +72,8 @@
 <tr>
 <td colspan="4" class="text_center">
 	<c:if test="${curPage != 1}">
-				<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=1">◀◀</a>&nbsp;&nbsp;</c:if>
-		<c:if test="${curPage-showPage >= 1}"><a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${startPage-showPage}">◁</a>&nbsp;&nbsp;</c:if>			
+				<a href="adminPage?adminSelect=${adminSelect}&curPage=1">◀◀</a>&nbsp;&nbsp;</c:if>
+		<c:if test="${curPage-showPage >= 1}"><a href="adminPage?adminSelect=${adminSelect}&curPage=${startPage-showPage}">◁</a>&nbsp;&nbsp;</c:if>			
 			
 		<c:forEach var="i" begin="${startPage}" end="${lastPage}" step="1">	
 				<c:choose>
@@ -81,13 +81,13 @@
 						<span style="color:red">${i}</span>
 					</c:when>
 					<c:when test="${curPage != i}">
-						<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${i}">${i}</a>&nbsp;
+						<a href="adminPage?adminSelect=${adminSelect}&curPage=${i}">${i}</a>&nbsp;
 					</c:when>
 				</c:choose>	
 		</c:forEach>			
 				<c:if test="${endPage != curPage && lastPage != endPage && startPage != endPage}">		
-				<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${lastPage+1}">▷</a>&nbsp;&nbsp;</c:if>
-				<c:if test="${curPage != endPage && curPage != 0}">	<a href="AdminPageServlet?adminSelect=${adminSelect}&curPage=${endPage}">▶▶</a></c:if>
+				<a href="adminPage?adminSelect=${adminSelect}&curPage=${lastPage+1}">▷</a>&nbsp;&nbsp;</c:if>
+				<c:if test="${curPage != endPage && curPage != 0}">	<a href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}">▶▶</a></c:if>
 </tr>
 </c:if>
 </table>

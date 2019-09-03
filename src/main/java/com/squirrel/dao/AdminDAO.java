@@ -19,12 +19,12 @@ public class AdminDAO {
 
 	public int totalRecord(HashMap<String, Object> map) {
 		
-		return template.selectOne("", map);
+		return template.selectOne("AdminMapper.totalRecord", map);
 	}
 	
 	public List<MemberDTO> adminMemberSelect(HashMap<String, Object> map) {
 		
-		return template.selectList("", map);
+		return template.selectList("AdminMapper.adminMemberSelect", map);
 	}
 
 

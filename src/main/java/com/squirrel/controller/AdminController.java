@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.squirrel.dto.GolfCcDTO;
@@ -23,27 +24,28 @@ public class AdminController {
 	@Autowired AdminService aService;	
 	@Autowired MemberService mService;	
 	
-	@RequestMapping("/adminMemberSelect")
-	public String adminMemberSelect(HttpSession session, HttpServletRequest request, 
+	@RequestMapping(value="/adminPage", method=RequestMethod.POST)
+	public String adminPage(HttpSession session, HttpServletRequest request, 
 									@RequestParam HashMap<String, Object> map) {
 		
 		MemberDTO mDTO = (MemberDTO)session.getAttribute("login");
 		String destination = null;
-		
-		if( mDTO.getRating() != "A") {
+
+		if( !mDTO.getRating().equals("A")) {
 			session.invalidate();
-			destination = "/login";			
+			destination = "redirect:member/login";			
 		}else {
 			int user_no = mDTO.getUser_no();			
 			mDTO = mService.myPage(user_no);
 			
-			int curPage = (int)map.get("curPage");
+			String curPage = null;
 			String adminSelect = (String)map.get("adminSelect");
+			String adminSearch = (String)map.get("adminSearch");
 			
-			if( curPage == 0 ) { curPage = 1; }
+			if( map.get("curPage") == null ) { curPage = "1"; }
 			
 			int perPage = 10;
-			int start = perPage * ((curPage)-1)+1 ;
+			int start = perPage * ((Integer.parseInt(curPage))-1)+1 ;
 			int end = perPage-1 + start;
 			int totalRecord = 0;
 			
@@ -64,13 +66,15 @@ public class AdminController {
 					request.setAttribute("pList", pList);
 					break;
 					
-				case "ccinfo" :
+				case "golfcc" :
 					List<GolfCcDTO> gList = aService.adminGolfCcSelect(map);
 					totalRecord = aService.totalRecord(map);
 					request.setAttribute("gList", gList);
 					break;
 			}
-			
+		
+			request.setAttribute("adminSelect", adminSelect);
+			request.setAttribute("adminSearch", adminSearch);
 			
 			
 			

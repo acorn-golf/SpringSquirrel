@@ -30,20 +30,19 @@
 			}
 		}); */
 		$("#adminPage").on("click",function(){			
-			this.action="/teamSquirrel/AdminPageServlet";
+			this.action="/golfhi/adminPage";
 		});
 
 	});
 </script>
-<form id="adminPage" method="get">
+<form id="adminPage" method="post">
 <table border="1" class="form_main">
 <tr>
 <th>
 <select style="size: 40px;" id="adminSelect" name="adminSelect">
-<option id="none" value="none">조건</option> 
 <option id="member" value="member">회원</option>
 <option id="product" value="product">상품</option>
-<option id="ccname" value="ccinfo">골프장</option>
+<option id="ccname" value="golfcc">골프장</option>
 <option id="notice" value="notice">공지사항</option>
 <option id="order" value="order">주문목록</option>
 </select></th>
