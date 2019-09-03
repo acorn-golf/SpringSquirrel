@@ -53,6 +53,7 @@
 			<c:when test="${empty productList}">
 				<tr>
 					<td colspan="4" align="center" style="border-bottom: 1px solid #444444"><h3 style="color:#665b5f">상품이 없습니다</h3></td>
+				
 				</tr>
 			</c:when>
 			<c:otherwise>
@@ -60,7 +61,7 @@
 					<tr>
 						<td width="120" style="border-bottom: 1px solid #444444"><img
 							src="img/GOLFCC/${pList.loc_id}/${pList.cc_img}"
-							onerror="this.src='/teamSquirrel/GOLFCC/noimg.jpg'" border="0"
+							onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'" border="0"
 							align="middle" width="120" height="80" /></td>
 						<td style="border-bottom: 1px solid #444444">
 							<table>
