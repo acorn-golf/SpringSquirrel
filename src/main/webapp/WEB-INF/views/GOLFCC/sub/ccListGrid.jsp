@@ -49,10 +49,11 @@ $(document).ready(function() {
 							<table style='padding: 15px' class="ccGridOne" cc_Id="${Golfcc.cc_id}">
 								<tr>
 									<td>
+									
 											<c:if test="${Golfcc.cc_img != null}">
 												<img
-													src="/teamSquirrel/GOLFCC/${Golfcc.loc_id}/${Golfcc.cc_img}"
-													onerror="this.src='/teamSquirrel/GOLFCC/noimg.jpg'"
+													src="<c:url value="img/GOLFCC/${Golfcc.loc_id}/${Golfcc.cc_img}"/>"
+													onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'"
 													border="0" align="center" width="200">
 											</c:if> <c:if test="${empty Golfcc.cc_img}">
 												<img src="/teamSquirrel/GOLFCC/noimg.jpg" border="0"

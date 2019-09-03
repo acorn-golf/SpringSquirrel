@@ -49,7 +49,7 @@
 			where email = #{email}
 		</if>
 	</select>
-	<select id="adminMemberSelect" resultType="MemberDTO"
+<!-- 	<select id="adminMemberSelect" resultType="MemberDTO"
 		parameterType="HashMap">
 		
 		select user_no,phone_id,userpw,username,nickname,userssn,gender,
@@ -61,7 +61,7 @@
 		<if test="member != null">
 			and ${member} like '%'||#{adminSearch}||'%'
 		</if>
-	</select>
+	</select> -->
 	<update id="adminModified" parameterType="MemberDTO">
 		update memberList
 		set
