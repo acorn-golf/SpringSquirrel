@@ -9,7 +9,7 @@
 
 	$(document).ready(function(){
 				
-		$("#adminSelect").on("click",function(){
+/* 		$("#adminSelect").on("click",function(){
 			if( $("select").val() == "none"){
 				$("#memberSelect").html("");
 			}else if( $("select").val() == "member" ){				
@@ -28,7 +28,7 @@
 					<td style="width: 90px;">주소<input type="radio" id="ccaddress" name="ccinfo" value="ccaddress"></td>
 					<td style="width: 90px;">전화번호<input type="radio" id="ccphone" name="ccinfo" value="ccphone"></td>`);
 			}
-		});
+		}); */
 		$("#adminPage").on("click",function(){			
 			this.action="/teamSquirrel/AdminPageServlet";
 		});

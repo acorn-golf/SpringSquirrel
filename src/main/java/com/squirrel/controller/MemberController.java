@@ -5,14 +5,11 @@ import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.service.MemberService;
@@ -67,8 +64,7 @@ public class MemberController {
 			}else {
 				session.setAttribute("login", mDTO);
 				destination = "redirect:/";
-			}
-				
+			}				
 		
 		return destination;
 	}
@@ -85,7 +81,6 @@ public class MemberController {
 	public String myPage(HttpSession session) {
 		
 		MemberDTO mDTO = (MemberDTO)session.getAttribute("login");
-		System.out.println(mDTO);
 		mDTO = service.myPage(mDTO.getUser_no());
 		session.setAttribute("login", mDTO);
 		

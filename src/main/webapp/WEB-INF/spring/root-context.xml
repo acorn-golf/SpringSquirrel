@@ -40,6 +40,7 @@
 				<value>classpath:com/squirrel/config/MemberMapper.xml</value>
 				<value>classpath:com/squirrel/config/NoticeMapper.xml</value>
 				<value>classpath:com/squirrel/config/ReviewMapper.xml</value>
+				<value>classpath:com/squirrel/config/AdminMapper.xml</value>
 				<value>classpath:com/squirrel/config/ReviewViewMapper.xml</value>
 				<value>classpath:com/squirrel/config/ReCommentMapper.xml</value>
 				<value>classpath:com/squirrel/config/PickListMapper.xml</value>
