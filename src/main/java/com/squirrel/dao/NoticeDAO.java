@@ -27,4 +27,9 @@ public class NoticeDAO {
 			// TODO Auto-generated method stub
 			return template.selectList("NoticeMapper.NoteView");
 		}
+
+		public List<NoticeListDTO> notecontent() {
+			
+		return template.selectList("NoticeMapper.NoteContent");
+		}
 }

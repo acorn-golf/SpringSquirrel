@@ -12,7 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="NoteView" resultType="NoticeListDTO">
-	select *
-	from NOTICELIST
+		select NOTE_NO,NICKNAME,NOTE_TITLE,NOTEDATE
+	from NOTICELIST NATURAL join MEMBERLIST
 	</select>
+	<select id="NoteContent" resultType="NoticeListDTO">
+		select NOTE_NO,NICKNAME,NOTE_CONTENT
+	from NOTICELIST NATURAL join MEMBERLIST
+	</select>
+	
+	
 </mapper>

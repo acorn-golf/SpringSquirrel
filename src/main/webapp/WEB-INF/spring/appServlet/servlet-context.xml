@@ -15,6 +15,7 @@
     <mvc:view-controller path="/member/loginForm" view-name="member/loginForm"/>
     <mvc:view-controller path="/member/memberForm" view-name="member/memberForm"/>
     <mvc:view-controller path="/show/main" view-name="show/main"/>
+    <mvc:view-controller path="/note/Notice/Note" view-name="note/Notice/Note"/>
 
     
     <mvc:interceptors>
