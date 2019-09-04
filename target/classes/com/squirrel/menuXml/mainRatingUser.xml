@@ -83,16 +83,16 @@
 
 	<Menu> <!-- 공지사항 -->
 		<name>공지사항</name>
-		<url></url>
+		<url>/golfhi/NoteView</url>
 
 		<sub_Menu>
 			<name>전체보기</name>
-			<url></url>
+			<url>/golfhi/NoteView</url>
 		</sub_Menu>
 
 		<sub_Menu>
 			<name>공지사항</name>
-			<url></url>
+			<url>/golfhi/NoteView</url>
 		</sub_Menu>
 
 		<sub_Menu>
