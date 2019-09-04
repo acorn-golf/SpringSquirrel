@@ -82,9 +82,9 @@ public class MemberService {
 		return dao.kakaoLogin(string);
 	}
 
-	public int updatePW(HashMap<String, String> map) {
+	public int updatePW(HashMap<String, String> insertmap) {
 
-		return dao.updatePW(map);
+		return dao.updatePW(insertmap);
 
 	}
 

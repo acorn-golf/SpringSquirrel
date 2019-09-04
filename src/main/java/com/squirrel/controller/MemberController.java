@@ -1,6 +1,7 @@
 package com.squirrel.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.service.MemberService;
 
@@ -97,4 +100,34 @@ public class MemberController {
 		
 		return "redirect:/myPage";
 	}
+	
+	@RequestMapping(value = "/phoneIdCheck", produces = "text/plain;charset=utf-8")
+	@ResponseBody
+	public String phoneIdCheck(@RequestParam("phoneid") String phone_id) {
+		MemberDTO dto = service.getPhoneUser(phone_id);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = "";
+		
+		Map<String, String> map = new HashMap<String,String>();
+		if(dto==null) {
+			map.put("phoneid", "정보없음");
+			map.put("email", "정보없음");
+			map.put("email_chk", "정보없음");
+		}else {
+			map.put("phoneid", dto.getPhone_id());
+			map.put("email", dto.getEmail());
+			map.put("email_chk", dto.getEmail_chk());
+		}
+		try {
+			json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(map);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			json = e.getMessage();
+		}
+		
+		return json;
+	}
+	
 }

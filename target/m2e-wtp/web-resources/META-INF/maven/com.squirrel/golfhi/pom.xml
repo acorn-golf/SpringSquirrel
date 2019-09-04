@@ -226,6 +226,29 @@
         <version>1.1.2</version>
     </dependency>
 
+	<!-- mail Start -->
+      <dependency>
+         <groupId>javax.mail</groupId>
+         <artifactId>mail</artifactId>
+         <version>1.4.3</version>
+      </dependency>
+
+      <!-- mail end -->
+      <!-- activation 추가 -->
+      <dependency>
+         <groupId>javax.activation</groupId>
+         <artifactId>activation</artifactId>
+         <version>1.1</version>
+      </dependency>
+      <!-- activation 끝 -->
+      <!-- context-support start -->
+      <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context-support</artifactId>
+    <version>5.1.9.RELEASE</version>
+</dependency>
+<!-- context-support end -->
+
 	</dependencies>
 	<build>
 		<plugins>

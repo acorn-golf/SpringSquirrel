@@ -11,7 +11,7 @@
 		$("#phoneid").on("keyup",function(){
 			$.ajax({
 				type : "post",
-				url : "../PhoneIdCheckServlet",
+				url : "../phoneIdCheck",
 				data :{
 					phoneid:$("#phoneid").val()
 				},
@@ -32,6 +32,8 @@
 				error : function(xhr,status,error){
 					console.log(error);
 					console.log(status);
+					phoneid = "정보없음";
+					$("#idchk").text(phoneid);
 				}
 			});
 		});
@@ -78,7 +80,7 @@
 		
 </script>
 
-<form action="../SendPWMailServlet" method="post" name="myForm" class="form_login">
+<form action="../sendPWMail" method="post" name="myForm" class="form_login">
 <input type="hidden" id="email_chkYN" name="email_chkYN">
 <table>
 <tr>
