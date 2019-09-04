@@ -10,6 +10,7 @@
 <title>게시판</title>
 </head>
 <body>
+<jsp:include page="../../show/main.jsp"/>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 
@@ -22,7 +23,7 @@
 
 
 
-	<form action="/teamSquirrel/NoticeUIService">
+	<form action="<c:url value="/NoteAdd"/>" method="post">
 		<table>
 			<tr>
 				<td>
@@ -31,7 +32,7 @@
 							<td><h1>공지사항</h1></td>
 
 						</tr>
-					</table> <select name="division" id="division">
+					</table> <select name="note_division" id="division">
 
 						<option value="공지" selected>공지</option>
 

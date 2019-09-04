@@ -51,21 +51,21 @@
 
 	<Menu> <!-- 공지사항 -->
 		<name>공지사항</name>
-		<url></url>
+		<url>/golfhi/NoteView</url>
 
 		<sub_Menu>
 			<name>전체보기</name>
-			<url></url>
+			<url>/golfhi/NoteView</url>
 		</sub_Menu>
 
 		<sub_Menu>
 			<name>공지사항 등록</name>
-			<url>/teamSquirrel/note/Notice/Note.jsp</url>
+			<url>/golfhi/note/Notice/Note</url>
 		</sub_Menu>
 
 		<sub_Menu>
 			<name>공지사항 수정</name>
-			<url></url>
+			<url>/golfhi/NoteView</url>
 		</sub_Menu>
 	</Menu>
 
