@@ -28,9 +28,9 @@ public class NoticeDAO {
 			return template.selectList("NoticeMapper.NoteView");
 		}
 
-		public List<NoticeListDTO> notecontent() {
+		public List<NoticeListDTO> notecontent(int note_no) {
 			
-		return template.selectList("NoticeMapper.NoteContent");
+		return template.selectList("NoticeMapper.NoteContent",note_no);
 		}
 
 		public List<NoticeListDTO> noteAdd() {

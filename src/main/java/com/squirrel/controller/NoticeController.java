@@ -29,6 +29,8 @@ public class NoticeController {
 	@Autowired
 	NoticeService sevice;
 	
+	
+	
 	@RequestMapping("/NoteView")
 	public ModelAndView NoteView() {
 		ModelAndView mav = new ModelAndView();
@@ -39,9 +41,9 @@ public class NoticeController {
 		return mav;
 	}
 	@RequestMapping("/NoteContent")
-	public ModelAndView NoteContent() {
+	public ModelAndView NoteContent(@RequestParam("note_no") int note_no) {
 		ModelAndView mav = new ModelAndView();
-		List<NoticeListDTO> NoteContent = sevice.noteconent();
+		List<NoticeListDTO> NoteContent = sevice.noteconent(note_no);
 		mav.addObject("NoteContent", NoteContent);
 		mav.setViewName("note/Notice/NoteContent");
 		return mav;
