@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.annotation.Loginchk;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;
@@ -32,7 +33,7 @@ public class OrderListController {
 	@Autowired
 	OrderListService orderService;
 	
-	// ÇÑ´µ¾ß »óÇ° ÀÚ¼¼È÷ º¸±â¿¡¼­ ±¸¸ÅÇÏ±â ´­·¶À» ¶§ ÀÏ·Î¿À¸éµÊ
+	// ï¿½Ñ´ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï·Î¿ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/orderConfirm")
 	@ResponseBody
 	public ModelAndView orderConfirm(@RequestParam HashMap<String, String> map) {
@@ -61,20 +62,27 @@ public class OrderListController {
 	}
 	
 	@RequestMapping(value = "/addOrder")
+	@Loginchk
 	public String addOrder(@RequestParam HashMap<String, Object> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 		int user_no = dto.getUser_no();
 		map.put("user_no", user_no);
-		// map.put("user_no", 3); // È®ÀÎÀ» À§ÇÑ ÀÓ½Ãpk
+		// map.put("user_no", 3); // È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ó½ï¿½pk
 		String goingPage = null;
-		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map => map¿¡ ÇÊ¿äÇÑ°Å ´Ù ÆÄ¶ó¹ÌÅÍ·Î ¹Þ¾Ò´Ù
+		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map => mapï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½Ñ°ï¿½ ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½Þ¾Ò´ï¿½
 		if(map.get("pick_no") == null) {
-			System.out.println("»óÇ°¿¡¼­Á¢±Ù");
+			System.out.println("ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			System.out.println(map.get("p_id"));
 			System.out.println(map.get("o_amount"));
 			System.out.println(map.get("o_price"));
-			goingPage = "redirect:"; // »óÇ°º¸±âÆäÀÌÁö·Î ÀÌµ¿, ¸Þ½ÃÁö º¸³»°í½ÍÀº°Å ÀÖÀ¸¸é flash·Î º¸³»¼À
+			
+			if(map.get("o_amount")!=null) {
+				map.put("o_amount", map.get("g_amount"));
+				//map.put("o_price", map.get("g_amount"));
+			}
+			
+			goingPage = "redirect:"; // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½, ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ flashï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			try {
 				int result = orderService.addOrder(map);
 			} catch (Exception e) {
@@ -83,8 +91,8 @@ public class OrderListController {
 			}
 			
     	}else {
-    		System.out.println("Àå¹Ù±¸´Ï Á¢±Ù");
-    		// Àå¹Ù±¸´Ï pk, »óÇ°¼ö·®, °áÁ¦³»¿ª Ãß°¡
+    		System.out.println("ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+    		// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ pk, ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     		System.out.println(map.get("pick_no"));
     		System.out.println(map.get("p_id"));
     		System.out.println(map.get("o_amount"));
@@ -96,7 +104,7 @@ public class OrderListController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		goingPage = "redirect:/orderList"; // °áÁ¦³»¿ªÀ¸·Î ÀÌµ¿
+    		goingPage = "redirect:/orderList"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
     		
 		}
 		
@@ -107,9 +115,9 @@ public class OrderListController {
 	public ModelAndView orderList(@RequestParam Map<String, String> map, HttpSession session) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();
-		//int user_no = 3; // È®ÀÎÀ» À§ÇÑ ÀÓ½Ãpk
+		//int user_no = 3; // È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ó½ï¿½pk
 		
-		int curPage; // ÇöÀçÆäÀÌÁö
+		int curPage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			String curPageStr = map.get("curPage");
 			if (curPageStr == null) {
@@ -130,7 +138,7 @@ public class OrderListController {
 			totalPage++;
 		}
 
-		int showBlock = 5; // º¸¿©ÁÙ ÆäÀÌÁö 1,2,3,4,5 // 6,7,8,9,10
+		int showBlock = 5; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
 		if (curPage == totalPage || totalPage < minBlock+showBlock) {

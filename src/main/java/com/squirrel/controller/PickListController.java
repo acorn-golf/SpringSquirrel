@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.annotation.Loginchk;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;
@@ -82,6 +83,7 @@ public class PickListController {
 	
 	// 한뉘야 상품 자세히보기에서 장바구니담을 때 여기다가 보내면됨
 	@RequestMapping(value = "/insertPickList")
+	@Loginchk
 	public String insertPickList(@RequestParam Map<String, String> map, HttpSession session, RedirectAttributes data) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();
