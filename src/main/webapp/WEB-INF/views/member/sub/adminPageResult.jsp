@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
-<form method="get" class="form_main">
+<form class="form_main">
 <table class="line_table">
 <c:if test="${adminSelect eq 'member'}">
 <c:forEach var="mList" items="${mList}" varStatus="status">
@@ -68,12 +68,12 @@
 </tr>
 </c:forEach>
 </c:if>
-<c:if test="${adminSearch eq '' || adminSearch eq null }">
+<c:if test="${totalRecord != 0}">
 <tr>
 <td colspan="4" class="text_center">
 	<c:if test="${curPage != 1}">
-				<a href="adminPage?adminSelect=${adminSelect}&curPage=1">◀◀</a>&nbsp;&nbsp;</c:if>
-		<c:if test="${curPage-showPage >= 1}"><a href="adminPage?adminSelect=${adminSelect}&curPage=${startPage-showPage}">◁</a>&nbsp;&nbsp;</c:if>			
+				<a href="adminPage?adminSelect=${adminSelect}&curPage=1&adminSearch=${adminSearch}">◀◀</a>&nbsp;&nbsp;</c:if>
+		<c:if test="${curPage-showPage >= 1}"><a href="adminPage?adminSelect=${adminSelect}&curPage=${startPage-showPage}&adminSearch=${adminSearch}">◁</a>&nbsp;&nbsp;</c:if>			
 			
 		<c:forEach var="i" begin="${startPage}" end="${lastPage}" step="1">	
 				<c:choose>
@@ -81,13 +81,13 @@
 						<span style="color:red">${i}</span>
 					</c:when>
 					<c:when test="${curPage != i}">
-						<a href="adminPage?adminSelect=${adminSelect}&curPage=${i}">${i}</a>&nbsp;
+						<a href="adminPage?adminSelect=${adminSelect}&curPage=${i}&adminSearch=${adminSearch}">${i}</a>&nbsp;
 					</c:when>
 				</c:choose>	
 		</c:forEach>			
 				<c:if test="${endPage != curPage && lastPage != endPage && startPage != endPage}">		
-				<a href="adminPage?adminSelect=${adminSelect}&curPage=${lastPage+1}">▷</a>&nbsp;&nbsp;</c:if>
-				<c:if test="${curPage != endPage && curPage != 0}">	<a href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}">▶▶</a></c:if>
+				<a href="adminPage?adminSelect=${adminSelect}&curPage=${lastPage+1}&adminSearch=${adminSearch}">▷</a>&nbsp;&nbsp;</c:if>
+				<c:if test="${curPage != endPage && curPage != 0}">	<a href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}&adminSearch=${adminSearch}">▶▶</a></c:if>
 </tr>
 </c:if>
 </table>

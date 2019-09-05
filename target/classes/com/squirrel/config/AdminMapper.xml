@@ -6,41 +6,71 @@
 
 	<select id="totalRecord" resultType="int">
 		select count(*) from
-		<if test="adminSelect == 'member'">
-			memberList <include refid="memberSelect" /> </if> <!--<if test="adminSelect 
-			== 'product'"> productList <include refid="productSelect" /> </if> <if test="adminSelect 
-			== 'golfcc'"> GolfCC <include refid="golfCcSelect" /> </if> -->
+			<if test="adminSelect == 'member'">
+			memberList <include refid="memberSelect" /> 
+			</if>
+			<if test="adminSelect == 'product'"> 
+			product p join golfcc g on p.cc_id = g.cc_id join memberList m
+			on p.user_no = m.user_no join location l on l.loc_id = g.loc_id
+			<include refid="productSelect" /> 
+			</if> 
+			<if test="adminSelect == 'golfcc'"> 
+			GolfCC <include refid="golfCcSelect" /> 
+			</if>
 	</select>
-	<select id="adminGolfSelect" resultType="GolfCcDTO"
-		parameterType="HashMap">
-		select cc_id, cc_name, cc_addr1, cc_addr2, cc_phone, cc_url, cc_img
-		from (select * from (select rownum rnum, g.* from golfcc g)
-		<include refid="golfCcSelect" />
-		)
-		<include refid="rnum" />
-	</select>
-	<select id="adminMemberSelect" parameterType="HashMap"
-		resultType="MemberDTO">
+	
+	<select id="adminMemberSelect" parameterType="HashMap" resultType="MemberDTO">
 		select user_no,phone_id,userpw,username,nickname,userssn,gender,
 		rating,to_char(rstartdate,'yyyy/MM/dd') rstartdate,
 		to_char(renddate,'yyyy/MM/dd') renddate, email,email_chk from (select
 		* from ( select rownum rnum, m.* from memberList m
-		<if test="adminSearch != null"> where username like '%'||#{adminSearch}||'%' or phone_id
-			like '%'||#{adminSearch}||'%' or nickname like
-			'%'||#{adminSearch}||'%' order by username</if>
+		<include refid="memberSelect" />
 		)
 		<include refid="rnum" />
 	</select>
+	
+	<select id="adminProductSelect" parameterType="hashmap" resultType="ProductListDTO">				
+		select to_char(p_pdate,'yyyy/MM/dd HH24:mm') p_pdate, cc_name, nickname, phone_id, p_price, loc_name 
+		from (select * from 
+		( select rownum rnum,  p.p_pdate, g.cc_name, m.nickname, 
+		m.phone_id, l.loc_name, p.p_price 
+		from product p join golfcc g on p.cc_id = g.cc_id join memberList m
+		on p.user_no = m.user_no join location l on l.loc_id = g.loc_id 
+		<include refid="productSelect" />		
+		) 
+		<include refid="rnum" />
+    </select>
+	<select id="adminGolfCcSelect" resultType="GolfCcDTO" parameterType="HashMap">
+		select cc_id, cc_name, cc_addr1, cc_addr2, cc_phone, cc_url, cc_img
+		from (select * from (select rownum rnum, g.* from golfcc g
+		<include refid="golfCcSelect" />
+		)
+		<include refid="rnum" />
+	</select>
+	
 	<sql id="memberSelect">
-		<if test="adminSearch == 'member'">
+		<if test="adminSearch != ''">
 			where username like '%'||#{adminSearch}||'%' 
 			or phone_id like '%'||#{adminSearch}||'%' 
 			or nickname like '%'||#{adminSearch}||'%' 
 			order by username
 		</if>
 	</sql>
+	
+	<sql id="productSelect">
+		<if test="adminSearch != ''">
+		where g.cc_name like '%'||#{adminSearch}||'%' 
+		or m.nickname like '%'||#{adminSearch}||'%'
+		or m.phone_id like '%'||#{adminSearch}||'%'
+		or to_char(p.p_pdate, 'yyyyMMdd HH24mm') like '%'||#{adminSearch}||'%'
+		or p.p_price like '%'||#{adminSearch}||'%'
+		or l.loc_name like '%'||#{adminSearch}||'%'
+		order by p.p_pdate
+		</if>
+	</sql>
+	
 	<sql id="golfCcSelect">
-		<if test="adminSelect == 'golfcc'">
+		<if test="adminSearch != ''">
 			where cc_name like '%'||#{adminSearch}||'%'
 			or cc_addr2	like '%'||#{adminSearch}||'%'
 			or cc_phone like '%'||#{adminSearch}||'%'
@@ -48,6 +78,7 @@
 			order by cc_name
 		</if>
 	</sql>
+	
 	<sql id="rnum">
 		<![CDATA[ where rnum <= #{end} ) where rnum >= #{start} ]]>
 	</sql>
