@@ -32,4 +32,9 @@ public class NoticeDAO {
 			
 		return template.selectList("NoticeMapper.NoteContent");
 		}
+
+		public List<NoticeListDTO> noteAdd() {
+			
+			return template.selectList("NoticeMapper.NoticeInsert");
+		}
 }

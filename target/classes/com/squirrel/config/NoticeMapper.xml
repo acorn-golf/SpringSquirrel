@@ -6,9 +6,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    <insert id="NoticeInsert" parameterType="NoticeListDTO">
 		insert into
-		NOTICELIST(NOTE_CONTENT,NOTE_NO,NOTE_TITLE,USER_NO,NOTE_DIVISION,NOTE_FILE,notedate,note_vcount)
-		values(#{note_content},NOTE_NO_SQ.nextval,#{note_title},#{user_no},#{note_division},
-		null,sysdate,0)
+		NOTICELIST(NOTE_CONTENT,NOTE_NO,NOTE_TITLE,USER_NO,NOTE_DIVISION
+		<if test="note_file !=null">
+		,NOTE_FILE
+		</if>
+		)
+		values(#{note_content},NOTE_NO_SQ.nextval,#{note_title},#{user_no},#{note_division}
+		<if test="note_file != null ">
+		,#{note_file}
+		</if>)
+		
 	</insert>
 	
 	<select id="NoteView" resultType="NoticeListDTO">

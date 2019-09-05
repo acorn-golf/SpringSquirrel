@@ -34,4 +34,8 @@ public class NoticeService {
 	public List<NoticeListDTO> noteconent() {
 		return dao.notecontent();
 	}
+
+	public List<NoticeListDTO> noteAdd() {
+		return dao.noteAdd();
+	}
 }

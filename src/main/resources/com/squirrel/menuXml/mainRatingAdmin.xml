@@ -65,7 +65,7 @@
 
 		<sub_Menu>
 			<name>공지사항 수정</name>
-			<url></url>
+			<url>/golfhi/NoteView</url>
 		</sub_Menu>
 	</Menu>
 
