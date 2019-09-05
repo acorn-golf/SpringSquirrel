@@ -9,6 +9,7 @@ import org.apache.regexp.recompile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +47,20 @@ public class NoticeController {
 		return mav;
 	}
 	
-	//@Loginchk(role = Role.ADMIN)
-	
+	@Loginchk(role = Role.ADMIN)
+	@RequestMapping("/NoteInput") //공지사항 입력창으로 이동
+	public String NoteInput() {
+
+		return "note/Notice/note";
+	}
+	@Loginchk(role = Role.ADMIN)
+	@RequestMapping("/NoteAdd") //공지사항 추가하는거
+	public String NoteAdd(NoticeListDTO dto,HttpSession session) {
+		System.out.println(dto);
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("login");
+		dto.setUser_no(memberDTO.getUser_no());
+		sevice.NoticeInsert(dto);
+		return "redirect:/NoteView";
+	}
 }
 

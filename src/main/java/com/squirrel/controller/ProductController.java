@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ import com.squirrel.dto.ProductDTO;
 import com.squirrel.dto.view.ProductListDTO;
 import com.squirrel.service.GolfccService;
 import com.squirrel.service.LocationService;
+import com.squirrel.service.MemberService;
 import com.squirrel.service.ProductService;
 
 @Controller
@@ -41,7 +43,10 @@ public class ProductController {
 
 	@Autowired
 	ProductService proService;
-
+	
+	@Autowired
+	MemberService memberService;
+ 
 	@RequestMapping("productInsertForm")
 	@Loginchk(role = Role.MANAGER)
 	public ModelAndView productInsertForm(HttpSession session) { // 상품 등록 Form, 인터셉터에서 M등급이 아닌접근 -> main으로 보내고 권한없음 메시지
@@ -179,5 +184,20 @@ public class ProductController {
 	}
 
 	// 한뉘야 여기다가 상품자세히보기 ㄱㄱ
+	@RequestMapping(value =  "/ProductRetrieve", method = RequestMethod.GET)
+	public String ProductRetrieve(@RequestParam String p_id,Model m)
+	{
+		ProductDTO productDTO =proService.productRetrieve(p_id);
+		MemberDTO memberDTO = memberService.getMemberInfo(productDTO.getUser_no());
+		GolfCcDTO golfCcDTO = golfService.getGolfccScoreOne(productDTO.getCc_id());
+
+		
+		m.addAttribute("productDTO", productDTO);
+		m.addAttribute("Seller", memberDTO);
+		m.addAttribute("Golfcc", golfCcDTO);
+		
+		
+		return "product/productRetrieve";
+	}
 }
 

@@ -124,6 +124,10 @@ public class CurlUtil {
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			con.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+			System.out.println(this.getClass()+"테스트용 : POST");
+			if (harderSet != null)
+				for (String key : harderSet.keySet())
+					con.setRequestProperty(key, harderSet.get(key));
 			con.setDoOutput(true);
 			con.getOutputStream().write(postDataBytes); // POST 호출
 
@@ -145,12 +149,13 @@ public class CurlUtil {
 
 			url = new URL(urlStr + "?" + paramBuffer.toString());
 			con = (HttpURLConnection) url.openConnection();
+			if (harderSet != null)
+				for (String key : harderSet.keySet())
+					con.setRequestProperty(key, harderSet.get(key));
 			con.setRequestMethod("GET");
 		}
 
-		if (harderSet != null)
-			for (String key : harderSet.keySet())
-				con.setRequestProperty(key, harderSet.get(key));
+
 		// 결과값 출력
 
 		return con;

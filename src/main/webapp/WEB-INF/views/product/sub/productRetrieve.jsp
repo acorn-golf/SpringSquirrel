@@ -11,16 +11,16 @@
 		if (parseInt(tmp.value) < 1)
 			tmp.value = 1;
 		if (parseInt(tmp.value) > ${productDTO.p_maxpeople})
-			tmp.value = 4;
+			tmp.value =  ${productDTO.p_maxpeople};
 	}
 
 	function reqCheck(action, myform,e) {
 
 		if (validityF()) {
 			if (action == 'order') {
-				myform.action = "IsOrderServlet";
+				myform.action = "addOrder";
 			} else if (action == 'cart') {
-				myform.action = "InsertPickListServlet";
+				myform.action = "insertPickList";
 			}
 			alert("예약하였습니다.");
 		} else {
@@ -74,9 +74,10 @@
 					</tr>
 
 					<tr>
+					
 						<td rowspan="7"><img
-							src="/teamSquirrel/GOLFCC/${Golfcc.loc_id}/${Golfcc.cc_img}"
-							onerror="this.src='/teamSquirrel/GOLFCC/noimg.jpg'"
+							src="<c:url value="img/GOLFCC/${Golfcc.loc_id}/${Golfcc.cc_img}"/>"
+							onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'"
 							border="0" align="center" width="300" /> <br>
 
 							<table width="300">
@@ -154,9 +155,9 @@
 						<td style="padding-left: 30px"><input type="text"
 							name="g_amount" value="1" id="g_amount"
 							style="text-align: right; height: 18px"> <img
-							src="/teamSquirrel/product/sub/up.PNG" id="up"
+							src="<c:url value = "img/button/up.PNG" />" id="up"
 							onclick="amountUpDown('1')"> <img
-							src="/teamSquirrel/product/sub/down.PNG" id="down"
+							src="<c:url value = "img/button/down.PNG" />" id="down"
 							onclick="amountUpDown('-1')"></td>
 					</tr>
 					<tr>

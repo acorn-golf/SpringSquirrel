@@ -27,15 +27,14 @@ public class AdminDAO {
 		return template.selectList("AdminMapper.adminMemberSelect", map);
 	}
 
-
 	public List<ProductDTO> adminProductSelect(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return template.selectList("AdminMapper.adminProductSelect", map);
 	}
 
 	public List<GolfCcDTO> adminGolfCcSelect(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return template.selectList("AdminMapper.adminGolfCcSelect", map);
 	}
 	
 }
