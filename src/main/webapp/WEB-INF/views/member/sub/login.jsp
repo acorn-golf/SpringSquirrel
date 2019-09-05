@@ -43,7 +43,7 @@
 		});
 		
 		$("#findPW").on("click",function(){
-			location.href='FindPWFormServlet';
+			location.href='findPWForm';
 		});
 		
 	});

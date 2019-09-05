@@ -48,7 +48,7 @@ public class ProductController {
 	MemberService memberService;
  
 	@RequestMapping("productInsertForm")
-	// @Loginchk(role = Role.MANAGER)
+	@Loginchk(role = Role.MANAGER)
 	public ModelAndView productInsertForm(HttpSession session) { // 상품 등록 Form, 인터셉터에서 M등급이 아닌접근 -> main으로 보내고 권한없음 메시지
 																	// 띄우기
 
@@ -72,6 +72,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/productInsert")
+	@Loginchk(role = Role.MANAGER)
 	public String productInsert(ProductDTO dto, HttpSession session) { 
 		MemberDTO mDTO = (MemberDTO) session.getAttribute("login");
 		dto.setUser_no(mDTO.getUser_no());

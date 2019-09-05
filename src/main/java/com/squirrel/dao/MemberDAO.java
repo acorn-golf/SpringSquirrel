@@ -77,9 +77,9 @@ public class MemberDAO {
 
 	}
 
-	public int updatePW(HashMap<String, String> map) {
+	public int updatePW(HashMap<String, String> insertmap) {
 
-		return template.update("MemberMapper.updatePW", map);
+		return template.update("MemberMapper.updatePW", insertmap);
 	}
 
 	public MemberDTO kakaoLogin(String string) {

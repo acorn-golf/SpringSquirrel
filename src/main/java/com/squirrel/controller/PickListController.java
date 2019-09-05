@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.annotation.Loginchk;
+import com.annotation.Loginchk.Role;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;

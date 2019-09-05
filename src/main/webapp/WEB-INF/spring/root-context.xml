@@ -3,10 +3,34 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
+	<!-- 메일보내기 -->
+  <bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
+    p:host="smtp.naver.com"
+    p:port="465"
+    p:username="tlakffja"
+    p:password="chang16gh@!">
+    <property name="javaMailProperties">
+    <props>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+      <prop key="mail.smtps.ssl.trust">*</prop>
+      <prop key="mail.debug">true</prop>
+      <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+    </props>
+    </property>
+  </bean>
+
+   <!-- 메일보내기 끝 -->
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- /////시작//// -->
 	<!-- 1. jdbc.properties -->
@@ -93,5 +117,7 @@
 
 
 	<bean id="curlUtil" class="com.squirrel.util.curl.CurlUtil"/>
+	
+
 	
 </beans>

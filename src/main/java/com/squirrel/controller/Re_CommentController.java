@@ -25,6 +25,7 @@ public class Re_CommentController {
 		if(n==0) {
 			mesg = "등록 실패";
 		}
+		System.out.println(this.getClass()+"test용 :"+mesg);
 		return mesg;
 	}
 	

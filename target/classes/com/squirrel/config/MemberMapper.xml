@@ -108,8 +108,7 @@
 
 	<update id="updatePW" parameterType="hashmap">
 		update memberList
-		set userpw
-		= #{userpw}
+		set userpw = #{userpw}
 		where phone_id = #{phone_id}
 	</update>
 

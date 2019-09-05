@@ -20,6 +20,7 @@
     <mvc:view-controller path="/member/adminPage" view-name="member/adminPage"/>
     <mvc:view-controller path="/member/adminPageResult" view-name="member/adminPageResult"/>
 
+	<mvc:view-controller path="/member/findPWForm" view-name="/member/findPWForm"/>
     
     <mvc:interceptors>
       <mvc:interceptor>
