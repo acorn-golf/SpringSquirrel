@@ -39,7 +39,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			mesg+="</script>";
 			response.setContentType("text/html;charset=UTF-8");
 			response.getWriter().print(mesg);
-			response.sendRedirect("loginForm");
+			response.sendRedirect("member/loginForm");
 			return false;
 		} else {
 			boolean chk = false;
@@ -68,7 +68,7 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 				mesg+="</script>";
 				response.setContentType("text/html;charset=UTF-8");
 				response.getWriter().print(mesg);
-				response.sendRedirect("main");
+				response.sendRedirect("/");
 				return false; 
 			}
 			// 나중에 에러 메세지를 통해 매세지또한 보내주기

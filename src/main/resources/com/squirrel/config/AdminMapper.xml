@@ -30,9 +30,9 @@
 	</select>
 	
 	<select id="adminProductSelect" parameterType="hashmap" resultType="ProductListDTO">				
-		select to_char(p_pdate,'yyyy/MM/dd HH24:mm') p_pdate, cc_name, nickname, phone_id, p_price, loc_name 
+		select p_id,to_char(p_pdate,'yyyy/MM/dd HH24:mm') p_pdate, cc_name, nickname, phone_id, p_price, loc_name 
 		from (select * from 
-		( select rownum rnum,  p.p_pdate, g.cc_name, m.nickname, 
+		( select rownum rnum, p.p_id, p.p_pdate, g.cc_name, m.nickname, 
 		m.phone_id, l.loc_name, p.p_price 
 		from product p join golfcc g on p.cc_id = g.cc_id join memberList m
 		on p.user_no = m.user_no join location l on l.loc_id = g.loc_id 
@@ -41,7 +41,7 @@
 		<include refid="rnum" />
     </select>
 	<select id="adminGolfCcSelect" resultType="GolfCcDTO" parameterType="HashMap">
-		select cc_id, cc_name, cc_addr1, cc_addr2, cc_phone, cc_url, cc_img
+		select *
 		from (select * from (select rownum rnum, g.* from golfcc g
 		<include refid="golfCcSelect" />
 		)
