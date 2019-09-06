@@ -71,7 +71,7 @@
 		$("[type='radio']").attr("disabled","true");
 		
 		$("input[type='button']").on("click",function(){
-			location.href="SendMailServlet";
+			location.href="sendMail";
 		});
 		
 	});
