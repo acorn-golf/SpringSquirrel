@@ -71,7 +71,7 @@
  						if( data == 0){						
 							$("#userpw").focus();
 							$("#userpw").val("");
-							$("#alert").html("<div class='alert'>아이디<br> 또는 <br>비밀번호가 <br>틀립니다.</div>");
+							$("#alert").html("<div class='alert'>아이디<br> 또는 <br>비밀번호가 <br>틀립니다.<br><input type='button' value='확인'></div>");
 						}else{
 							$("form").unbind("submit").submit();					
 						} 
@@ -87,7 +87,8 @@
 	});
 </script>
 <style>
-.login_box, .alert {
+.login_box {
+border-radius: 4px;
 	position: absolute;
 	top: 65%;
 	transform: translate(-50%, -50%);
@@ -100,21 +101,28 @@
 }
 #kakao-login-btn {
 	position: absolute;
-	top: 85%;
+	top: 88%;
 	left: 70%;
 	transform: translate(-50%, -50%);
 }
+.alert {
+
+}
 </style>
 
-<!-- <div id="alert"></div> -->
+
+	<div id="alert">		
+	</div>
+
 <div class="login_box">
 	<h2>로그인</h2>
 	<form method="POST" action="login">
 		<div><input type="text" name="phone_id" id="phone_id" maxlength="11" required /><label>전화번호</label></div>
 		<div><input type="password" name="userpw" id="userpw" maxlength="30" required /><label>비밀번호</label></div>
-		<input type="submit" value="로그인"><br><br>	
+		<input type="submit" value="로그인"><br><br>
+		<input type="button" value="비밀번호찾기" id="findPW">	
 	</form>	
-		<input type="button" value="비밀번호찾기" id="findPW">
+		
 </div>
 
 	

@@ -36,18 +36,35 @@
 	</update>
 	<select id="multiCheck" parameterType="HashMap" resultType="int">
 		select count(*) from memberList
-		<if test="phone_id != null &amp;&amp; userpw == ''">
+		<choose>
+			<when test="phone_id != null &amp;&amp; userpw != ''">
+				where phone_id = #{phone_id} and userpw = #{userpw}
+			</when>
+			<when test="nickname != null">
+				where nickname = #{nickname}
+			</when>
+			<when test="email != null">
+				where email = #{email}
+			</when>
+			<when test="phone_id != null">
+				where phone_id = #{phone_id}
+			</when>
+		</choose>
+<!-- 		<if test="phone_id != null">
 			where phone_id = #{phone_id}
-		</if>
-		<if test="phone_id != null &amp;&amp; userpw != null">
+		</if> -->
+		<!-- <if test="phone_id != null &amp;&amp; userpw == null">
+			where phone_id = #{phone_id}
+		</if> -->
+<!-- 		<if test="phone_id != null &amp;&amp; userpw != null">
 			where phone_id = #{phone_id} and userpw = #{userpw}
-		</if>
-		<if test="nickname != null">
+		</if> -->
+<!-- 		<if test="nickname != null">
 			where nickname = #{nickname}
-		</if>
-		<if test="email != null">
+		</if> -->
+<!-- 		<if test="email != null">
 			where email = #{email}
-		</if>
+		</if> -->
 	</select>
 <!-- 	<select id="adminMemberSelect" resultType="MemberDTO"
 		parameterType="HashMap">
