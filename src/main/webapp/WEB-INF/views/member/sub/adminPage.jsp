@@ -50,8 +50,4 @@
 <td><input type="submit" id="adminSubmit" value="검색"></td>
 </tr>
 </table>
-<table class="form_main">
-<tr id="memberSelect">
-</tr>
-</table>
 </form>
