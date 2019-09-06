@@ -31,11 +31,12 @@ public class NoticeService {
 		return dao.notelist();
 	}
 
-	public List<NoticeListDTO> noteconent() {
-		return dao.notecontent();
+	public List<NoticeListDTO> noteconent(int note_no) {
+		return dao.notecontent(note_no);
 	}
 
 	public List<NoticeListDTO> noteAdd() {
 		return dao.noteAdd();
 	}
+	
 }

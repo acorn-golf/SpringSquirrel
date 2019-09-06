@@ -22,9 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select NOTE_NO,NICKNAME,NOTE_TITLE,NOTEDATE
 	from NOTICELIST NATURAL join MEMBERLIST
 	</select>
-	<select id="NoteContent" resultType="NoticeListDTO">
+	<select id="NoteContent" resultType="NoticeListDTO" parameterType="int">
 		select NOTE_NO,NICKNAME,NOTE_CONTENT
 	from NOTICELIST NATURAL join MEMBERLIST
+	where NOTE_NO = #{value} 
 	</select>
 	
 	
