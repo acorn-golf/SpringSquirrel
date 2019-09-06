@@ -111,9 +111,9 @@ public class MemberController {
 		
 		Map<String, String> map = new HashMap<String,String>();
 		if(dto==null) {
-			map.put("phoneid", "Á¤º¸¾øÀ½");
-			map.put("email", "Á¤º¸¾øÀ½");
-			map.put("email_chk", "Á¤º¸¾øÀ½");
+			map.put("phoneid", "ì •ë³´ì—†ìŒ");
+			map.put("email", "ì •ë³´ì—†ìŒ");
+			map.put("email_chk", "ì •ë³´ì—†ìŒ");
 		}else {
 			map.put("phoneid", dto.getPhone_id());
 			map.put("email", dto.getEmail());

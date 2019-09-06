@@ -41,7 +41,7 @@ public class ReviewController {
 	@Autowired
 	ReCommentService recService;
 
-	@RequestMapping(value = "/insertReviewForm") // ¸®ºäµî·Ï º¸¿©ÁÖ´Â Æû
+	@RequestMapping(value = "/insertReviewForm") // ê²Œì‹œê¸€ ì‚½ì… í¼
 	public ModelAndView insertReviewForm() {
 		List<LocationDTO> list = locService.locationList();
 		ModelAndView mav = new ModelAndView();
@@ -50,18 +50,18 @@ public class ReviewController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/insertReview") // ¸®ºä »ğÀÔ
+	@RequestMapping(value = "/insertReview") // ê²Œì‹œê¸€ ì‚½ì…
 	public String insertReview(CcScoreDTO dto, HttpSession session) {
 		MemberDTO mDTO = (MemberDTO) session.getAttribute("login");
 		dto.setUser_no(mDTO.getUser_no());
-		// dto.setUser_no(28); // È®ÀÎÀ» À§ÇÑ ÀÓ½Ãpk
+		// dto.setUser_no(28);
 		int n = revService.insertReview(dto);
 
 		return "redirect:/reviewList";
-		// ¸®ºä°Ô½ÃÆÇ ¸Ş¼­µå·Î º¸³¿
+		
 	}
 
-	@RequestMapping(value = "/reviewList") // ¸®ºä°Ô½ÃÆÇ
+	@RequestMapping(value = "/reviewList") 
 	public ModelAndView reviewList(@RequestParam Map<String, String> reqParam, HttpSession session) {
 		boolean ReSearchChk = false;
 		int curPage;
@@ -83,19 +83,19 @@ public class ReviewController {
 		String searchValue = reqParam.get("searchValue");
 		String orderby = reqParam.get("orderby");
 
-		if (orderby != null) { // Á¤·Ä°ª Àç¼¼ÆÃ
+		if (orderby != null) { // ï¿½ï¿½ï¿½Ä°ï¿½ ï¿½ç¼¼ï¿½ï¿½
 			if (!orderby.equals((String) session.getAttribute("orderby"))) {
 				session.setAttribute("orderby", orderby);
 			}
 		}
 
-		if (ReSearchChk) {// °Ë»ö°ª Àç¼¼ÆÃ
+		if (ReSearchChk) {// ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ç¼¼ï¿½ï¿½
 			if (searchName == null) {
-				// °Ë»ö°ªÀ» ¾Æ¹«°Íµµ ÀÔ·ÂÇÏÁö ¾ÊÀº °æ¿ì ÀüºÎ°Ë»ö
+				// ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î°Ë»ï¿½
 				session.removeAttribute("searchName");
 				session.removeAttribute("searchValue");
 			} else {
-				// °Ë»ö°ª ÀÔ·Â ½Ã
+				// ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½
 				session.setAttribute("searchName", searchName);
 				session.setAttribute("searchValue", searchValue);
 			}
@@ -118,10 +118,10 @@ public class ReviewController {
 			totalPage++;
 		}
 
-		int showBlock = 5; // º¸¿©ÁÙ ÆäÀÌÁö 1,2,3,4,5 // 6,7,8,9,10
+		int showBlock = 5; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
-		// System.out.println("ÅäÅ»"+totalPage+" min:"+minBlock+" showBlock:"+showBlock);
+		// System.out.println("ï¿½ï¿½Å»"+totalPage+" min:"+minBlock+" showBlock:"+showBlock);
 		if (curPage == totalPage || totalPage < minBlock + showBlock) {
 			maxBlock = totalPage;
 		} else if (curPage < totalPage) {
@@ -151,18 +151,18 @@ public class ReviewController {
 			// by hanyi
 
 		}
-		// golfcc ÀÚ¼¼È÷ º¸±â
+		// golfcc ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		mav.setViewName("review/review");
 		return mav;
 	}
 
-	@RequestMapping(value = "/reviewDetail") // ¸®ºä°Ô½ÃÆÇ °Ô½Ã±Û ÀÚ¼¼È÷ º¸±â
+	@RequestMapping(value = "/reviewDetail") // ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½Ô½Ã±ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Loginchk(role = Role.USER)
 	public ModelAndView reviewDetail(@RequestParam HashMap<String, String> map, HttpServletRequest request,
 			HttpServletResponse response) {
 		//String score_no = map.get("score_no");
-		String score_no = "160"; // test¿ë ÀÓ½Ã score_no
+		String score_no = "160"; // testï¿½ï¿½ ï¿½Ó½ï¿½ score_no
 		//String user_no = map.get("user_no");
 //		if (score_no == null && user_no == null) {
 //
@@ -170,9 +170,9 @@ public class ReviewController {
 		CcScoreDTO dto = revService.selectDetail(Integer.parseInt(score_no));
 		Cookie[] cookies = request.getCookies();
 
-		// ºñ±³ÇÏ±â À§ÇÑ »õ·Î¿î ÄíÅ°
+		// compare for new cookie
 		Cookie viewCookie = null;
-		// ÄíÅ°°¡ ÀÖÀ» °æ¿ì : Á¸ÀçÇÏ´Â ÄíÅ°¿Í ºñ±³ÇÒ ÀÌ¸§ÀÌ °°À¸¸é viewCookie¿¡ ÀÌ¸§ ÀúÀå
+		// Save name in view cookie if same name as existing cookie
 		if (cookies != null && cookies.length > 0) {
 			for (int i = 0; i < cookies.length; i++) {
 				if (cookies[i].getName().equals("cookie" + score_no)) {
@@ -180,7 +180,7 @@ public class ReviewController {
 				}
 			}
 		}
-		// ÄíÅ°°¡ ¾øÀ» °æ¿ì : »õ ÄíÅ°¸¦ »ı¼ºÇÏ¿© ÀÌ¸§À» ³Ö°í ÄíÅ°¸¦ ÀúÀå, ÄíÅ° ÀúÀå½Ã°£ : 24½Ã°£, Á¶È¸¼ö Áõ°¡
+		// if don't have cookie : Create a new cookie, name it and save
 		if (viewCookie == null) {
 			Cookie newCookie = new Cookie("cookie" + score_no, score_no);
 			response.addCookie(newCookie);
@@ -199,7 +199,7 @@ public class ReviewController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/updateReviewform") // ¸®ºä°Ô½ÃÆÇ¿¡¼­ÀÇ °Ô½Ã±Û ¼öÁ¤ Æû
+	@RequestMapping(value = "/updateReviewform") // review's update comment form
 	public ModelAndView updateReviewform(@RequestParam("score_no") int score_no) {
 				
 		CcScoreDTO cdto = revService.selectDetail(score_no);
@@ -213,18 +213,18 @@ public class ReviewController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/updateReviewDetail") // °Ô½Ã±Û ¼öÁ¤
+	@RequestMapping(value = "/updateReviewDetail") // update post
 	public String updateReviewDetail(CcScoreDTO cdto, RedirectAttributes ra) {
 		int n = revService.updateReview(cdto);
-		String message = "¼öÁ¤µÇ¾ú½À´Ï´Ù";
+		String message = "ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤";
 		if(n==0) {
-			message = "¼öÁ¤ ½ÇÆĞ";
+			message = "ìˆ˜ì •ì‹¤íŒ¨";
 		}
 		ra.addFlashAttribute("message", message);
 		return "redirect:/reviewDetail";
 	}
 	
-	@RequestMapping(value = "/deleteReviewDeatil") // °Ô½Ã±Û »èÁ¦
+	@RequestMapping(value = "/deleteReviewDeatil") // delete post
 	public String deleteReviewDeatil(@RequestParam("score_no") int score_no) {
 		int n = revService.deleteReview(score_no);
 		return "redirect:/reviewList";
