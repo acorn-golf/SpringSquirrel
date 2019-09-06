@@ -31,7 +31,7 @@ public class PickListController {
 	public ModelAndView pickListView(@RequestParam Map<String, String> map, HttpSession session) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();
-		//int user_no = 3; // 확인을 위한 임시pk
+		//int user_no = 3; // for confirm pk
 		boolean ReSearchChk = false;
 		int curPage; 
 		{
@@ -98,7 +98,7 @@ public class PickListController {
 			mesg = "장바구니에 담지 못했습니다";
 		}
 		data.addFlashAttribute("pickMesg", mesg);
-		return "redirect:/pickListView"; // 원래 있었던 상품 자세히 보기로 보내고 메시지 날려야하는 데 임시로 장바구니 리스트로보냄
+		return "redirect:/pickListView"; // must go to ProductRetrieve
 	}
 	
 	@RequestMapping(value = "deletePick")

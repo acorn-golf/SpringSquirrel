@@ -33,7 +33,6 @@ public class OrderListController {
 	@Autowired
 	OrderListService orderService;
 	
-	// �Ѵ��� ��ǰ �ڼ��� ���⿡�� �����ϱ� ������ �� �Ϸο����
 	@RequestMapping(value = "/orderConfirm")
 	@ResponseBody
 	public ModelAndView orderConfirm(@RequestParam HashMap<String, String> map) {
@@ -68,9 +67,9 @@ public class OrderListController {
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 		int user_no = dto.getUser_no();
 		map.put("user_no", user_no);
-		// map.put("user_no", 3); // Ȯ���� ���� �ӽ�pk
+		// map.put("user_no", 3);
 		String goingPage = null;
-		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map => map�� �ʿ��Ѱ� �� �Ķ���ͷ� �޾Ҵ�
+		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map 
 		if(map.get("pick_no") == null) {
 			System.out.println("��ǰ��������");
 			System.out.println(map.get("p_id"));
@@ -82,7 +81,7 @@ public class OrderListController {
 				//map.put("o_price", map.get("g_amount"));
 			}
 			
-			goingPage = "redirect:"; // ��ǰ������������ �̵�, �޽��� ����������� ������ flash�� ������
+			goingPage = "redirect:"; 
 			try {
 				int result = orderService.addOrder(map);
 			} catch (Exception e) {
@@ -92,7 +91,7 @@ public class OrderListController {
 			
     	}else {
     		System.out.println("��ٱ��� ����");
-    		// ��ٱ��� pk, ��ǰ����, �������� �߰�
+    		
     		System.out.println(map.get("pick_no"));
     		System.out.println(map.get("p_id"));
     		System.out.println(map.get("o_amount"));
@@ -104,7 +103,7 @@ public class OrderListController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		goingPage = "redirect:/orderList"; // ������������ �̵�
+    		goingPage = "redirect:/orderList";
     		
 		}
 		
@@ -115,9 +114,9 @@ public class OrderListController {
 	public ModelAndView orderList(@RequestParam Map<String, String> map, HttpSession session) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();
-		//int user_no = 3; // Ȯ���� ���� �ӽ�pk
+		//int user_no = 3; 
 		
-		int curPage; // ����������
+		int curPage; 
 		{
 			String curPageStr = map.get("curPage");
 			if (curPageStr == null) {
@@ -138,7 +137,7 @@ public class OrderListController {
 			totalPage++;
 		}
 
-		int showBlock = 5; // ������ ������ 1,2,3,4,5 // 6,7,8,9,10
+		int showBlock = 5; // for show page 1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
 		if (curPage == totalPage || totalPage < minBlock+showBlock) {

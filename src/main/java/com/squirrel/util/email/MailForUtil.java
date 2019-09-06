@@ -47,8 +47,8 @@ public class MailForUtil {
 	
 	
 
-	// mailSending ÄÚµå
-	@RequestMapping(value = "/sendPWMail") // È¸¿ø ºñ¹Ğ¹øÈ£ Ã£±â ½Ã ÀÓ½Ãºñ¹Ğ¹øÈ£ ¹ß¼Û
+	// mailSending ì½”ë“œ
+	@RequestMapping(value = "/sendPWMail") // íšŒì› ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ì‹œ ì„ì‹œë¹„ë°€ë²ˆí˜¸ ë°œì†¡
 	public ModelAndView mailSending(@RequestParam HashMap<String, String> map) {
 
 		String sendMail = map.get("email");
@@ -69,17 +69,17 @@ public class MailForUtil {
 
 		String setfrom = "tlakffja@naver.com";
 		String tomail = sendMail;
-		String title = "GolfHi ÀÓ½Ãºñ¹Ğ¹øÈ£ ¹ß¼Û";
-		String content = "<h2>¾È³çÇÏ¼¼¿ä MS :p GolfHi ÀÔ´Ï´Ù!</h2><br><br>" + "ÀÓ½Ãºñ¹Ğ¹øÈ£: " + pw;
+		String title = "GolfHi ì„ì‹œë¹„ë°€ë²ˆí˜¸ ë°œì†¡";
+		String content = "<h2>ì•ˆë…•í•˜ì„¸ìš” MS :p GolfHi ì…ë‹ˆë‹¤!</h2><br><br>" + "ì„ì‹œë¹„ë°€ë²ˆí˜¸: " + pw;
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-			messageHelper.setFrom(setfrom); // º¸³»´Â»ç¶÷ »ı·«ÇÏ°Å³ª ÇÏ¸é Á¤»óÀÛµ¿À» ¾ÈÇÔ
-			messageHelper.setTo(tomail); // ¹Ş´Â»ç¶÷ ÀÌ¸ŞÀÏ
-			messageHelper.setSubject(title); // ¸ŞÀÏÁ¦¸ñÀº »ı·«ÀÌ °¡´ÉÇÏ´Ù
-			messageHelper.setText(content,true); // ¸ŞÀÏ ³»¿ë
+			messageHelper.setFrom(setfrom); // ë³´ë‚´ëŠ”ì‚¬ëŒ ìƒëµí•˜ê±°ë‚˜ í•˜ë©´ ì •ìƒì‘ë™ì„ ì•ˆí•¨
+			messageHelper.setTo(tomail); // ë°›ëŠ”ì‚¬ëŒ ì´ë©”ì¼
+			messageHelper.setSubject(title); // ë©”ì¼ì œëª©ì€ ìƒëµì´ ê°€ëŠ¥í•˜ë‹¤
+			messageHelper.setText(content,true); // ë©”ì¼ ë‚´ìš©
 
 			mailSender.send(message);
 		} catch (Exception e) {
@@ -91,7 +91,7 @@ public class MailForUtil {
 		return mav;
 	}
 
-	// ÆÄ¶ó¹ÌÅÍ·Î ³Ñ¾î¿Â ¹®ÀÚ¿­À» ÇØ½¬ÄÚµå°ªÀ¸·Î º¯°æ(MD5 : 128bit)
+	// íŒŒë¼ë¯¸í„°ë¡œ ë„˜ì–´ì˜¨ ë¬¸ìì—´ì„ í•´ì‰¬ì½”ë“œê°’ìœ¼ë¡œ ë³€ê²½(MD5 : 128bit)
 	public String testMD5(String str) {
 		String MD5 = "";
 		try {
@@ -117,34 +117,34 @@ public class MailForUtil {
 		String username = user.getUsername();
 		int user_no = user.getUser_no();
 		Date dateTmp = new Date(); 
-		long date = dateTmp.getTime(); // ¹ß¼Û½Ã°£
-		long endDate = date + (24*60*60*1000); // À¯È¿½Ã°£ : ¹ß¼Û½Ã°£ + 24½Ã°£ 
+		long date = dateTmp.getTime(); // ë°œì†¡ì‹œê°„
+		long endDate = date + (24*60*60*1000); // ìœ íš¨ì‹œê°„ : ë°œì†¡ì‹œê°„ + 24ì‹œê°„ 
 
-		// ½Ã°£ ¼³Á¤ ³¡
-		String code = date+"/"+endDate+"/"+user_no; // isTime : ¾ÏÈ£È­ÇÒ °ª(¹ß¼Û½Ã°£+À¯È¿½Ã°£+À¯Àú)
+		// ì‹œê°„ ì„¤ì • ë
+		String code = date+"/"+endDate+"/"+user_no; // isTime : ì•”í˜¸í™”í•  ê°’(ë°œì†¡ì‹œê°„+ìœ íš¨ì‹œê°„+ìœ ì €)
 
-		String enco = aesManager.enCodeText("email", code); // ¾ÏÈ£È­°ª
-//		System.out.println("¾ÏÈ£È­>>>>"+enco);
+		String enco = aesManager.enCodeText("email", code); // ì•”í˜¸í™”ê°’
+//		System.out.println("ì•”í˜¸í™”>>>>"+enco);
 		String deco = aesManager.deCodeText("email", enco);
-//		System.out.println("º¹È£È­>>>>"+deco);
-		String iscode = testMD5(enco+"golfHi"); // isCode : ÇØ½¬°ª(¾ÏÈ£°ª + º°µµ¹®ÀÚ)
+//		System.out.println("ë³µí˜¸í™”>>>>"+deco);
+		String iscode = testMD5(enco+"golfHi"); // isCode : í•´ì‰¬ê°’(ì•”í˜¸ê°’ + ë³„ë„ë¬¸ì)
 				
 		String setfrom = "tlakffja@naver.com";
 		String tomail = user.getEmail();
-		String title = "GolfHi ÀÌ¸ŞÀÏ ÀÎÁõ";
-		String content = "<h2>¾È³çÇÏ¼¼¿ä MS :p GolfHi ÀÔ´Ï´Ù!</h2><br><br>" + "<h3>" + username + "´Ô</h3>"
-				+"<p>ÀÎÁõÇÏ±â ¹öÆ°À» ´©¸£½Ã¸é ºñ¹Ğ¹øÈ£ ºĞ½Ç ½Ã ÀÌ¸ŞÀÏÀ» ÅëÇØ È®ÀÎÇÒ ¼ö ÀÖ½À´Ï´Ù</p>"
-				+"<a href='localhost:8090/golfhi/emailCheck?isTime="+enco+"&isCode="+iscode+"'>ÀÎÁõÇÏ±â</a>"
-				+ "(È¤½Ã Àß¸ø Àü´ŞµÈ ¸ŞÀÏÀÌ¶ó¸é ÀÌ ÀÌ¸ŞÀÏÀ» ¹«½ÃÇÏ¼Åµµ µË´Ï´Ù)";
+		String title = "GolfHi ì´ë©”ì¼ ì¸ì¦";
+		String content = "<h2>ì•ˆë…•í•˜ì„¸ìš” MS :p GolfHi ì…ë‹ˆë‹¤!</h2><br><br>" + "<h3>" + username + "ë‹˜</h3>"
+				+"<p>ì¸ì¦í•˜ê¸° ë²„íŠ¼ì„ ëˆ„ë¥´ì‹œë©´ ë¹„ë°€ë²ˆí˜¸ ë¶„ì‹¤ ì‹œ ì´ë©”ì¼ì„ í†µí•´ í™•ì¸í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤</p>"
+				+"<a href='localhost:8090/golfhi/emailCheck?isTime="+enco+"&isCode="+iscode+"'>ì¸ì¦í•˜ê¸°</a>"
+				+ "(í˜¹ì‹œ ì˜ëª» ì „ë‹¬ëœ ë©”ì¼ì´ë¼ë©´ ì´ ì´ë©”ì¼ì„ ë¬´ì‹œí•˜ì…”ë„ ë©ë‹ˆë‹¤)";
 
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-			messageHelper.setFrom(setfrom); // º¸³»´Â»ç¶÷ »ı·«ÇÏ°Å³ª ÇÏ¸é Á¤»óÀÛµ¿À» ¾ÈÇÔ
-			messageHelper.setTo(tomail); // ¹Ş´Â»ç¶÷ ÀÌ¸ŞÀÏ
-			messageHelper.setSubject(title); // ¸ŞÀÏÁ¦¸ñÀº »ı·«ÀÌ °¡´ÉÇÏ´Ù
-			messageHelper.setText(content,true); // ¸ŞÀÏ ³»¿ë
+			messageHelper.setFrom(setfrom); // ë³´ë‚´ëŠ”ì‚¬ëŒ ìƒëµí•˜ê±°ë‚˜ í•˜ë©´ ì •ìƒì‘ë™ì„ ì•ˆí•¨
+			messageHelper.setTo(tomail); // ë°›ëŠ”ì‚¬ëŒ ì´ë©”ì¼
+			messageHelper.setSubject(title); // ë©”ì¼ì œëª©ì€ ìƒëµì´ ê°€ëŠ¥í•˜ë‹¤
+			messageHelper.setText(content,true); // ë©”ì¼ ë‚´ìš©
 
 			mailSender.send(message);
 		} catch (Exception e) {
@@ -158,36 +158,36 @@ public class MailForUtil {
 	public String emailCheck(@RequestParam("isTime") String isTime,
 			@RequestParam("isCode") String isCode, HttpSession session,
 			RedirectAttributes redData) {
-		System.out.println(">>>ÀÎÁõÇÑ ¾ÏÈ£È­°ª>>>"+isTime);
-		System.out.println(">>>ÀÎÁõÇÑ ÇØ½¬°ª>>>"+isCode);
+		System.out.println(">>>ì¸ì¦í•œ ì•”í˜¸í™”ê°’>>>"+isTime);
+		System.out.println(">>>ì¸ì¦í•œ í•´ì‰¬ê°’>>>"+isCode);
 		String compareHash = isTime;
 		isTime = isTime.replace(" ", "+");
-		isTime = aesManager.deCodeText("email", isTime); // º¹È£È­
+		isTime = aesManager.deCodeText("email", isTime); // ë³µí˜¸í™”
 		
 		Date curDate = new Date(); 
-		long serverTime = curDate.getTime(); // À¯Àú°¡ ÀÎÁõÇÑ ½Ã°£(¼­¹ö½Ã°£)
+		long serverTime = curDate.getTime(); // ìœ ì €ê°€ ì¸ì¦í•œ ì‹œê°„(ì„œë²„ì‹œê°„)
 		String[] data = isTime.split("/");
 		
-		long sendTime = Long.parseLong(data[0]); // ¹ß¼Û½Ã°£
-		System.out.println(">>>¹ß¼Û½Ã°£ : "+sendTime);
-		long checkTime = Long.parseLong(data[1]); // À¯È¿½Ã°£
-		System.out.println(">>>À¯È¿½Ã°£~~~"+checkTime);
-		System.out.println(">>>ÀÎÁõ½Ã°£~~~"+serverTime);
-		if(checkTime - serverTime > 0) { // À¯È¿½Ã°£(¹ß¼Û½Ã°£À¸·ÎºÎÅÍ24½Ã°£) - À¯Àú°¡ÀÎÁõÇÏ±â´©¸¥ ½Ã°£
-			// isCode ÇØ½Ã °ª ºñ±³ÇØ¾ßµÊ
+		long sendTime = Long.parseLong(data[0]); // ë°œì†¡ì‹œê°„
+		System.out.println(">>>ë°œì†¡ì‹œê°„ : "+sendTime);
+		long checkTime = Long.parseLong(data[1]); // ìœ íš¨ì‹œê°„
+		System.out.println(">>>ìœ íš¨ì‹œê°„~~~"+checkTime);
+		System.out.println(">>>ì¸ì¦ì‹œê°„~~~"+serverTime);
+		if(checkTime - serverTime > 0) { // ìœ íš¨ì‹œê°„(ë°œì†¡ì‹œê°„ìœ¼ë¡œë¶€í„°24ì‹œê°„) - ìœ ì €ê°€ì¸ì¦í•˜ê¸°ëˆ„ë¥¸ ì‹œê°„
+			// isCode í•´ì‹œ ê°’ ë¹„êµí•´ì•¼ë¨
 			if(testMD5(compareHash+"golfHi")==isCode) {
 				int user_no = Integer.parseInt(data[2]);
 				memService.updateEmail(user_no);
-				if(session.getAttribute("login") == null) { // ±âÁ¸ ºê¶ó¿ìÀú ²ô°Å³ª ´Ş¶óÁ³À» ¶§ ·Î±×ÀÎÀÌ nullÀÏ ¼ö ÀÖ´Ù
+				if(session.getAttribute("login") == null) { // ê¸°ì¡´ ë¸Œë¼ìš°ì € ë„ê±°ë‚˜ ë‹¬ë¼ì¡Œì„ ë•Œ ë¡œê·¸ì¸ì´ nullì¼ ìˆ˜ ìˆë‹¤
 					MemberDTO dto = memService.getUser(user_no);
 					session.setAttribute("login", dto);
 				}
 			}else {
-				redData.addFlashAttribute("mesg","½ÇÆĞ \n ÀÎÁõÄÚµå°¡ ´Ù¸¨´Ï´Ù");
+				redData.addFlashAttribute("mesg","ì‹¤íŒ¨ \n ì¸ì¦ì½”ë“œê°€ ë‹¤ë¦…ë‹ˆë‹¤");
 			}
 			
 		}else {
-			redData.addFlashAttribute("mesg", "½ÇÆĞ \n ÀÎÁõ ½Ã°£ÀÌ Áö³µ½À´Ï´Ù\n ÀÎÁõ½Ã°£ : 24½Ã°£\n ¸¶ÀÌÆäÀÌÁö¿¡¼­ ÀÌ¸ŞÀÏÀÎÁõÀ» ÁøÇàÇÏ¼¼¿ä");
+			redData.addFlashAttribute("mesg", "ì‹¤íŒ¨ \n ì¸ì¦ ì‹œê°„ì´ ì§€ë‚¬ìŠµë‹ˆë‹¤\n ì¸ì¦ì‹œê°„ : 24ì‹œê°„\n ë§ˆì´í˜ì´ì§€ì—ì„œ ì´ë©”ì¼ì¸ì¦ì„ ì§„í–‰í•˜ì„¸ìš”");
 		}
 		return "redirect:/";
 	}

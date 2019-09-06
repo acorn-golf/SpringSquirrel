@@ -17,36 +17,36 @@ public class Re_CommentController {
 	@Autowired
 	ReCommentService recService;
 	
-	@RequestMapping(value = "/insertComment", produces = "text/plain;charset=utf-8") // ´ñ±Û »ğÀÔ
+	@RequestMapping(value = "/insertComment", produces = "text/plain;charset=utf-8") // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	public String insertComment(ReCommentDTO dto) {
 		int n = recService.insertComment(dto);
-		String mesg = "µî·ÏµÇ¾ú½À´Ï´Ù";
+		String mesg = "ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤";
 		if(n==0) {
-			mesg = "µî·Ï ½ÇÆĞ";
+			mesg = "ë“±ë¡ ì‹¤íŒ¨";
 		}
-		System.out.println(this.getClass()+"test¿ë :"+mesg);
+		System.out.println(this.getClass()+"testï¿½ï¿½ :"+mesg);
 		return mesg;
 	}
 	
-	@RequestMapping(value = "/updateComment", produces = "text/plain;charset=utf-8") // ´ñ±Û ¼öÁ¤
+	@RequestMapping(value = "/updateComment", produces = "text/plain;charset=utf-8") // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	public String updateComment(@RequestParam HashMap<String, String> map) {
 		int n = recService.updateComment(map);
-		String mesg = "¼öÁ¤µÇ¾ú½À´Ï´Ù";
+		String mesg = "ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤";
 		if(n==0) {
-			mesg = "¼öÁ¤ ½ÇÆĞ";
+			mesg = "ìˆ˜ì •ì‹¤íŒ¨";
 		}
 		return mesg;
 	}
 	
-	@RequestMapping(value = "/deleteComment", produces = "text/plain;charset=utf-8") // ´ñ±Û ¼öÁ¤
+	@RequestMapping(value = "/deleteComment", produces = "text/plain;charset=utf-8") // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	public String deleteComment(@RequestParam("re_no") String re_no) {
 		int n = recService.deleteComment(re_no);
-		String mesg = "»èÁ¦µÇ¾ú½À´Ï´Ù";
+		String mesg = "ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤";
 		if(n==0) {
-			mesg = "»èÁ¦ ½ÇÆĞ";
+			mesg = "ì‚­ì œì‹¤íŒ¨";
 		}
 		return mesg;
 	}
