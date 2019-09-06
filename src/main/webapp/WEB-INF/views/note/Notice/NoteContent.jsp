@@ -26,7 +26,14 @@
 		</c:forEach>
 
 	</table>
-
+<c:if test="${empty login.rating eq 'A'}">
+<a href="NoteUpdate">
+<input type="submit" value="수정">
+</a>
+<a href="NoteDelete">
+<input type="submit" value="삭제">
+</a>
+</c:if>
 
 
 
