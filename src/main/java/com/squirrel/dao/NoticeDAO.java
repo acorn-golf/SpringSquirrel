@@ -28,13 +28,21 @@ public class NoticeDAO {
 			return template.selectList("NoticeMapper.NoteView");
 		}
 
-		public List<NoticeListDTO> notecontent(int note_no) {
+		public NoticeListDTO notecontent(int note_no) {
 			
-		return template.selectList("NoticeMapper.NoteContent",note_no);
+		return template.selectOne("NoticeMapper.NoteContent",note_no);
 		}
 
 		public List<NoticeListDTO> noteAdd() {
 			
 			return template.selectList("NoticeMapper.NoticeInsert");
+		}
+
+		public int NoteDelete(NoticeListDTO dto) {
+			return template.delete("NoticeMapper.NoteDelete",dto.getNote_no());
+		}
+
+		public int NoteUpdate(NoticeListDTO dto) {
+			return template.update("NoticeMapper.NoteUpdate",dto.getNote_no());
 		}
 }
