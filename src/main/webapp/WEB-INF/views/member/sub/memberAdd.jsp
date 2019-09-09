@@ -171,7 +171,6 @@ function audioCaptcha() {
 					data: { phone_id : $("#phone_id").val()},				
 					dataType:"text",
 					success : function(data,status,xhr){	
-						console.log(data);
 						if(data == 0){
 							if ( !RegexPhone.test($.trim($("#phone_id").val())) ){
 								$("#idchk").text("사용 불가").css("color","red");

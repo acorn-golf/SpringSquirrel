@@ -1818,7 +1818,7 @@ body .MOD_IMPACTSTRIP4_Txt p {
 	text-align: center;
 }
 
-.login_box input {
+.login_box input, .alert input {
 	text-align: center;
 	padding: 10px 0;
 	margin-bottom: 30px;
@@ -1833,7 +1833,7 @@ body .MOD_IMPACTSTRIP4_Txt p {
 }
 
 .login_box input[type='submit'], .login_box input[type='reset'],
-	.login_box input[type='button'] {
+	.login_box input[type='button'], .alert input[type='button'] {
 	border-bottom: none;
 	cursor: pointer;
 	background: #808000;
@@ -1872,11 +1872,11 @@ body .MOD_IMPACTSTRIP4_Txt p {
 	border-bottom: 2px solid #808000;
 }
 
-.alert {
+.alert{
 	z-index: 1;
 	font-size: 20px;
 	color: red;
 	text-align: center;
 	width: 350px;
-	transition: opacity 0.06s;
+	font-weight: bold;
 }
