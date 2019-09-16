@@ -3,7 +3,7 @@
 <Menus>
 	<Menu>  <!-- 거래내역 -->
 		<name>상품거래</name>
-		<url></url>
+		<url>/golfhi/dealHistory</url>
 
 		<sub_Menu>
 			<name>상품 등록</name>
@@ -12,7 +12,7 @@
 
 		<sub_Menu>
 			<name>상품 관리</name>
-			<url></url>
+			<url>/golfhi/editProduct</url>
 		</sub_Menu>
 
 		<sub_Menu>

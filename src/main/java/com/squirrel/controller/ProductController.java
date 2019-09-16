@@ -227,9 +227,7 @@ public class ProductController {
 			pdto = proService.selectDealHistory(Integer.parseInt(map.get("user_no")), curPage);
 		}
 		List<ProductDealHistoryDTO> list = pdto.getList();
-		for (ProductDealHistoryDTO o : list) {
-			System.out.println(o);
-		}
+		
 		int perPage = pdto.getPerPage();
 		int totalRecord = pdto.getTotalRecord();
 		int totalPage = totalRecord / perPage;
@@ -263,6 +261,67 @@ public class ProductController {
 		mav.addObject("totalPage", totalPage);
 		mav.addObject("curPage", curPage);
 		mav.setViewName("product/dealHistory");
+		return mav;
+	}
+	
+	// Manager : 상품 관리 목록 보여주기
+	@RequestMapping(value = "/editProduct")
+	@Loginchk(role = Role.MANAGER)
+	public ModelAndView editProduct(@RequestParam Map<String, String> map, HttpSession session) {
+		int curPage; 
+		{
+			String curPageStr = map.get("curPage");
+			if (curPageStr == null) {
+				curPage = 0;
+			}else
+				curPage=Integer.parseInt(curPageStr)-1;
+		}
+		
+		PageDTO<ProductListDTO> pdto = null;
+		
+		if(map.get("user_no") == null) {
+			MemberDTO mdto = (MemberDTO)session.getAttribute("login");
+			int mUser_no = mdto.getUser_no();
+			pdto = proService.selectEditProduct(mUser_no, curPage);
+		}else {
+			// admin 페이지에서 조회
+			pdto = proService.selectEditProduct(Integer.parseInt(map.get("user_no")), curPage);
+		}
+		List<ProductListDTO> list = pdto.getList();
+		
+		int perPage = pdto.getPerPage();
+		int totalRecord = pdto.getTotalRecord();
+		int totalPage = totalRecord / perPage;
+
+		if (totalRecord % (float)perPage != 0) {
+			totalPage++;
+		}
+
+		int showBlock = 5; // for show page 1,2,3,4,5 // 6,7,8,9,10
+		int minBlock = (curPage / (showBlock)) * showBlock;
+		int maxBlock = 0;
+		if (curPage == totalPage || totalPage < minBlock+showBlock) {
+			maxBlock = totalPage;
+		} else if (curPage < totalPage) {
+			maxBlock = minBlock + showBlock;
+		}
+		int perBlock = 0;//totalPage/showBlock;
+		if(totalPage%showBlock==0) {
+			perBlock = (totalPage/showBlock)-1;
+		}else {
+			perBlock = totalPage/showBlock;
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("perBlock", perBlock);
+		mav.addObject("minBlock", minBlock);
+		mav.addObject("maxBlock", maxBlock);
+		mav.addObject("showBlock", showBlock);
+		mav.addObject("productList", list);
+		mav.addObject("totalPage", totalPage);
+		mav.addObject("curPage", curPage);
+		mav.setViewName("product/editProduct");
 		return mav;
 	}
 }

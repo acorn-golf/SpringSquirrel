@@ -101,6 +101,22 @@
 		SELECT g.CC_NAME CC_NAME,g.CC_IMG CC_IMG,l.LOC_ID LOC_ID,to_char(p.P_PDATE,'YYYY-MM-DD') P_PDATE,to_char(p.P_UPLOADDATE,'YYYY-MM-DD') P_UPLOADDATE,p.P_PRICE P_PRICE,to_char(o.O_DATE,'YYYY-MM-DD') O_DATE,o.O_AMOUNT O_AMOUNT,o.O_PRICE O_PRICE,m.NICKNAME NICKNAME,m.PHONE_ID PHONE_ID,m.EMAIL EMAIL
 		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join MEMBERLIST m on o.USER_NO = m.USER_NO join GOLFCC g on p.CC_ID = g.CC_ID join LOCATION l on g.LOC_ID=l.LOC_ID
 		WHERE p.USER_NO = #{user_no}
+		order by P_PDATE
 	</select>
+	
+	<select id="totalRecordEditProduct" parameterType="int" resultType="int">
+		select count(*)
+		from PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO  JOIN LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_PDATE > sysdate and p.USER_NO=#{user_no}
+	</select>
+	
+	<select id="selectEditProduct" parameterType="int" resultType="ProductListDTO">
+		SELECT CC_NAME,CC_IMG,P_ID,P_PDATE,P_UPLOADDATE,P_MAXPEOPLE,P_HOLE,P_CADDYYN,P_BABYN,P_CARTYN,P_PRICE,P_CONTENT,m.USER_NO user_no,P_VCOUNT,NICKNAME,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,LOC_NAME,g.LOC_ID loc_id,
+		<![CDATA[case when P_PDATE-sysdate <= 0.5 then '긴급'
+		end emergency]]>
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO JOIN LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_PDATE > sysdate and p.USER_NO=#{user_no}
+		order by P_PDATE
+    </select>
 
 </mapper>

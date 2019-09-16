@@ -84,4 +84,23 @@ public class ProductDAO {
 		return pdto;
 	}
 
+	public int totalRecordEditProduct(int user_no) {
+		return template.selectOne("ProductMapper.totalRecordEditProduct",user_no);
+	}
+	
+	public PageDTO<ProductListDTO> selectEditProduct(int user_no, int curPage) {
+		PageDTO<ProductListDTO> pdto = new PageDTO<ProductListDTO>();
+		pdto.setPerPage(10);
+		int perPage = pdto.getPerPage();
+		int offset = (curPage)*perPage;
+		int totalRecord = totalRecordEditProduct(user_no);
+		List<ProductListDTO> list = template.selectList("ProductMapper.selectEditProduct", user_no, new RowBounds(offset, perPage));
+		
+		pdto.setList(list);
+		pdto.setCurPage(curPage);
+		pdto.setTotalRecord(totalRecord);
+		
+		return pdto;
+	}
+
 }

@@ -67,4 +67,12 @@ public class ProductService {
 		return pdto;
 	}
 
+	public PageDTO<ProductListDTO> selectEditProduct(int user_no, int curPage) {
+		PageDTO<ProductListDTO> pdto = null;
+
+		pdto = dao.selectEditProduct(user_no, curPage);
+
+		return pdto;
+	}
+
 }
