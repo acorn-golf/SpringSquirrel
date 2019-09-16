@@ -37,7 +37,7 @@
 	<select id="multiCheck" parameterType="HashMap" resultType="int">
 		select count(*) from memberList
 		<choose>
-			<when test="phone_id != null &amp;&amp; userpw != ''">
+			<when test="phone_id != null &amp;&amp; userpw != null ">
 				where phone_id = #{phone_id} and userpw = #{userpw}
 			</when>
 			<when test="nickname != null">

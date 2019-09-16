@@ -46,9 +46,9 @@ public class AdminController {
 		}
 		
 		int curPage = Integer.parseInt(curPageStr);				
-		int perPage = 10; // ÆäÀÌÁö´ç º¸¿©ÁÙ °³¼ö
-		int start = perPage * ( (curPage) - 1 ) + 1; // Rownum¿¡ »ç¿ëµÉ ½ÃÀÛ °ª
-		int end = perPage - 1 + start; // Rownum¿¡ »ç¿ëµÉ ³¡ °ª
+		int perPage = 10; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		int start = perPage * ( (curPage) - 1 ) + 1; // Rownumï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+		int end = perPage - 1 + start; // Rownumï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
 		int totalRecord = 0;
 		
 		map.put("start", start);
@@ -77,28 +77,28 @@ public class AdminController {
 		
 		totalRecord = aService.totalRecord(map);
 		
-		int endPage = totalRecord / perPage; // ¸¶Áö¸· ÆäÀÌÁö			
+		int endPage = totalRecord / perPage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½			
 		if( totalRecord % perPage != 0 ) {
-			endPage++; // ÆäÀÌÁö°¡ ¸ðÀÚ¸¦ °æ¿ì endPage¸¦ ¿Ã¸²ÇÑ´ç.
+			endPage++; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ endPageï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½Ñ´ï¿½.
 		}
 		
-		int showPage = 10; // ÇÑ¹ø¿¡ º¸¿©ÁÙ ÆäÀÌÁö
-		int startPage = (curPage-1) / showPage * showPage + 1; // Ã¹ÀåÀº 1 µÎ¹øÂ² 2
-		int lastPage = startPage + showPage - 1; // Ã¹ÀåÀº 10, µÎ¹øÂ² 20			
+		int showPage = 10; // ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int startPage = (curPage-1) / showPage * showPage + 1; // Ã¹ï¿½ï¿½ï¿½ï¿½ 1 ï¿½Î¹ï¿½Â² 2
+		int lastPage = startPage + showPage - 1; // Ã¹ï¿½ï¿½ï¿½ï¿½ 10, ï¿½Î¹ï¿½Â² 20			
 		if( curPage == endPage || endPage < startPage + showPage ) {
 			lastPage = endPage;
 		}else if (curPage < endPage) {
 			lastPage = ( startPage + showPage ) - 1;
 		}
 		
-		int beforeShow = curPage - showPage;			
+		int beforeShow = startPage - showPage;			
 		if( beforeShow < 1 ) {
-			beforeShow = 1; // 0 ´Â À½¼ö°ªÀÌ µÉ °æ¿ì
+			beforeShow = 1; // 0 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
 		}
 		
 		int afterShow = beforeShow + showPage;			
 		if( afterShow > totalRecord ) {
-			afterShow = totalRecord; // ÃÑ °Ô½Ã¹°À» ÃÊ°úÇÒ °æ¿ì
+			afterShow = totalRecord; // ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		}
 		
 		request.setAttribute("adminSelect", adminSelect);
