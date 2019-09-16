@@ -17,7 +17,7 @@
 
 		<sub_Menu>
 			<name>거래 내역</name>
-			<url></url>
+			<url>/golfhi/dealHistory</url>
 		</sub_Menu>
 		
 		<sub_Menu>
