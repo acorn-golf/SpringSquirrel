@@ -27,7 +27,7 @@
 		
 		<sub_Menu>
 			<name>완료된 구매내역</name>
-			<url></url>
+			<url>/golfhi/orderListPayment</url>
 		</sub_Menu>
 	</Menu>
 
