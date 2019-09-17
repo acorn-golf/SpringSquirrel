@@ -41,7 +41,7 @@ public class MemberController {
 			break;
 		case 1:
 			session.setAttribute("login", mDTO);
-			destination = "email/isEmailchk";
+			destination = "redirect:email/isEmailchk";
 			break;
 		}
 		return destination;
@@ -66,7 +66,7 @@ public class MemberController {
 				destination = "redirect:member/loginForm";
 			}else {
 				session.setAttribute("login", mDTO);
-				destination = "redirect:/";
+				destination = "redirect:../email/isEmailchk";
 			}				
 		
 		return destination;

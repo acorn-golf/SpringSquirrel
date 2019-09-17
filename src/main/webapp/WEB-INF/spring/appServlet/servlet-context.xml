@@ -21,6 +21,7 @@
     <mvc:view-controller path="/member/adminPageResult" view-name="member/adminPageResult"/>
 
 	<mvc:view-controller path="/member/findPWForm" view-name="/member/findPWForm"/>
+	<mvc:view-controller path="/email/isEmailchk" view-name="/email/isEmailchk"/>
     
     <mvc:interceptors>
       <mvc:interceptor>

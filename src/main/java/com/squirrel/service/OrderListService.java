@@ -62,5 +62,13 @@ public class OrderListService {
 		return 0;
 	}
 
+	public PageDTO<OrderInfoDTO> selectOrderListPayment(int user_no, int curPage) {
+		PageDTO<OrderInfoDTO> pdto = null;
+
+		pdto = dao.selectOrderListPayment(user_no, curPage);
+
+		return pdto;
+	}
+
 
 }

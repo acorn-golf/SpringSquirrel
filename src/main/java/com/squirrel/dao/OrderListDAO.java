@@ -51,7 +51,24 @@ public class OrderListDAO {
 		// TODO Auto-generated method stub
 		return template.delete("PickListMapper.deletePickList", map);
 	}
-
 	
+	private int totalRecordPayment( int user_no) {
+		return template.selectOne("OrderListMapper.totalRecordpayment",user_no);
+	}
 
+	public PageDTO<OrderInfoDTO> selectOrderListPayment(int user_no, int curPage) {
+		PageDTO<OrderInfoDTO> pdto = new PageDTO<OrderInfoDTO>();
+		pdto.setPerPage(10);
+		int perPage = pdto.getPerPage();
+		int offset = (curPage)*perPage;
+		int totalRecord = totalRecordPayment(user_no);
+		List<OrderInfoDTO> list = template.selectList("OrderListMapper.selectOrderListpayment", user_no, new RowBounds(offset, perPage));
+		
+		pdto.setList(list);
+		pdto.setCurPage(curPage);
+		pdto.setTotalRecord(totalRecord);
+		
+		return pdto;
+	}
+	
 }

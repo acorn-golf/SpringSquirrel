@@ -6,17 +6,19 @@
 
 	<select id="totalRecord" resultType="int">
 		select count(*) from
-			<if test="adminSelect == 'member'">
+		<choose>
+			<when test="adminSelect == 'member'">
 			memberList <include refid="memberSelect" /> 
-			</if>
-			<if test="adminSelect == 'product'"> 
+			</when>
+			<when test="adminSelect == 'product'"> 
 			product p join golfcc g on p.cc_id = g.cc_id join memberList m
 			on p.user_no = m.user_no join location l on l.loc_id = g.loc_id
 			<include refid="productSelect" /> 
-			</if> 
-			<if test="adminSelect == 'golfcc'"> 
+			</when> 
+			<when test="adminSelect == 'golfcc'"> 
 			GolfCC <include refid="golfCcSelect" /> 
-			</if>
+			</when>
+		</choose>
 	</select>
 	
 	<select id="adminMemberSelect" parameterType="HashMap" resultType="MemberDTO">

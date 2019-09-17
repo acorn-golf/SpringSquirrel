@@ -20,5 +20,6 @@ alert('${mesg}');
 <body>
 <jsp:include page="show/main.jsp" flush="true"/>
 <hr>
+<jsp:include page="show/weather.jsp"/>
 </body>
 </html>

@@ -128,6 +128,8 @@ public class MailForUtil {
 		String deco = aesManager.deCodeText("email", enco);
 //		System.out.println("복호화>>>>"+deco);
 		String iscode = testMD5(enco+"golfHi"); // isCode : 해쉬값(암호값 + 별도문자)
+		System.out.println(">>>암호화"+enco+"\n 길이 : "+enco.length());
+		System.out.println(">>>해시화"+iscode+"\n 길이 : "+iscode.length());
 				
 		String setfrom = "tlakffja@naver.com";
 		String tomail = user.getEmail();
@@ -160,9 +162,10 @@ public class MailForUtil {
 			RedirectAttributes redData) {
 		System.out.println(">>>인증한 암호화값>>>"+isTime);
 		System.out.println(">>>인증한 해쉬값>>>"+isCode);
+		isTime = isTime.replace(" ", "+");		
 		String compareHash = isTime;
-		isTime = isTime.replace(" ", "+");
 		isTime = aesManager.deCodeText("email", isTime); // 복호화
+		System.out.println(">>>받은 암호화"+compareHash+"/암호길이"+compareHash.length());
 		
 		Date curDate = new Date(); 
 		long serverTime = curDate.getTime(); // 유저가 인증한 시간(서버시간)
@@ -175,12 +178,15 @@ public class MailForUtil {
 		System.out.println(">>>인증시간~~~"+serverTime);
 		if(checkTime - serverTime > 0) { // 유효시간(발송시간으로부터24시간) - 유저가인증하기누른 시간
 			// isCode 해시 값 비교해야됨
-			if(testMD5(compareHash+"golfHi")==isCode) {
+			System.out.println(">>>>해시값비교1 : "+testMD5(compareHash+"golfHi"));
+			System.out.println(">>>>해시값비교2 : "+isCode);
+			if(testMD5(compareHash+"golfHi").equals(isCode)) {
 				int user_no = Integer.parseInt(data[2]);
 				memService.updateEmail(user_no);
 				if(session.getAttribute("login") == null) { // 기존 브라우저 끄거나 달라졌을 때 로그인이 null일 수 있다
 					MemberDTO dto = memService.getUser(user_no);
 					session.setAttribute("login", dto);
+					redData.addFlashAttribute("mesg","인증되었습니다.");
 				}
 			}else {
 				redData.addFlashAttribute("mesg","실패 \n 인증코드가 다릅니다");

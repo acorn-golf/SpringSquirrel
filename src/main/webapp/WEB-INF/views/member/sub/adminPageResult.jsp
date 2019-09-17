@@ -6,7 +6,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
 <form class="form_main">
-	<table class="line_table">
+	<table class="line_table" style="table-layout: fixed">
 		<c:if test="${adminSelect eq 'member'}">
 			<c:forEach var="mList" items="${mList}" varStatus="status">
 				<c:if test="${status.first}">
@@ -18,7 +18,8 @@
 						<th class="line_th">e-mail</th>
 					</tr>
 				</c:if>
-				<tr> <!-- 번호를 누르면 user_no를 검색 변경 -->
+				<tr>
+					<!-- 번호를 누르면 user_no를 검색 변경 -->
 					<td class="line_td"><a
 						href="/golfhi/adminModified?item=member&user_no=${mList.user_no}">${mList.phone_id}</a></td>
 					<td class="line_td" style="background-color: lightblue">${mList.username}</td>
@@ -42,8 +43,10 @@
 						<th class="line_th">지역</th>
 					</tr>
 				</c:if>
-				<tr> <!-- 골프장명을 누르면 p_id를 검색후 변경 -->
-					<td class="line_td"><a href="/golfhi/adminModified?item=product&p_id=${pList.p_id}">${pList.cc_name}</a></td>
+				<tr>
+					<!-- 골프장명을 누르면 p_id를 검색후 변경 -->
+					<td class="line_td"><a
+						href="/golfhi/adminModified?item=product&p_id=${pList.p_id}">${pList.cc_name}</a></td>
 					<td class="line_td" style="background-color: lightblue">${pList.nickname}</td>
 					<td class="line_td" style="background-color: lightgreen">${pList.phone_id}</td>
 					<td class="text_center line_td">${pList.p_pdate}</td>
@@ -62,11 +65,15 @@
 						<th class="line_th">url</th>
 					</tr>
 				</c:if>
-				<tr> <!-- 골프장명을 누르면  cc_id를 검색후 변경-->
-					<td class="line_td"><a href="/golfhi/adminModified?item=golf&cc_id=${gList.cc_id}">${gList.cc_name}</a></td>
-					<td class="line_td" style="background-color: lightblue">${gList.cc_addr2}</td>
+				<tr>
+					<!-- 골프장명을 누르면  cc_id를 검색후 변경-->
+					<td class="line_td"><a
+						href="/golfhi/adminModified?item=golf&cc_id=${gList.cc_id}">${gList.cc_name}</a></td>
+					<td class="line_td"
+						style="width: 170px; background-color: lightblue; word-break: break-all;">${gList.cc_addr2}</td>
 					<td class="line_td" style="background-color: lightgreen">${gList.cc_phone}</td>
-					<td class="text_center line_td"><a
+					<td class="text_center line_td"
+						style="width: 150px; word-break: break-all;"><a
 						href="https://${gList.cc_url}">${gList.cc_url}</a></td>
 				</tr>
 			</c:forEach>
@@ -98,7 +105,7 @@
 					<c:if test="${curPage != endPage && curPage != 0}">
 						<a
 							href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}&adminSearch=${adminSearch}">▶▶</a>
-					</c:if>
+					</c:if></td>
 			</tr>
 		</c:if>
 	</table>
