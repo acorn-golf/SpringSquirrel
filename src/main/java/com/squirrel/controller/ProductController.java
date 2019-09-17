@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -199,5 +200,19 @@ public class ProductController {
 		
 		return "product/productRetrieve";
 	}
+	
+	@RequestMapping(value =  "/getProductListJson/{page}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ProductListDTO> ProductRetrieve(@RequestParam Map<String, String> reqParam,@PathVariable("page")int page)
+	{
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		PageDTO<ProductListDTO> pDTO = proService.selectProduct(map, page);
+		List<ProductListDTO> list = pDTO.getList();
+		
+		
+		return list;
+	}
+	
 }
 
