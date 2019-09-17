@@ -3,26 +3,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	
+	$(document).ready(function() {
+		console.log(new Date('${dto.p_pdate}'));
+		if('${dto.p_babyn}' == 'Y'){
+			$("input[name='p_babyn']").prop("checked",true);
+		}else{
+			$("input[name='p_babyn']").prop("checked",false);
+		}
+		if('${dto.p_cartyn}' == 'Y'){
+			$("input[name='p_cartyn']").prop("checked",true);
+		}else{
+			$("input[name='p_cartyn']").prop("checked",false);
+		}
+		if('${dto.p_caddyyn}' == 'Y'){
+			$("input[name='p_caddyyn']").prop("checked",true);
+		}else{
+			$("input[name='p_caddyyn']").prop("checked",false);
+		}
 		
-		// 전체선택
-		$("#chkall").on("click",function(){
-			$(".check").each(function(idx,ele){
-				$(ele).prop("checked",$("#chkall").prop("checked"));
-			});
-		});
-		
-		// 하나라도 체크 풀면 전체선택 체크풀림
-		$(".check").on("click",function(){
-			if($(".check:checked").length == ${productList.size()}){
-				$("#chkall").prop("checked",true);
-			}else{
-				$("#chkall").prop("checked",false);
+		$("input[name='p_hole']").each(function(idx,ele){
+			if('${dto.p_hole}' == $(ele).val()){
+				$(ele).prop("checked",true);
 			}
 		});
+		
+		
 				
 		Date.prototype.format = function (f) {
 		    if (!this.valueOf()) return " ";
@@ -55,121 +63,122 @@
 		String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
 		Number.prototype.zf = function (len) { return this.toString().zf(len); };
 		
+		function parse(str){
+			var day = new Date(str)
+			day.format('yyyy-MM-dd')+"T23:59";
+			//https://hianna.tistory.com/319
+			return day;
+		}
+		
 		var date = new Date();
 		console.dir(date);
 		console.log(date.format('yyyy-MM-dd')+"T"+date.format('HH:mm:ss'));
 		console.log(Number.parseInt(date.format('HH'))+12);
 		var day = date.format('yyyy-MM-dd')+"T23:59";
 		console.log(Number.parseInt(day)<10);
+		$("#p_pdate").attr("value",parse('${dto.p_pdate}').toISOString().slice(0, 19));
 		$("#p_pdate").attr("min",day);
 		$("#p_pdate").attr("max",(Number.parseInt(date.format('yyyy'))+1)+"-12-31T23:59");
 		
 	});
 </script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<h3 style="margin-left:200px;margin-top: 15px">상품 관리</h3>
-	<table class="line_table" style="margin-left:200px">
+
+<FORM name="productForm" method="GET" action="#">
+<input type="hidden" name="p_id" value="${dto.p_id}">
+
+	<table width="100%" cellspacing="0" cellpadding="0" border="0">
 		<tr>
-			<td><input type="checkbox" style="width: 30px" id="chkall">전체선택</td>
-			<th colspan="2" style="border-bottom: 1px solid #444444;width: 300px">골프장</th>
-			<th style="border-bottom: 1px solid #444444">티업시간</th>
-			<th style="border-bottom: 1px solid #444444">그린피</th>
+			<td height="30">
 		</tr>
-		<c:choose>
-			<c:when test="${empty productList}">
-				<tr>
-					<td colspan="5" align="center" style="border-bottom: 1px solid #444444"><h3 style="color:#665b5f">상품이 없습니다</h3></td>
-				
-				</tr>
-			</c:when>
-			<c:otherwise>
-				<c:forEach var="pList" items="${productList}">
-				<input type="hidden" name="p_id" value="${pList.p_id}">
+		<tr>
+			<td>
+				<table align="center" width="710" cellspacing="0" cellpadding="0"
+					border="0" style='margin-left: 30px'>
 					<tr>
-						<td><input type="checkbox" name="check" class="check" value="${pList.p_id}" id="check${pList.p_id}"></td>
-						<td width="120" style="border-bottom: 1px solid #444444"><img
-							src="img/GOLFCC/${pList.loc_id}/${pList.cc_img}"
-							onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'" border="0"
-							align="middle" width="120" height="80" /></td>
-						<td style="border-bottom: 1px solid #444444">
-							<table>
-								<tr>
-									<td><a href="ProductRetrieve?p_id=${pList.p_id}"><b>${pList.cc_name}</b></a></td>
-									<td style="width: 220px"><span>${pList.p_maxpeople}명 
-										<!-- <script>
-											$("input[name='p_hole']").each(function(idx,ele){
-												console.log($(ele).val());
-												if($(ele).val()==${pList.p_hole}){
-													$(ele).prop("checked",true);
-												}
-											});
-												
-										</script> -->
-										<input type="radio" name="p_hole" value="18" checked="checked">18홀&nbsp;&nbsp; 
-										<input type="radio"	name="p_hole" value="27">27홀&nbsp;&nbsp;
-										<input type="radio"	name="p_hole" value="36">36홀<br>${pList.p_hole}홀</span></td>
-								</tr>
-								<tr>
-									<td><font size="2" color="#4374D9">${pList.p_uploaddate}</font></td>
-									<td>
-										<font size="2" color="#665b5f">캐디유무 :</font>
-										<input type="radio" name="p_caddyyn" value="Y" checked="checked">캐디&nbsp;&nbsp; 
-										<input type="radio" name="p_caddyyn" value="N">노캐디
-											${pList.p_caddyyn} <br>
-										<font size="2" color="#665b5f">식사유무 : </font>
-										<input type="checkbox" name="p_babyn" style="width: 30px">
-										${pList.p_babyn}
-										<br>
-										<font size="2" color="#665b5f"> 카트유무 : </font>
-										<input type="checkbox" name="p_cartyn" style="width: 30px">
-											${pList.p_cartyn}</td>
-								</tr>
-							</table>
-						</td >
-						<td style="border-bottom: 1px solid #444444">
-							<input type="datetime-local" id="p_pdate" name="p_pdate"  max="2020-01-01T00:00" pattern="" required="required" value="${pList.p_pdate}">
-							<br><b>${pList.p_pdate}</b><br>${pList.nickname}
-							☎${pList.phone_id}</td>
-						<td align="center" style="border-bottom: 1px solid #444444">
-							<input type="number" min="1" name="p_price" style="width:50px" required="required" value="${pList.p_price}"> 만원<br> 
-							<c:if test="${pList.emergency eq '긴급'}">
-								<b style="color: red">[${pList.emergency}]</b>
-							</c:if></td>
+						<td class="td_default"><font size="5"><b>- 상품 보기 -</b></font>
+							&nbsp;</td>
 					</tr>
-				</c:forEach>
+					<tr>
+						<td height="5"></td>
+					</tr>
+					<tr>
+						<td height="1" colspan="8" bgcolor="CECECE"></td>
+					</tr>
+					<tr>
+						<td height="10"></td>
+					</tr>
 
-				<tr>
-					<td colspan="5" align="center" style="border-bottom: 1px solid #444444">
-						<ul class="pagination justify-content-center" style="margin-top:10px">
-						<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
-						<c:set var="maxBlock" value="${maxBlock}" />
-						<c:set var="minBlock" value="${minBlock+1}" /> 
-						<c:if test="${curPage != 1}">
-							<li class="page-item"><a class="page-link" href="productList?curPage=1"><<</a></li>
-								<c:if test="${curPage>showBlock}">
-									<li class="page-item"><a class="page-link" href="productList?curPage=${minBlock-1}"><</a></li>
-								</c:if>
-						</c:if>
-						<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
-							<c:choose>
-								<c:when test="${curPage eq i}">
-									<li class="page-item disabled"><a class="page-link" href="productList?curPage=${i}">${i}</a></li>
-								</c:when>
-								<c:when test="${curPage != i}">
-									<li class="page-item"><a class="page-link" href="productList?curPage=${i}">${i}</a></li>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${curPage != totalPage}">
-							<c:if test="${curPage<=showBlock*perBlock}">
-								<li class="page-item"><a class="page-link" href="productList?curPage=${maxBlock+1}">></a></li>
-							</c:if>
-							<li class="page-item"><a class="page-link" href="productList?curPage=${totalPage}">>></a></li>
-						</c:if>
-						</ul>
-					</td>
-				</tr>
-			</c:otherwise>
-		</c:choose>
+					<tr>
+					
+						<td rowspan="6"><img
+							src="<c:url value="img/GOLFCC/${dto.loc_id}/${dto.cc_img}"/>"
+							onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'"
+							border="0" align="center" width="300" /> <br>
 
+						<td class="td_title" style="width: 80px">골프장 명</td>
+						<td class="td_default" colspan="2" style='padding-left: 30px'>${dto.cc_name}</td>
+
+					</tr>
+					<tr>
+
+						<td class="td_title">티업 시간</td>
+						<td class="td_default" colspan="2" style='padding-left: 30px'>
+						<input type="datetime-local" name="p_pdate" id="p_pdate">
+						${dto.p_pdate}
+						</td>
+					</tr>
+					<tr>
+						<td class="td_title">가격</td>
+
+						<td class="td_red" colspan="2" style='padding-left: 30px'>
+							<input type="number" name="p_price" value="${dto.p_price}" min="1" style="width: 40px"> 만원</td>
+					</tr>
+					
+					<tr>
+						<td class="td_title" rowspan="2">상품옵션</td>
+						<td colspan="2" style='padding-left: 30px'>
+							<input type="checkbox" name="p_babyn" style="width: 20px"><span>식사제공</span>&nbsp;
+							<input type="checkbox" name="p_cartyn" style="width: 20px"><span>카트제공</span>&nbsp;
+							<input type="checkbox" name="p_caddyyn" style="width: 20px"><span>캐디제공</span>&nbsp;
+							<input type="radio" name="p_hole" value="18"><span>18 홀</span>&nbsp;
+							<input type="radio" name="p_hole" value="27"><span>27 홀</span>&nbsp;
+							<input type="radio" name="p_hole" value="36"><span>36 홀</span><br>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style='padding-left: 30px'></td>
+					</tr>
+
+					<tr>
+						<td class="td_title">인원 수&nbsp;&nbsp;
+						</td>
+						<td style="padding-left: 30px">
+							${dto.p_maxpeople} 명
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<hr>
+							<font size="5"><b>- 상품 설명 -</b></font>
+							<br>
+							<br>
+							<div>
+								<textarea rows="1" cols="10">${dto.p_content}</textarea> 
+							</div>
+						</td>
+
+					</tr>
+
+
+				</table>
+			</td>
+		</tr>
 	</table>
+	<br>
+	<hr>
+
+	<br>
+	<button onclick="reqCheck('order',productForm,event)">구매</button>
+	&nbsp;&nbsp;
+	<button onclick="reqCheck('cart',productForm,event)">장바구니</button>
+</FORM>

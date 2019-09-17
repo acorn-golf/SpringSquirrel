@@ -281,9 +281,9 @@ public class ProductController {
 	}
 	
 	// Manager : 상품 관리 목록 보여주기
-	@RequestMapping(value = "/editProduct")
+	@RequestMapping(value = "/editProductView")
 	@Loginchk(role = Role.MANAGER)
-	public ModelAndView editProduct(@RequestParam Map<String, String> map, HttpSession session) {
+	public ModelAndView editProductView(@RequestParam Map<String, String> map, HttpSession session) {
 		int curPage; 
 		{
 			String curPageStr = map.get("curPage");
@@ -337,8 +337,19 @@ public class ProductController {
 		mav.addObject("productList", list);
 		mav.addObject("totalPage", totalPage);
 		mav.addObject("curPage", curPage);
-		mav.setViewName("product/editProduct");
+		mav.setViewName("product/editProductView");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/editProduct")
+	@Loginchk(role = Role.MANAGER)
+	public String editProduct(@RequestParam("p_id") String p_id, Model m) {
+		System.out.println(p_id);
+		ProductListDTO dto = proService.editProduct(p_id);
+		
+		System.out.println(dto.getCc_name());
+		m.addAttribute("dto", dto);
+		return "product/editProduct";
 	}
 
 }
