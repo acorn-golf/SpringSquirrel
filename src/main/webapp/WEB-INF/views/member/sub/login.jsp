@@ -44,6 +44,11 @@
 		});
 		//]]>
 
+		function alertClose(){
+			$("#alert").html('');
+		
+		}
+		
 	$(document).ready(function(){
 		
 		$("#phone_id").click(function(){
@@ -54,6 +59,10 @@
 		$("#userpw").click(function(){
 			$("#idchk").text("");
 			$("#pwchk").text("");			
+		});
+		
+		$("#close").click(function() {
+			$("#alert").html("");
 		});
 		
 		$("form").on("submit",function(event){
@@ -71,7 +80,7 @@
  						if( data == 0){						
 							$("#userpw").focus();
 							$("#userpw").val("");
-							$("#alert").html("<div class='alert'>아이디<br> 또는 <br>비밀번호가 <br>틀립니다.<br><input type='button' value='확인'></div>");
+							$("#alert").html("<div class='alert'>아이디<br> 또는 <br>비밀번호가 <br>틀립니다.<br><br><input type='button' value='확인' onclick='alertClose()'></div>");
 						}else{
 							$("form").unbind("submit").submit();					
 						} 
@@ -88,7 +97,7 @@
 </script>
 <style>
 .login_box {
-border-radius: 4px;
+	border-radius: 4px;
 	position: absolute;
 	top: 65%;
 	transform: translate(-50%, -50%);
@@ -106,7 +115,10 @@ border-radius: 4px;
 	transform: translate(-50%, -50%);
 }
 .alert {
-
+	border-radius: 4px;
+	position: absolute;
+	top: 65%;
+	transform: translate(-50%, -50%);
 }
 </style>
 
@@ -121,8 +133,7 @@ border-radius: 4px;
 		<div><input type="password" name="userpw" id="userpw" maxlength="30" required /><label>비밀번호</label></div>
 		<input type="submit" value="로그인"><br><br>
 		<input type="button" value="비밀번호찾기" id="findPW">	
-	</form>	
-		
+	</form>			
 </div>
 
 	
