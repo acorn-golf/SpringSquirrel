@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.ProductDTO;
+import com.squirrel.dto.view.OrderInfoDTO;
+import com.squirrel.dto.view.ProductDealHistoryDTO;
 import com.squirrel.dto.view.ProductListDTO;
 
 @Repository
@@ -61,6 +63,44 @@ public class ProductDAO {
 	public int totalRecord() {
 		int totalRecord = template.selectOne("ProductMapper.adminTotalRecord");
 		return totalRecord;
+	}
+
+	public int totalRecordDealHistory(int user_no) {
+		return template.selectOne("ProductMapper.totalRecordDealHistory",user_no);
+	}
+	
+	public PageDTO<ProductDealHistoryDTO> selectDealHistory(int user_no, int curPage) {
+		PageDTO<ProductDealHistoryDTO> pdto = new PageDTO<ProductDealHistoryDTO>();
+		pdto.setPerPage(10);
+		int perPage = pdto.getPerPage();
+		int offset = (curPage)*perPage;
+		int totalRecord = totalRecordDealHistory(user_no);
+		List<ProductDealHistoryDTO> list = template.selectList("ProductMapper.selectDealHistory", user_no, new RowBounds(offset, perPage));
+		
+		pdto.setList(list);
+		pdto.setCurPage(curPage);
+		pdto.setTotalRecord(totalRecord);
+		
+		return pdto;
+	}
+
+	public int totalRecordEditProduct(int user_no) {
+		return template.selectOne("ProductMapper.totalRecordEditProduct",user_no);
+	}
+	
+	public PageDTO<ProductListDTO> selectEditProduct(int user_no, int curPage) {
+		PageDTO<ProductListDTO> pdto = new PageDTO<ProductListDTO>();
+		pdto.setPerPage(10);
+		int perPage = pdto.getPerPage();
+		int offset = (curPage)*perPage;
+		int totalRecord = totalRecordEditProduct(user_no);
+		List<ProductListDTO> list = template.selectList("ProductMapper.selectEditProduct", user_no, new RowBounds(offset, perPage));
+		
+		pdto.setList(list);
+		pdto.setCurPage(curPage);
+		pdto.setTotalRecord(totalRecord);
+		
+		return pdto;
 	}
 
 }

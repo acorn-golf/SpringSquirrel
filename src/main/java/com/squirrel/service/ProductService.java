@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.squirrel.dao.ProductDAO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.ProductDTO;
+import com.squirrel.dto.view.OrderInfoDTO;
+import com.squirrel.dto.view.ProductDealHistoryDTO;
 import com.squirrel.dto.view.ProductListDTO;
 
 @Service
@@ -55,6 +57,22 @@ public class ProductService {
 		totalRecord = dao.totalRecord();
 
 		return totalRecord;
+	}
+
+	public PageDTO<ProductDealHistoryDTO> selectDealHistory(int user_no, int curPage) {
+		PageDTO<ProductDealHistoryDTO> pdto = null;
+
+		pdto = dao.selectDealHistory(user_no, curPage);
+
+		return pdto;
+	}
+
+	public PageDTO<ProductListDTO> selectEditProduct(int user_no, int curPage) {
+		PageDTO<ProductListDTO> pdto = null;
+
+		pdto = dao.selectEditProduct(user_no, curPage);
+
+		return pdto;
 	}
 
 }

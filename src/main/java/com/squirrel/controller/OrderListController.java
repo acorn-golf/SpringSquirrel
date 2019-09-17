@@ -165,4 +165,59 @@ public class OrderListController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/orderListPayment")
+	public ModelAndView orderListPayment(@RequestParam Map<String, String> map, HttpSession session) {
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+		//int user_no = 3; 
+		
+		int curPage; 
+		{
+			String curPageStr = map.get("curPage");
+			if (curPageStr == null) {
+				curPage = 0;
+			}else
+				curPage=Integer.parseInt(curPageStr)-1;
+		}
+		
+		
+		PageDTO<OrderInfoDTO> pdto = orderService.selectOrderListPayment(user_no, curPage);
+		List<OrderInfoDTO> list = pdto.getList();
+		
+		int perPage = pdto.getPerPage();
+		int totalRecord = pdto.getTotalRecord();
+		int totalPage = totalRecord / perPage;
+
+		if (totalRecord % (float)perPage != 0) {
+			totalPage++;
+		}
+
+		int showBlock = 5; // for show page 1,2,3,4,5 // 6,7,8,9,10
+		int minBlock = (curPage / (showBlock)) * showBlock;
+		int maxBlock = 0;
+		if (curPage == totalPage || totalPage < minBlock+showBlock) {
+			maxBlock = totalPage;
+		} else if (curPage < totalPage) {
+			maxBlock = minBlock + showBlock;
+		}
+		int perBlock = 0;//totalPage/showBlock;
+		if(totalPage%showBlock==0) {
+			perBlock = (totalPage/showBlock)-1;
+		}else {
+			perBlock = totalPage/showBlock;
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("perBlock", perBlock);
+		mav.addObject("minBlock", minBlock);
+		mav.addObject("maxBlock", maxBlock);
+		mav.addObject("showBlock", showBlock);
+		mav.addObject("orderList", list);
+		mav.addObject("totalPage", totalPage);
+		mav.addObject("curPage", curPage);
+		mav.setViewName("orderlist/orderlistviewPayment");
+		return mav;
+	}
+	
 }
