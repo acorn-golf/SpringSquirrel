@@ -17,7 +17,7 @@
     p:host="smtp.naver.com"
     p:port="465"
     p:username="tlakffja"
-    p:password="chang16gh@!">
+    p:password="chang16gh~~!">
     <property name="javaMailProperties">
     <props>
       <prop key="mail.smtp.starttls.enable">true</prop>
@@ -91,6 +91,7 @@
 				<value>com.squirrel.dto.view.IsOrderListDTO</value>
 				<value>com.squirrel.dto.view.OrderInfoDTO</value>
 				<value>com.squirrel.dto.view.PickOrderListDTO</value>
+				<value>com.squirrel.dto.view.ProductDealHistoryDTO</value>
 
 			</list>
 		</property>

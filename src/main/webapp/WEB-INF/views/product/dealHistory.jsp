@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약 목록</title>
+<title>거래 내역</title>
 </head>
 <body>
 <%-- <jsp:include page="common/top.jsp" flush="true" /><br>
 <jsp:include page="common/menu.jsp" flush="true" /> --%>
 <jsp:include page="../show/main.jsp" flush="false"/>
 
-<jsp:include page="sub/orderlistview.jsp" flush="true" />
+<jsp:include page="sub/dealHistory.jsp" flush="true" />
 </body>
 </html>
