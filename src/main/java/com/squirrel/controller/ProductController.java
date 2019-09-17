@@ -351,6 +351,20 @@ public class ProductController {
 		m.addAttribute("dto", dto);
 		return "product/editProduct";
 	}
+	
+	@RequestMapping(value = "/deleteProduct")
+	@Loginchk(role = Role.MANAGER)
+	public String deleteProduct(@RequestParam Map<String, String> map) {
+		
+		return "redirect:/editProductView";
+	}
+	
+	@RequestMapping(value = "/updateProduct")
+	@Loginchk(role = Role.MANAGER)
+	public String updateProduct(@RequestParam Map<String, String> map) {
+		System.out.println(">>>>>>"+map);
+		return "redirect:/editProductView";
+	}
 
 }
 

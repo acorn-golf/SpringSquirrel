@@ -65,9 +65,10 @@
 		
 		function parse(str){
 			var day = new Date(str)
-			day.format('yyyy-MM-dd')+"T23:59";
+			var date = day.format('yyyy-MM-dd')+"T"+day.format('HH:mm:ss');
+			console.log(">>>"+date);
 			//https://hianna.tistory.com/319
-			return day;
+			return date;
 		}
 		
 		var date = new Date();
@@ -76,14 +77,22 @@
 		console.log(Number.parseInt(date.format('HH'))+12);
 		var day = date.format('yyyy-MM-dd')+"T23:59";
 		console.log(Number.parseInt(day)<10);
-		$("#p_pdate").attr("value",parse('${dto.p_pdate}').toISOString().slice(0, 19));
+		$("#p_pdate").attr("value",parse('${dto.p_pdate}'));
 		$("#p_pdate").attr("min",day);
 		$("#p_pdate").attr("max",(Number.parseInt(date.format('yyyy'))+1)+"-12-31T23:59");
 		
+		$("#delete").on("click",function(event){
+			$("form").attr("action","deleteProduct");
+		});
+		$("#update").on("click",function(event){
+			$("form").attr("action","updateProduct");
+		});
 	});
+	
+	
 </script>
 
-<FORM name="productForm" method="GET" action="#">
+<form name="productForm" method="GET" action="#" class="form_main">
 <input type="hidden" name="p_id" value="${dto.p_id}">
 
 	<table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -163,7 +172,7 @@
 							<br>
 							<br>
 							<div>
-								<textarea rows="1" cols="10">${dto.p_content}</textarea> 
+								<textarea rows="1" cols="10" name="p_content">${dto.p_content}</textarea> 
 							</div>
 						</td>
 
@@ -178,7 +187,7 @@
 	<hr>
 
 	<br>
-	<button onclick="reqCheck('order',productForm,event)">구매</button>
+	<button id="delete">삭제</button>
 	&nbsp;&nbsp;
-	<button onclick="reqCheck('cart',productForm,event)">장바구니</button>
-</FORM>
+	<button id="update">수정</button>
+</form>
