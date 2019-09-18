@@ -103,4 +103,9 @@ public class ProductDAO {
 		return pdto;
 	}
 
+	public ProductListDTO editProduct(String p_id) {
+		ProductListDTO dto = template.selectOne("ProductMapper.editProduct", p_id);
+		return dto;
+	}
+
 }

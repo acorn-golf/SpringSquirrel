@@ -17,21 +17,21 @@
 			<th>작성자</th>
 			<th>내용</th>
 		</tr>
-		<c:forEach items="${NoteContent}" var="note">
+	
 			<tr>
-			    <td>${note.note_no}</td>
-				<td>${note.nickname}</td>
-				<td>${note.note_content}</td>
+			    <td>${NoteContent.note_no}</td>
+				<td>${NoteContent.nickname}</td>
+				<td>${NoteContent.note_content}</td>
 			</tr>
-		</c:forEach>
+		
 
 	</table>
 <c:if test="${empty login.rating eq 'A'}">
-<a href="NoteUpdate">
-<input type="submit" value="수정">
+<a href="NoteUpdate?note_no= ${NoteContent.note_no}">
+<input type="button" value="수정">
 </a>
-<a href="NoteDelete">
-<input type="submit" value="삭제">
+<a href="NoteDelete?note_no= ${NoteContent.note_no}">
+<input type="button" value="삭제">
 </a>
 </c:if>
 

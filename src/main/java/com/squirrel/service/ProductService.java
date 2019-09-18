@@ -75,4 +75,9 @@ public class ProductService {
 		return pdto;
 	}
 
+	public ProductListDTO editProduct(String p_id) {
+		ProductListDTO dto = dao.editProduct(p_id);
+		return dto;
+	}
+
 }
