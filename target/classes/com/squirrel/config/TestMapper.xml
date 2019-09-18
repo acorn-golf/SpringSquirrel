@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TestMapper">
+
+	<!-- <select id="countList" resultType="int">
+		SELECT count(*) 
+		FROM(
+			SELECT ROWNUM as rn, A.* 
+			FROM (
+				SELECT CC_ID,CC_NAME,CC_ADDR1,CC_ADDR2,CC_PHONE,CC_URL,CC_IMG,LOC_ID 
+				FROM GOLFCC
+				<include refid="search"></include>
+				ORDER BY CC_ID) A )
+	</select> -->
+	<select id="countList" resultType="int">
+	SELECT count(*) 
+		FROM(
+			SELECT ROWNUM as rn, A.* 
+			FROM (
+				SELECT CC_ID,CC_NAME,CC_ADDR1,CC_ADDR2,CC_PHONE,CC_URL,CC_IMG,LOC_ID 
+				FROM GOLFCC
+                order by CC_ID
+            ) A
+        )
+	</select>
+	<select id="listAll" resultType="TestDTO">
+		<!-- 목록 조회 및 페이징 전체 쿼리 -->
+		<include refid="pagingHeader"></include>
+			SELECT CC_ID,CC_NAME,CC_ADDR1,CC_ADDR2,CC_PHONE,CC_URL,CC_IMG,LOC_ID 
+			FROM GOLFCC
+			<include refid="search"></include>
+			ORDER BY CC_ID
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<!-- 검색조건  sql -->
+	<sql id="search">
+		<choose>
+		<!-- 검색옵션이 전체 검색일 경우 -->
+		<when test="searchOption == 'all'">
+			where CC_NAME like '%'||#{keyword}||'%' or CC_ADDR1 like '%'||#{keyword}||'%' or CC_URL like '%'||#{keyword}||'%'
+		</when>
+		<otherwise>
+			where ${searchOption} like '%'||#{keyword}||'%'
+		</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		SELECT * FROM(
+			SELECT ROWNUM as rn, A.* FROM ( 
+	</sql>
+	<sql id="pagingFooter">
+			)A
+		) where rn BETWEEN #{start} and  #{end};
+	</sql>
+</mapper>

@@ -12,7 +12,7 @@
 
 		<sub_Menu>
 			<name>상품 관리</name>
-			<url>/golfhi/editProduct</url>
+			<url>/golfhi/editProductView</url>
 		</sub_Menu>
 
 		<sub_Menu>
