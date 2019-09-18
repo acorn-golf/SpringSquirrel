@@ -127,4 +127,14 @@
 		where P_ID=#{p_id}
     </select>
 
+	<delete id="deleteProduct" parameterType="hashmap">
+		delete from PRODUCT
+		where P_ID=#{p_id}
+	</delete>
+	
+	<update id="updateProduct" parameterType="ProductDTO">
+		update PRODUCT
+		set p_pdate=to_date(#{p_pdate},'yyyy-MM-dd/HH24:mi'), p_price=#{p_price}, p_caddyyn=#{p_caddyyn}, p_babyn=#{p_babyn}, p_cartyn=#{p_cartyn}, p_hole=#{p_hole}, p_content=#{p_content}
+		where P_ID=#{p_id}
+	</update>
 </mapper>

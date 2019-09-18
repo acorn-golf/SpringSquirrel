@@ -53,11 +53,11 @@
 
 	<Menu> <!-- 평점게시판 -->
 		<name>평점게시판</name>
-		<url>/teamSquirrel/ReviewListServlet</url>
+		<url>/golfhi/reviewList</url>
 
 		<sub_Menu>
 			<name>전체 보기</name>
-			<url>/teamSquirrel/ReviewListServlet</url>
+			<url>/golfhi/reviewList</url>
 		</sub_Menu>
 
 		<sub_Menu>
@@ -67,7 +67,7 @@
 
 		<sub_Menu>
 			<name>평점 남기기</name>
-			<url>/teamSquirrel/InsertReviewServlet</url>
+			<url>/golfhi/insertReviewForm</url>
 		</sub_Menu>
 
 		<sub_Menu>

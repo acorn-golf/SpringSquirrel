@@ -344,25 +344,52 @@ public class ProductController {
 	@RequestMapping(value = "/editProduct")
 	@Loginchk(role = Role.MANAGER)
 	public String editProduct(@RequestParam("p_id") String p_id, Model m) {
-		System.out.println(p_id);
 		ProductListDTO dto = proService.editProduct(p_id);
-		
-		System.out.println(dto.getCc_name());
 		m.addAttribute("dto", dto);
 		return "product/editProduct";
 	}
 	
 	@RequestMapping(value = "/deleteProduct")
 	@Loginchk(role = Role.MANAGER)
-	public String deleteProduct(@RequestParam Map<String, String> map) {
-		
+	public String deleteProduct(@RequestParam HashMap<String, String> map, RedirectAttributes data) {
+		String mesg = "삭제되었습니다.";
+		if(Integer.parseInt(map.get("p_maxpeople"))==4) {
+			int result = proService.deleteProduct(map);
+			if(result==0) {
+				mesg = "삭제 실패";
+			}
+			data.addFlashAttribute("mesg", mesg);
+		}
 		return "redirect:/editProductView";
 	}
 	
 	@RequestMapping(value = "/updateProduct")
 	@Loginchk(role = Role.MANAGER)
-	public String updateProduct(@RequestParam Map<String, String> map) {
-		System.out.println(">>>>>>"+map);
+	public String updateProduct(ProductDTO dto, RedirectAttributes data) {
+		
+		dto.setP_pdate(dto.getP_pdate().replace('T', '/'));
+		if (dto.getP_babyn() == null) {
+			dto.setP_babyn("N");
+		} else {
+			dto.setP_babyn("Y");
+		}
+		if (dto.getP_cartyn() == null) {
+			dto.setP_cartyn("N");
+		} else {
+			dto.setP_cartyn("Y");
+		}
+		if (dto.getP_caddyyn() == null) {
+			dto.setP_caddyyn("N");
+		} else {
+			dto.setP_caddyyn("Y");
+		}
+		String mesg = "수정되었습니다.";
+		int result = proService.updateProduct(dto);
+		if(result==0) {
+			mesg = "수정 실패";
+		}
+		data.addFlashAttribute("mesg", mesg);
+		
 		return "redirect:/editProductView";
 	}
 

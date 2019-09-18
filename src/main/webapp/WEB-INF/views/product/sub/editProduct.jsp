@@ -82,9 +82,19 @@
 		$("#p_pdate").attr("max",(Number.parseInt(date.format('yyyy'))+1)+"-12-31T23:59");
 		
 		$("#delete").on("click",function(event){
-			$("form").attr("action","deleteProduct");
+			if(Number.parseInt('${dto.p_maxpeople}')<4){
+				event.preventDefault();
+				alert('이미 상품을 예약한 인원이 있어 삭제할 수 없습니다 \n 나중에 DB에 가상삭제컬럼 추가하여 작업하든 할껍니다');
+			}else{
+				$("form").attr("action","deleteProduct");
+			}
+			
 		});
 		$("#update").on("click",function(event){
+			if($("#p_content").val().length == 0){
+				event.preventDefault();
+				alert('상품 설명을 적어주세요');
+			}
 			$("form").attr("action","updateProduct");
 		});
 	});
@@ -92,7 +102,7 @@
 	
 </script>
 
-<form name="productForm" method="GET" action="#" class="form_main">
+<form name="productForm" method="GET" action="#" class="form_login">
 <input type="hidden" name="p_id" value="${dto.p_id}">
 
 	<table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -133,7 +143,6 @@
 						<td class="td_title">티업 시간</td>
 						<td class="td_default" colspan="2" style='padding-left: 30px'>
 						<input type="datetime-local" name="p_pdate" id="p_pdate">
-						${dto.p_pdate}
 						</td>
 					</tr>
 					<tr>
@@ -162,7 +171,7 @@
 						<td class="td_title">인원 수&nbsp;&nbsp;
 						</td>
 						<td style="padding-left: 30px">
-							${dto.p_maxpeople} 명
+							<input type="text" readonly="readonly" name="p_maxpeople" value="${dto.p_maxpeople}"> 명
 						</td>
 					</tr>
 					<tr>
@@ -172,7 +181,7 @@
 							<br>
 							<br>
 							<div>
-								<textarea rows="1" cols="10" name="p_content">${dto.p_content}</textarea> 
+								<textarea rows="1" cols="10" name="p_content" id="p_content">${dto.p_content}</textarea> 
 							</div>
 						</td>
 
