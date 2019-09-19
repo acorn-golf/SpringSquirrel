@@ -16,12 +16,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.service.MemberService;
+import com.squirrel.util.jwt.JwtUtil;
 
 @Controller
 public class MemberController {
 
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	JwtUtil jwtUtil;
 
 	@RequestMapping(value="/memberAdd")
 	public String memberAdd(MemberDTO mDTO, HttpSession session) {
@@ -67,6 +71,10 @@ public class MemberController {
 			}else {
 				session.setAttribute("login", mDTO);
 				destination = "redirect:../email/isEmailchk";
+				
+				//jwt 테스트 코드 (지한뉘)
+				System.out.println(jwtUtil.TestGetAccessToken(mDTO.getUser_no(), mDTO.getRating()));
+				
 			}				
 		
 		return destination;

@@ -40,25 +40,7 @@ public class OauthController {
 	@ResponseBody
 	public HashMap<String, Object> kakaoLogin(@RequestParam HashMap<String, String> logininfo,
 			HttpSession httpSession) {
-		// SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-
-		SecretKey key;
-		byte[] tmp = "아 너무 졸리다 배고프고 춥고 졸리고 그냥 뒤질거같다".getBytes();
-		byte[] tmpdate = String.valueOf(new Date().getTime()).getBytes();
-		for (int i = 0; i<tmp.length;i++) {
-			System.out.println("변경전" + tmp[i]);
-			 tmp[i] = (byte) (tmp[i]^tmpdate[i%tmpdate.length]);
-			 System.out.println("변경후" + tmp[i]);
-		}
-
-		byte[] keyBytes = tmp;
-		key = Keys.hmacShaKeyFor(tmp);
-
-		String jws = Jwts.builder().setSubject("Joe").signWith(key).compact();
-
-		System.out.println(jws);
-
-		// test
+	
 		for (Map.Entry<String, String> entry : logininfo.entrySet())
 			System.out.println(entry.getKey() + ":" + entry.getValue());
 
