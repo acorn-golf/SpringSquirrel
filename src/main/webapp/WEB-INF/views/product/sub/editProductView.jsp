@@ -5,6 +5,11 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<c:if test="${mesg != null}">
+	<script>
+		alert('${mesg}');
+	</script>
+</c:if>
 <script type="text/javascript">
 	$(document).ready(function(){
 		

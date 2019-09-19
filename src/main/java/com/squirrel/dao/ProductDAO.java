@@ -2,6 +2,7 @@ package com.squirrel.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -106,6 +107,16 @@ public class ProductDAO {
 	public ProductListDTO editProduct(String p_id) {
 		ProductListDTO dto = template.selectOne("ProductMapper.editProduct", p_id);
 		return dto;
+	}
+
+	public int deleteProduct(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return template.delete("ProductMapper.deleteProduct", map);
+	}
+
+	public int updateProduct(ProductDTO dto) {
+		// TODO Auto-generated method stub
+		return template.update("ProductMapper.updateProduct", dto);
 	}
 
 }
