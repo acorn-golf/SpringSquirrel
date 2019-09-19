@@ -1,9 +1,16 @@
 package com.squirrel.controller;
 
+import java.security.Key;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpSession;
+import javax.swing.JComboBox.KeySelectionManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +22,10 @@ import com.squirrel.dto.MemberDTO;
 import com.squirrel.service.MemberService;
 import com.squirrel.util.aes.AESManager;
 import com.squirrel.util.curl.CurlUtil;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Controller
 public class OauthController {
@@ -29,6 +40,23 @@ public class OauthController {
 	@ResponseBody
 	public HashMap<String, Object> kakaoLogin(@RequestParam HashMap<String, String> logininfo,
 			HttpSession httpSession) {
+		// SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+		SecretKey key;
+		byte[] tmp = "아 너무 졸리다 배고프고 춥고 졸리고 그냥 뒤질거같다".getBytes();
+		byte[] tmpdate = String.valueOf(new Date().getTime()).getBytes();
+		for (int i = 0; i<tmp.length;i++) {
+			System.out.println("변경전" + tmp[i]);
+			 tmp[i] = (byte) (tmp[i]^tmpdate[i%tmpdate.length]);
+			 System.out.println("변경후" + tmp[i]);
+		}
+
+		byte[] keyBytes = tmp;
+		key = Keys.hmacShaKeyFor(tmp);
+
+		String jws = Jwts.builder().setSubject("Joe").signWith(key).compact();
+
+		System.out.println(jws);
 
 		// test
 		for (Map.Entry<String, String> entry : logininfo.entrySet())
@@ -148,7 +176,7 @@ public class OauthController {
 		{
 			String tmpGender = (String) kakao_account.get("gender");
 
-			if (tmpGender!=null)// female
+			if (tmpGender != null)// female
 			{
 				String i = "1";
 
