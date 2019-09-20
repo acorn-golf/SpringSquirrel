@@ -93,7 +93,7 @@ public class JwtUtil {
 	    jws = Jwts.parser()         // (1)
 	    .setSigningKey(getKey())
 	    .requireSubject("Refresh")
-	    .parseClaimsJws(jstr); // (3)
+	    .parseClaimsJws(jstr); // (3)  
 	    
 		return jws.getBody();
 	}
