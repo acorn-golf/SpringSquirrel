@@ -80,7 +80,7 @@
  						if( data == 0){						
 							$("#userpw").focus();
 							$("#userpw").val("");
-							$("#alert").html("<div class='alert'>아이디<br> 또는 <br>비밀번호가 <br>틀립니다.<br><br><input type='button' value='확인' onclick='alertClose()'></div>");
+							$("#alert").html("<div class='alert'>아이디<br>또는<br>비밀번호가 틀립니다.<br><br><input type='button' value='확인' onclick='alertClose()'></div>");
 						}else{
 							$("form").unbind("submit").submit();					
 						} 
@@ -96,7 +96,7 @@
 	});
 </script>
 <style>
-.login_box {
+.login_box {	
 	border-radius: 4px;
 	position: absolute;
 	top: 65%;
@@ -115,6 +115,8 @@
 	transform: translate(-50%, -50%);
 }
 .alert {
+	background-color: #F5F5F5;
+	font-size: 18px;
 	border-radius: 4px;
 	position: absolute;
 	top: 65%;
@@ -127,7 +129,7 @@
 	</div>
 
 <div class="login_box">
-	<h2>로그인</h2>
+	<h1>Login</h1>
 	<form method="POST" action="login">
 		<div><input type="text" name="phone_id" id="phone_id" maxlength="11" required /><label>전화번호</label></div>
 		<div><input type="password" name="userpw" id="userpw" maxlength="30" required /><label>비밀번호</label></div>

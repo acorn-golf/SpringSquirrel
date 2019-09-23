@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>golf-hi</title>
 
-
+<link href="https://fonts.googleapis.com/css?family=Jua|Ultra&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/golfhi/css/style.min.css" />
 <link rel="stylesheet" type="text/css" href="/golfhi/css/modules.css" />
 
