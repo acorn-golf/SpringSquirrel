@@ -2,6 +2,7 @@ package com.squirrel.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,21 @@ public class ProductService {
 		pdto = dao.selectEditProduct(user_no, curPage);
 
 		return pdto;
+	}
+
+	public ProductListDTO editProduct(String p_id) {
+		ProductListDTO dto = dao.editProduct(p_id);
+		return dto;
+	}
+
+	public int deleteProduct(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return dao.deleteProduct(map);
+	}
+
+	public int updateProduct(ProductDTO dto) {
+		// TODO Auto-generated method stub
+		return dao.updateProduct(dto);
 	}
 
 }

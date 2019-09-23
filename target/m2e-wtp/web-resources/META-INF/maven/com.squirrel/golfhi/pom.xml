@@ -211,10 +211,21 @@
 <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 <dependency>
     <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt</artifactId>
-    <version>0.7.0</version>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.10.7</version>
 </dependency>
-
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.10.7</version>
+    <scope>runtime</scope>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.10.7</version>
+    <scope>runtime</scope>
+</dependency>
     <!-- taglibs -->
     <dependency>
         <groupId>taglibs</groupId>

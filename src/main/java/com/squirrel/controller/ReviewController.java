@@ -161,9 +161,9 @@ public class ReviewController {
 	@Loginchk(role = Role.USER)
 	public ModelAndView reviewDetail(@RequestParam HashMap<String, String> map, HttpServletRequest request,
 			HttpServletResponse response) {
-		//String score_no = map.get("score_no");
-		String score_no = "160"; // test�� �ӽ� score_no
-		//String user_no = map.get("user_no");
+		String score_no = map.get("score_no");
+		//String score_no = "160"; // test�� �ӽ� score_no
+		String user_no = map.get("user_no");
 //		if (score_no == null && user_no == null) {
 //
 //		}

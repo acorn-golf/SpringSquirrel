@@ -119,6 +119,13 @@
 
 	<bean id="curlUtil" class="com.squirrel.util.curl.CurlUtil"/>
 	
+	<bean id="jwtToken" class="com.squirrel.util.jwt.JwtUtil">
+	<constructor-arg name="issStr" value="http://golfhi.com"/>
+	<constructor-arg name="keyStr" value="himynameisjihannwiidonthavemoney"/>
+	<constructor-arg name="accessToken_IntervalMin" value="1"/>
+	<constructor-arg name="refresh_IntervalDay" value="15"/>
+	</bean>
+	
 
 	
 </beans>

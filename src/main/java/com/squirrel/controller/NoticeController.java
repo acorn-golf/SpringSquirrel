@@ -43,7 +43,7 @@ public class NoticeController {
 	@RequestMapping("/NoteContent")
 	public ModelAndView NoteContent(@RequestParam("note_no") int note_no) {
 		ModelAndView mav = new ModelAndView();
-		List<NoticeListDTO> NoteContent = sevice.noteconent(note_no);
+		NoticeListDTO NoteContent = sevice.noteconent(note_no);
 		mav.addObject("NoteContent", NoteContent);
 		mav.setViewName("note/Notice/NoteContent");
 		return mav;
@@ -62,6 +62,24 @@ public class NoticeController {
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("login");
 		dto.setUser_no(memberDTO.getUser_no());
 		sevice.NoticeInsert(dto);
+		return "redirect:/NoteView";
+	}
+	@Loginchk(role = Role.ADMIN)
+	@RequestMapping("/NoteDelete") //공지사항 삭제 
+	public String NoteDelete(NoticeListDTO dto , HttpSession session) {
+		System.out.println(dto);
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("login");
+		dto.setUser_no(memberDTO.getUser_no());
+		sevice.NoteDelete(dto);
+		return "redirect:/NoteView";
+	}
+	@Loginchk(role = Role.ADMIN)
+	@RequestMapping("/NoteUpdate") //공지사항 삭제 
+	public String NoteUpdate(NoticeListDTO dto , HttpSession session) {
+		System.out.println(dto);
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("login");
+		dto.setUser_no(memberDTO.getUser_no());
+		sevice.NoteUpdate(dto);
 		return "redirect:/NoteView";
 	}
 }

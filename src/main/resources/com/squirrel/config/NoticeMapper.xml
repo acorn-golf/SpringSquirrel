@@ -4,29 +4,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="NoticeMapper">
 
-   <insert id="NoticeInsert" parameterType="NoticeListDTO">
+	<insert id="NoticeInsert" parameterType="NoticeListDTO">
 		insert into
 		NOTICELIST(NOTE_CONTENT,NOTE_NO,NOTE_TITLE,USER_NO,NOTE_DIVISION
 		<if test="note_file !=null">
-		,NOTE_FILE
+			,NOTE_FILE
 		</if>
 		)
 		values(#{note_content},NOTE_NO_SQ.nextval,#{note_title},#{user_no},#{note_division}
 		<if test="note_file != null ">
-		,#{note_file}
-		</if>)
-		
+			,#{note_file}
+		</if>
+		)
+
 	</insert>
-	
+
 	<select id="NoteView" resultType="NoticeListDTO">
-		select NOTE_NO,NICKNAME,NOTE_TITLE,NOTEDATE
-	from NOTICELIST NATURAL join MEMBERLIST
+		select
+		NOTE_NO,NICKNAME,NOTE_TITLE,NOTEDATE
+		from NOTICELIST NATURAL join MEMBERLIST
 	</select>
-	<select id="NoteContent" resultType="NoticeListDTO" parameterType="int">
+	<select id="NoteContent" resultType="NoticeListDTO"
+		parameterType="int">
 		select NOTE_NO,NICKNAME,NOTE_CONTENT
-	from NOTICELIST NATURAL join MEMBERLIST
-	where NOTE_NO = #{value} 
+		from NOTICELIST NATURAL join MEMBERLIST
+		where NOTE_NO = #{value}
 	</select>
+	<delete id="NoteDelete" parameterType="int"> <!-- 공지사항 삭제 -->
+		delete from NOTICELIST
+		where NOTE_NO=#{value}
+	</delete>
+	<update id="NoteUpdate" parameterType="int"> <!-- 공지사항 수정 --> 
+	UPDATE NOTICELIST 
+set NOTE_CONTENT = #{NOTE_CONTENT}
+where NOTE_CONTENT = #{NOTE_CONTENT}
 	
-	
+	</update>
+
+
 </mapper>

@@ -118,5 +118,23 @@
 		where P_PDATE > sysdate and p.USER_NO=#{user_no}
 		order by P_PDATE
     </select>
+    
+    <select id="editProduct" parameterType="String" resultType="ProductListDTO">
+    	SELECT CC_NAME,CC_IMG,P_ID,P_PDATE,P_UPLOADDATE,P_MAXPEOPLE,P_HOLE,P_CADDYYN,P_BABYN,P_CARTYN,P_PRICE,P_CONTENT,m.USER_NO user_no,P_VCOUNT,NICKNAME,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,LOC_NAME,g.LOC_ID loc_id,
+		<![CDATA[case when P_PDATE-sysdate <= 0.5 then '긴급'
+		end emergency]]>
+		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO JOIN LOCATION l on l.LOC_ID = g.LOC_ID
+		where P_ID=#{p_id}
+    </select>
 
+	<delete id="deleteProduct" parameterType="hashmap">
+		delete from PRODUCT
+		where P_ID=#{p_id}
+	</delete>
+	
+	<update id="updateProduct" parameterType="ProductDTO">
+		update PRODUCT
+		set p_pdate=to_date(#{p_pdate},'yyyy-MM-dd/HH24:mi'), p_price=#{p_price}, p_caddyyn=#{p_caddyyn}, p_babyn=#{p_babyn}, p_cartyn=#{p_cartyn}, p_hole=#{p_hole}, p_content=#{p_content}
+		where P_ID=#{p_id}
+	</update>
 </mapper>

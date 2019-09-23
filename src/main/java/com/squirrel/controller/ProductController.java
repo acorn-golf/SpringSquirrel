@@ -281,9 +281,9 @@ public class ProductController {
 	}
 	
 	// Manager : 상품 관리 목록 보여주기
-	@RequestMapping(value = "/editProduct")
+	@RequestMapping(value = "/editProductView")
 	@Loginchk(role = Role.MANAGER)
-	public ModelAndView editProduct(@RequestParam Map<String, String> map, HttpSession session) {
+	public ModelAndView editProductView(@RequestParam Map<String, String> map, HttpSession session) {
 		int curPage; 
 		{
 			String curPageStr = map.get("curPage");
@@ -337,8 +337,60 @@ public class ProductController {
 		mav.addObject("productList", list);
 		mav.addObject("totalPage", totalPage);
 		mav.addObject("curPage", curPage);
-		mav.setViewName("product/editProduct");
+		mav.setViewName("product/editProductView");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/editProduct")
+	@Loginchk(role = Role.MANAGER)
+	public String editProduct(@RequestParam("p_id") String p_id, Model m) {
+		ProductListDTO dto = proService.editProduct(p_id);
+		m.addAttribute("dto", dto);
+		return "product/editProduct";
+	}
+	
+	@RequestMapping(value = "/deleteProduct")
+	@Loginchk(role = Role.MANAGER)
+	public String deleteProduct(@RequestParam HashMap<String, String> map, RedirectAttributes data) {
+		String mesg = "삭제되었습니다.";
+		if(Integer.parseInt(map.get("p_maxpeople"))==4) {
+			int result = proService.deleteProduct(map);
+			if(result==0) {
+				mesg = "삭제 실패";
+			}
+			data.addFlashAttribute("mesg", mesg);
+		}
+		return "redirect:/editProductView";
+	}
+	
+	@RequestMapping(value = "/updateProduct")
+	@Loginchk(role = Role.MANAGER)
+	public String updateProduct(ProductDTO dto, RedirectAttributes data) {
+		
+		dto.setP_pdate(dto.getP_pdate().replace('T', '/'));
+		if (dto.getP_babyn() == null) {
+			dto.setP_babyn("N");
+		} else {
+			dto.setP_babyn("Y");
+		}
+		if (dto.getP_cartyn() == null) {
+			dto.setP_cartyn("N");
+		} else {
+			dto.setP_cartyn("Y");
+		}
+		if (dto.getP_caddyyn() == null) {
+			dto.setP_caddyyn("N");
+		} else {
+			dto.setP_caddyyn("Y");
+		}
+		String mesg = "수정되었습니다.";
+		int result = proService.updateProduct(dto);
+		if(result==0) {
+			mesg = "수정 실패";
+		}
+		data.addFlashAttribute("mesg", mesg);
+		
+		return "redirect:/editProductView";
 	}
 
 }

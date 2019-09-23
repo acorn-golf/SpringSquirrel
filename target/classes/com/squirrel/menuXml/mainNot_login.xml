@@ -39,11 +39,11 @@
 	</Menu>
 	<Menu>
 		<name>평점게시판</name>
-		<url>/teamSquirrel/ReviewListServlet</url>
+		<url>/golfhi/reviewList</url>
 
 		<sub_Menu>
 			<name>전체 보기</name>
-			<url>/teamSquirrel/ReviewListServlet</url>
+			<url>/golfhi/reviewList</url>
 		</sub_Menu>
 
 	</Menu>

@@ -12,11 +12,11 @@
 </script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<form action="orderList" method="post" class="form_main">
+<form action="orderList" method="post" style="margin-top: 15px;margin-left: 200px">
 <h3>거래 내역</h3>
 <table class="line_table">
 	<tr>
-		<th class="line_th" align="center">상품</th>
+		<th class="line_th">상품</th>
 		<th class="line_th">티업시간</th>
 		<th class="line_th">등록시간</th>
 		<th class="line_th">상품 가격</th>

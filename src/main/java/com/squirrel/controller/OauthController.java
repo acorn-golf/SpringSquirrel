@@ -1,13 +1,22 @@
 package com.squirrel.controller;
 
+import java.security.Key;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
+import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.JComboBox.KeySelectionManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,6 +24,15 @@ import com.squirrel.dto.MemberDTO;
 import com.squirrel.service.MemberService;
 import com.squirrel.util.aes.AESManager;
 import com.squirrel.util.curl.CurlUtil;
+import com.squirrel.util.jwt.JwtUtil;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Controller
 public class OauthController {
@@ -24,13 +42,15 @@ public class OauthController {
 
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	JwtUtil jwt;
 
 	@RequestMapping("/Oauth/kakao")
 	@ResponseBody
 	public HashMap<String, Object> kakaoLogin(@RequestParam HashMap<String, String> logininfo,
 			HttpSession httpSession) {
-
-		// test
+	
 		for (Map.Entry<String, String> entry : logininfo.entrySet())
 			System.out.println(entry.getKey() + ":" + entry.getValue());
 
@@ -148,7 +168,7 @@ public class OauthController {
 		{
 			String tmpGender = (String) kakao_account.get("gender");
 
-			if (tmpGender!=null)// female
+			if (tmpGender != null)// female
 			{
 				String i = "1";
 
@@ -163,4 +183,30 @@ public class OauthController {
 		return chk;
 
 	}
+
+	
+	@RequestMapping(path = "/login/test")
+	@ResponseBody
+public Claims test(HttpServletRequest request) {
+	
+		Claims claims = null;
+		Jws<Claims> jws = null;
+		
+		try {
+			jws = jwt.testRead(request.getHeader("jwt"));
+			claims = jws.getBody();
+		} catch (ExpiredJwtException e) {
+			// TODO: handle exception
+			//타임아웃으로 인한 인증 실패
+		} catch(JwtException e)
+		{
+			//잘못된 값 형식
+		}
+		
+		
+		
+		
+		return claims;
+}
+
 }
