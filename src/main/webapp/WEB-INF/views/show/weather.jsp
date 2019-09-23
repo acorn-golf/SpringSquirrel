@@ -16,6 +16,7 @@
 .category .ico_coffee {background-position:-10px 0;}  
 .category .ico_store {background-position:-10px -36px;}   
 .category .ico_carpark {background-position:-10px -72px;} 
+
 </style>
 <title>Insert title here</title>
 
@@ -24,7 +25,7 @@
 <body>
 <!-- 이미지 지도를 표시할 div 입니다 -->
 <h3 style="margin-left: 200px">전국날씨</h3>
-<div id="staticMap" style="width:400px;height:650px;margin-left: 200px"></div>
+<div id="staticMap" style="width:400px;height:650px;margin-left: 200px;z-index: 0" ></div>
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

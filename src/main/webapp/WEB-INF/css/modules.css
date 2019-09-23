@@ -1,4 +1,5 @@
 body {
+	font-family: 'Jua', sans-serif;
 	font-size: 100%;
 }
 
@@ -1801,7 +1802,8 @@ body .MOD_IMPACTSTRIP4_Txt p {
 	padding: 10px;
 }
 
-.login_box, .alert {
+.login_box, .alert {	
+	font-family: 'Jua', sans-serif;
 	left: 50%;
 	width: 300px;
 	background: #fff;
@@ -1811,7 +1813,7 @@ body .MOD_IMPACTSTRIP4_Txt p {
 	box-shadow: 0 5px 10px rgba(0, 0, 0, 0, 0.2);
 }
 
-.login_box h2 {
+.login_box h1 {	
 	margin: 0 0 40px;
 	padding: 10px 0;
 	color: #808000;
@@ -1819,10 +1821,11 @@ body .MOD_IMPACTSTRIP4_Txt p {
 }
 
 .login_box input, .alert input {
+	font-family: 'Jua', sans-serif;
 	text-align: center;
 	padding: 10px 0;
 	margin-bottom: 30px;
-	font-size: 14px;
+	font-size: 20px;
 	font-weight: bold;
 	width: 100%;
 	box-sizing: border-box;
@@ -1832,12 +1835,13 @@ body .MOD_IMPACTSTRIP4_Txt p {
 	border-bottom: 2px solid #999;
 }
 
-.login_box input[type='submit'], .login_box input[type='reset'],
+.login_box input[type='submit'],
 	.login_box input[type='button'], .alert input[type='button'] {
 	border-bottom: none;
 	cursor: pointer;
 	background: #808000;
 	color: SeaShell;
+	font-size: 14px;
 	font-weight: bold;
 	margin-bottom: 0;
 	text-transform: uppercase;
