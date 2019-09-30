@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/squirrel/controller/MemberController.java=UTF-8
+encoding//src/main/java/com/squirrel/controller/OrderListController.java=UTF-8
 encoding//src/main/java/com/squirrel/controller/PickListController.java=UTF-8
 encoding//src/main/java/com/squirrel/controller/ProductController.java=UTF-8
 encoding//src/main/java/com/squirrel/interceptor/LoginCheckInterceptor.java=UTF-8

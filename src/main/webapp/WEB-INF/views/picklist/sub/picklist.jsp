@@ -55,7 +55,7 @@ alert('${pickMesg}');
 </script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<form name="myForm" class="form_main">
+<form name="myForm" class="form_main" style="margin-left: 200px;margin-top: 15px">
 <h3>장바구니</h3>
 	<table class="line_table">
 		<tr>
@@ -79,7 +79,7 @@ alert('${pickMesg}');
 							value="${pList.pick_no}" id="check${pList.pick_no}"></td>
 						<td width="120" class="line_td"><img
 							src="img/GOLFCC/${pList.loc_id}/${pList.cc_img}"
-							onerror="this.src='/teamSquirrel/GOLFCC/noimg.jpg'" border="0"
+							onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'" border="0"
 							align="middle" width="120" height="80" /></td>
 						<td class="line_td">
 							<table>

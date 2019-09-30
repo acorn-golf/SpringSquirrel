@@ -70,5 +70,15 @@ public class OrderListDAO {
 		
 		return pdto;
 	}
+
+	public int deleteOrderProduct(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return template.delete("OrderListMapper.deleteOrderProduct", map);
+	}
+
+	public int updateProduct(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return template.update("ProductMapper.updateP_maxPeople", map);
+	}
 	
 }
