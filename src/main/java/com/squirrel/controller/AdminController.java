@@ -91,9 +91,9 @@ public class AdminController {
 			beforeShow = 1; 
 		}
 		
-		int afterShow = beforeShow + showPage;			
-		if( afterShow > totalRecord ) {
-			afterShow = totalRecord; 
+		int afterShow = startPage + showPage;			
+		if( afterShow > endPage ) {
+			afterShow = endPage; 
 		}
 		
 		request.setAttribute("adminSelect", adminSelect);
