@@ -20,27 +20,32 @@
 	<select id="totalRecord" parameterType="int" resultType="int">
 		SELECT count(*)
 		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
-		where o.USER_NO=#{user_no} and o_date > sysdate
+		where o.USER_NO=#{user_no} and sysdate <![CDATA[<]]> p.P_PDATE
 	</select>
 	
 	<select id="selectOrderList" resultType="OrderInfoDTO" parameterType="int">
-		SELECT cc_name,p_price,o_amount,o_price,o_date,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID
+		SELECT o.O_NO,o.P_ID,cc_name,p_price,o_amount,o_price,o_date,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID
 		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
-		where o.USER_NO=#{user_no} and o_date > sysdate
+		where o.USER_NO=#{user_no} and sysdate <![CDATA[<]]> p.P_PDATE
 		order by o_date
 	</select>
 	
 	<select id="totalRecordpayment" parameterType="int" resultType="int">
 		SELECT count(*)
 		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
-		where o.USER_NO=#{user_no} and o_date <![CDATA[<]]> sysdate
+		where o.USER_NO=#{user_no} and sysdate <![CDATA[>]]> p.P_PDATE
 	</select>
 	
 	<select id="selectOrderListpayment" resultType="OrderInfoDTO" parameterType="int">
-		SELECT cc_name,p_price,o_amount,o_price,o_date,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID
+		SELECT cc_name,p_price,o_amount,o_price,o_date,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID,p.P_PDATE
 		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
-		where o.USER_NO=#{user_no} and o_date <![CDATA[<]]> sysdate
-		order by o_date
+		where o.USER_NO=#{user_no} and sysdate <![CDATA[>]]> p.P_PDATE
+		order by o_date desc
 	</select>
+	
+	<delete id="deleteOrderProduct" parameterType="hashmap">
+		delete from ORDERLIST
+		where o_no=#{o_no}
+	</delete>
 	
 </mapper>

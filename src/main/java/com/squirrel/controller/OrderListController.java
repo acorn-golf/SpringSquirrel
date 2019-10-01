@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.annotation.Loginchk;
+import com.annotation.Loginchk.Role;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.PickListDTO;
@@ -47,7 +48,7 @@ public class OrderListController {
 		}else {
 			// neet to p_id, g_amount
 			HashMap<String, String> test = new HashMap<String, String>();
-			test.put("p_id", "p61");
+			test.put("p_id", "p71"); //이거 2개만 넣으면 됨.
 			test.put("g_amount", "2"); // for test
 			IsOrderListDTO dto = orderService.selectIsOrder(test);
 			
@@ -71,26 +72,29 @@ public class OrderListController {
 		String goingPage = null;
 		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map 
 		if(map.get("pick_no") == null) {
-			System.out.println("��ǰ��������");
+			System.out.println("占쏙옙품占쏙옙占쏙옙占쏙옙占쏙옙");
 			System.out.println(map.get("p_id"));
-			System.out.println(map.get("o_amount"));
-			System.out.println(map.get("o_price"));
+			System.out.println(map.get("g_amount"));
+			System.out.println(map.get("p_price"));
 			
-			if(map.get("o_amount")!=null) {
-				map.put("o_amount", map.get("g_amount"));
+			if(map.get("o_amount")==null) {
+
+				map.put("o_amount",Integer.parseInt((String)map.get("g_amount")));
+				System.out.println(map.get("o_amount"));
 				//map.put("o_price", map.get("g_amount"));
+				map.put("o_price",(int)map.get("o_amount")*Integer.parseInt((String)map.get("p_price")));
 			}
 			
-			goingPage = "redirect:"; 
+			goingPage = "/orderConfirm"; 
 			try {
-				int result = orderService.addOrder(map);
+				int result = orderService.addOrderByCartTx(map);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
     	}else {
-    		System.out.println("��ٱ��� ����");
+    		System.out.println("占쏙옙袂占쏙옙占� 占쏙옙占쏙옙");
     		
     		System.out.println(map.get("pick_no"));
     		System.out.println(map.get("p_id"));
@@ -218,6 +222,21 @@ public class OrderListController {
 		mav.addObject("curPage", curPage);
 		mav.setViewName("orderlist/orderlistviewPayment");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/orderCancle")
+	@Loginchk(role = Role.USER)
+	public String orderCancle(@RequestParam HashMap<String, Object> map) {
+		//System.out.println(map.get("o_no")+"\t"+map.get("o_amount"+map.get("o_no")));
+		map.put("o_amount", map.get("o_amount"+map.get("o_no")));
+		map.put("p_id", map.get("p_id"+map.get("o_no")));
+		System.out.println(map.get("o_no")+"\t"+map.get("o_amount")+"\t"+map.get("p_id"));
+		try {
+			int result = orderService.deleteAndUpdateTx(map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/orderList";
 	}
 	
 }
