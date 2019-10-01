@@ -14,7 +14,7 @@
 	});
 </script>
 <form id="adminPage" method="post">
-	<div style="display: flex; margin-left: 400px; margin-top: 30px">
+	<div style="display: flex; margin-left: 400px; margin-top: 30px;" >
 		<div>
 			<select style="height: 31px;" id="adminSelect"
 				name="adminSelect">
