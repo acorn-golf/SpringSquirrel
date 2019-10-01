@@ -92,4 +92,9 @@ public class MemberDAO {
 		return template.insert("kakaoMemberAdd", dto);
 	}
 
+	public int applyRatingUp(int user_no) {
+		// TODO Auto-generated method stub
+		return template.insert("MemberMapper.applyRatingUp", user_no);
+	}
+
 }

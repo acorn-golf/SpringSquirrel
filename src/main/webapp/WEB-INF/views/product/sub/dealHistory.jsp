@@ -12,7 +12,7 @@
 </script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<form action="orderList" method="post" style="margin-top: 15px;margin-left: 200px">
+<form action="dealHistory" method="post" style="margin-top: 15px;margin-left: 200px">
 <h3>거래 내역</h3>
 <table class="line_table">
 	<tr>
@@ -56,25 +56,25 @@
 			<c:set var="minBlock" value="${minBlock+1}"/> 
 			
 			<c:if test="${curPage != 1}">
-				<li class="page-item"><a class="page-link" href="orderList?curPage=1"><<</a></li>
-				<c:if test="${curPage>showBlock}"><li class="page-item"><a class="page-link" href="orderList?curPage=${minBlock-1}"><</a></li></c:if>
+				<li class="page-item"><a class="page-link" href="dealHistory?curPage=1"><<</a></li>
+				<c:if test="${curPage>showBlock}"><li class="page-item"><a class="page-link" href="dealHistory?curPage=${minBlock-1}"><</a></li></c:if>
 			</c:if>
 			
 			
 			<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
 				<c:choose>
 					<c:when test="${curPage eq i}">
-						<li class="page-item disabled"><a class="page-link" href="orderList?curPage=${i}">${i}</a></li>
+						<li class="page-item disabled"><a class="page-link" href="dealHistory?curPage=${i}">${i}</a></li>
 					</c:when>
 					<c:when test="${curPage != i}">
-						<li class="page-item"><a class="page-link" href="orderList?curPage=${i}">${i}</a></li>
+						<li class="page-item"><a class="page-link" href="dealHistory?curPage=${i}">${i}</a></li>
 					</c:when>
 				</c:choose>	
 			</c:forEach>
 			
 			<c:if test="${curPage != totalPage}">
-				<c:if test="${curPage<=showBlock*perBlock}"><li class="page-item"><a class="page-link" href="orderList?curPage=${maxBlock+1}">></a></li></c:if>
-				<li class="page-item"><a class="page-link" href="orderList?curPage=${totalPage}">>></a></li>
+				<c:if test="${curPage<=showBlock*perBlock}"><li class="page-item"><a class="page-link" href="dealHistory?curPage=${maxBlock+1}">></a></li></c:if>
+				<li class="page-item"><a class="page-link" href="dealHistory?curPage=${totalPage}">>></a></li>
 			</c:if>
 			</ul>
 		</td>

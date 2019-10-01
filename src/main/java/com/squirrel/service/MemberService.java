@@ -93,4 +93,9 @@ public class MemberService {
 		return dao.kakaoMemberAdd(dto);
 	}
 
+	public int applyRatingUp(int user_no) {
+		// TODO Auto-generated method stub
+		return dao.applyRatingUp(user_no);
+	}
+
 }

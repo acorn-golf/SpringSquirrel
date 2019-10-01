@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <form action="productList" method="post" style="margin-left:200px">
 <%System.out.print(request.getRequestURI());  %>
-	<div style="margin-left: 200px">
+	<div style="margin-left: 200px;margin-top: 15px">
 	<select name="loc_id" id="location">
 		<option value="all" class="loc">전체</option>
 		<option value="gg" class="loc">경기</option>
@@ -35,7 +35,7 @@
 		class="radio">티업시간 순&nbsp;&nbsp; <input type="radio"
 		name="productOrderby" value="cc_name" class="radio">골프장
 	이름순&nbsp;&nbsp; <input type="checkbox" name="emergency"
-		value="p_pdate-sysdate" class="radio">긴급상품&nbsp;&nbsp;<br></div>
+		value="p_pdate-sysdate" class="radio" style="width: 20px">긴급상품&nbsp;&nbsp;<br></div>
 	<table class="line_table">
 		<tr>
 			<td colspan="4" style="border-bottom: 1px solid #444444" align="center"><select name="productDivision" >

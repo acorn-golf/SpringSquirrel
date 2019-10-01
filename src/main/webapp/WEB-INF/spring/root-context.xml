@@ -83,6 +83,7 @@
 				<value>com.squirrel.dto.ReCommentDTO</value>
 				<value>com.squirrel.dto.PickListDTO</value>
 				<value>com.squirrel.dto.OrderListDTO</value>
+				<value>com.squirrel.dto.RatingUpDTO</value>
 				<value>com.squirrel.dto.view.ReviewListDTO</value>
 				<value>com.squirrel.dto.view.CcGolfScoreDTO</value>
 				<value>com.squirrel.dto.view.ProductListDTO</value>
@@ -92,6 +93,7 @@
 				<value>com.squirrel.dto.view.OrderInfoDTO</value>
 				<value>com.squirrel.dto.view.PickOrderListDTO</value>
 				<value>com.squirrel.dto.view.ProductDealHistoryDTO</value>
+				<value>com.squirrel.dto.view.MyReviewDTO</value>
 
 			</list>
 		</property>

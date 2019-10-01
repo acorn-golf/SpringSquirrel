@@ -147,4 +147,9 @@
 		<if test="gender != null">#{gender},</if>
 		#{kakao_id})
 	</insert>
+	
+	<insert id="applyRatingUp" parameterType="int">
+		insert into ratingup(user_no)
+		values(#{user_no})
+	</insert>
 </mapper>

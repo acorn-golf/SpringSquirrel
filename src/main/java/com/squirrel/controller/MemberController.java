@@ -1,5 +1,7 @@
 package com.squirrel.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.annotation.Loginchk;
+import com.annotation.Loginchk.Role;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squirrel.dto.MemberDTO;
@@ -136,6 +140,24 @@ public class MemberController {
 		}
 		
 		return json;
+	}
+	
+	@RequestMapping(value = "/applyRatingUpForm")
+	@Loginchk(role = Role.USER)
+	public String applyRatingUpForm() {
+		// select ratingup table and this table data go to .jsp
+		return "member/applyRatingForm";
+	}
+	
+	@RequestMapping(value = "applyRatingUp")
+	@Loginchk(role = Role.USER)
+	public String applyRatingUp(HttpSession session) {
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+
+		int result = service.applyRatingUp(user_no);
+		
+		return "redirect:/applyRatingForm";
 	}
 	
 }
