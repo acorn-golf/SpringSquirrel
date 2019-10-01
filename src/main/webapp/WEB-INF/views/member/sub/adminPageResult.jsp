@@ -86,7 +86,7 @@
 							href="adminPage?adminSelect=${adminSelect}&curPage=1&adminSearch=${adminSearch}">◀◀</a>&nbsp;&nbsp;</c:if>
 					<c:if test="${curPage-showPage >= 1}">
 						<a
-							href="adminPage?adminSelect=${adminSelect}&curPage=${startPage-showPage}&adminSearch=${adminSearch}">◁</a>&nbsp;&nbsp;</c:if>
+							href="adminPage?adminSelect=${adminSelect}&curPage=${beforeShow}&adminSearch=${adminSearch}">◁</a>&nbsp;&nbsp;</c:if>
 
 					<c:forEach var="i" begin="${startPage}" end="${lastPage}" step="1">
 						<c:choose>
@@ -99,9 +99,9 @@
 					</c:when>
 						</c:choose>
 					</c:forEach> <c:if
-						test="${endPage != curPage && lastPage != endPage && startPage != endPage}">
+						test="${endPage != curPage && startPage != endPage}">
 						<a
-							href="adminPage?adminSelect=${adminSelect}&curPage=${lastPage+1}&adminSearch=${adminSearch}">▷</a>&nbsp;&nbsp;</c:if>
+							href="adminPage?adminSelect=${adminSelect}&curPage=${afterShow}&adminSearch=${adminSearch}">▷</a>&nbsp;&nbsp;</c:if>
 					<c:if test="${curPage != endPage && curPage != 0}">
 						<a
 							href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}&adminSearch=${adminSearch}">▶▶</a>

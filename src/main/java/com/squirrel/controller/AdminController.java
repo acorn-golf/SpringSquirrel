@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.annotation.Loginchk;
@@ -39,16 +38,15 @@ public class AdminController {
 		String curPageStr = (String)map.get("curPage");
 		String adminSelect = (String)map.get("adminSelect");
 		String adminSearch = (String)map.get("adminSearch");
-		
-		System.out.println(">>>>"+adminSearch);
+
 		if( curPageStr == null ) { 
 			curPageStr = "1"; 
 		}
 		
 		int curPage = Integer.parseInt(curPageStr);				
-		int perPage = 10; // �������� ������ ����
-		int start = perPage * ( (curPage) - 1 ) + 1; // Rownum�� ���� ���� ��
-		int end = perPage - 1 + start; // Rownum�� ���� �� ��
+		int perPage = 10; 
+		int start = perPage * ( (curPage) - 1 ) + 1; 
+		int end = perPage - 1 + start; 
 		int totalRecord = 0;
 		
 		map.put("start", start);
@@ -59,32 +57,29 @@ public class AdminController {
 			case "member" : 
 				List<MemberDTO> mList = aService.adminMemberSelect(map);			
 				request.setAttribute("mList", mList);
-				System.out.println(mList);
 				break;
 				
 			case "product" :
 				List<ProductDTO> pList = aService.adminProductSelect(map);					
 				request.setAttribute("pList", pList);
-				System.out.println(pList);
 				break;
 				
 			case "golfcc" :
 				List<GolfCcDTO> gList = aService.adminGolfCcSelect(map);			
 				request.setAttribute("gList", gList);
-				System.out.println(gList);
 				break;
 		}
 		
 		totalRecord = aService.totalRecord(map);
 		
-		int endPage = totalRecord / perPage; // ������ ������			
+		int endPage = totalRecord / perPage; 			
 		if( totalRecord % perPage != 0 ) {
-			endPage++; // �������� ���ڸ� ��� endPage�� �ø��Ѵ�.
+			endPage++; 
 		}
 		
-		int showPage = 10; // �ѹ��� ������ ������
-		int startPage = (curPage-1) / showPage * showPage + 1; // ù���� 1 �ι�² 2
-		int lastPage = startPage + showPage - 1; // ù���� 10, �ι�² 20			
+		int showPage = 10; 
+		int startPage = (curPage-1) / showPage * showPage + 1; 
+		int lastPage = startPage + showPage - 1; 		
 		if( curPage == endPage || endPage < startPage + showPage ) {
 			lastPage = endPage;
 		}else if (curPage < endPage) {
@@ -93,12 +88,12 @@ public class AdminController {
 		
 		int beforeShow = startPage - showPage;			
 		if( beforeShow < 1 ) {
-			beforeShow = 1; // 0 �� �������� �� ���
+			beforeShow = 1; 
 		}
 		
-		int afterShow = beforeShow + showPage;			
-		if( afterShow > totalRecord ) {
-			afterShow = totalRecord; // �� �Խù��� �ʰ��� ���
+		int afterShow = startPage + showPage;			
+		if( afterShow > endPage ) {
+			afterShow = endPage; 
 		}
 		
 		request.setAttribute("adminSelect", adminSelect);
