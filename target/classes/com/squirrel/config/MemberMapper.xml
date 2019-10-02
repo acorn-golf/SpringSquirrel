@@ -148,8 +148,46 @@
 		#{kakao_id})
 	</insert>
 	
+	<select id="selectRatingInfo" parameterType="int" resultType="RatingUpDTO">
+		SELECT USER_NO,APPLYDATE,OKDATE,APPROVER,num
+		FROM RATINGUP
+		where USER_NO=#{user_no}
+		order by num asc
+	</select>
+	
 	<insert id="applyRatingUp" parameterType="int">
-		insert into ratingup(user_no)
-		values(#{user_no})
+		insert into ratingup(user_no,num)
+		values(#{user_no},ratingup_sq.nextval)
 	</insert>
+	
+	<update id="updateRatingUp" parameterType="int">
+		update ratingup
+		set APPLYDATE = sysdate
+		where num=#{num}
+	</update>
+	
+	<select id="seeRatingInfo" resultType="SelectRatingDTO">
+		SELECT num,r.USER_NO user_no,USERNAME,NICKNAME,PHONE_ID,EMAIL
+		FROM RATINGUP r join MEMBERLIST m on r.USER_NO = m.USER_NO
+		where r.OKDATE is null
+		order by r.APPLYDATE
+	</select>
+	
+	<update id="updateForRating" parameterType="hashmap">
+		update memberList
+		set RATING='M', RSTARTDATE=sysdate, RENDDATE=sysdate+30
+		where user_no = #{user_no}
+	</update>
+	
+	<update id="updateRatingTable" parameterType="hashmap">
+		update ratingup
+		set OKDATE=sysdate, APPROVER=#{admin_no}
+		where num=#{num}
+	</update>
+	
+	<delete id="deleteRatingTable" parameterType="int">
+		delete from ratingup
+		where num=#{num}
+	</delete>
+	
 </mapper>

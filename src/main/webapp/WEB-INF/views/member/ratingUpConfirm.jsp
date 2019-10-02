@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>등업신청</title>
+<title>등업신청목록</title>
 </head>
 <body>
 <jsp:include page="../show/main.jsp"/>
 <hr>
-<jsp:include page="sub/applyRatingForm.jsp"/>
+<jsp:include page="sub/ratingUpConfirm.jsp"/>
 </body>
 </html>

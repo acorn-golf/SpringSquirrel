@@ -84,7 +84,7 @@
 		</sub_Menu>
 		<sub_Menu>
 			<name>등업관리</name>
-			<url>/golfhi/member/adminPage</url>
+			<url>/golfhi/ratingUpConfirm</url>
 		</sub_Menu>
 
 	</Menu>

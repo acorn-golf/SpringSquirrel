@@ -94,6 +94,7 @@
 				<value>com.squirrel.dto.view.PickOrderListDTO</value>
 				<value>com.squirrel.dto.view.ProductDealHistoryDTO</value>
 				<value>com.squirrel.dto.view.MyReviewDTO</value>
+				<value>com.squirrel.dto.view.SelectRatingDTO</value>
 
 			</list>
 		</property>

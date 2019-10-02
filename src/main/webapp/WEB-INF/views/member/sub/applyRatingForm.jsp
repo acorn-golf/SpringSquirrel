@@ -6,9 +6,18 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		$("#reRatingup").on("click",function(event){
+			//event.preventDefault();
+			$("form").attr({"action":"updateRatingUp","method":"post"});
+		});
+		console.log('${num}');
+		console.log('${okdate}');
+		console.log('${ratingUp}');
+		
 
-	}
+	})
 </script>
+
 <div style="margin-left: 200px;margin-top: 15px">
 <form action="applyRatingUp" method="post">
 <h3>등업사항 안내</h3>
@@ -21,11 +30,20 @@
 </textarea><br>
 <font style="color: red">불법 행동이나 사기 행위가 적발될 시 매니저 등급에서 박탈되며 강제 탈퇴 조치가 취해집니다</font>
 
-<c:if test="${ratingUp == null }">
+
+
+<c:if test="${ratingUp.size() == 0}"> <!-- 처음 등업신청(ratingup 테이블에 데이터가 없을 때) -->
 <button>등업신청</button>
 </c:if>
-<c:if test="${ratingUp != null }">
-<br><br>이미 신청하였습니다
+
+<c:if test="${ratingUp.size() != 0 && okdate != null}"> <!-- ratinup테이블에 예전 데이테로그 남은 사람이 새로 등업신청 -->
+<button>등업신청</button>
+</c:if>
+
+<c:if test="${ratingUp.size() != 0 && okdate == null}"> <!-- 요청대기 -->
+<br><br>신청접수되어 승인 대기중 입니다.<br>
+다시 요청하시려면 재요청 버튼을 누르세요 &nbsp;&nbsp; <button id="reRatingup">등업 재신청</button>
+<input type="hidden" name="num" value="${num}">
 </c:if>
 </form>
 </div>
