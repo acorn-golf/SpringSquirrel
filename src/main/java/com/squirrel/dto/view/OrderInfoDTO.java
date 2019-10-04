@@ -11,6 +11,8 @@ public class OrderInfoDTO {
 //	O_DATE	DATE
 //	NICKNAME	VARCHAR2(10 CHAR)
 //	PHONE_ID	VARCHAR2(11 BYTE)
+	private int o_no;
+	private String p_id;
 	private String cc_name;
 	private int p_price;
 	private int o_amount;
@@ -20,12 +22,15 @@ public class OrderInfoDTO {
 	private String phone_id;
 	
 	public OrderInfoDTO() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderInfoDTO(String cc_name, int p_price, int o_amount, int o_price, String o_date, String nickname,
-			String phone_id) {
+	public OrderInfoDTO(int o_no, String p_id, String cc_name, int p_price, int o_amount, int o_price, String o_date,
+			String nickname, String phone_id) {
 		super();
+		this.o_no = o_no;
+		this.p_id = p_id;
 		this.cc_name = cc_name;
 		this.p_price = p_price;
 		this.o_amount = o_amount;
@@ -35,12 +40,20 @@ public class OrderInfoDTO {
 		this.phone_id = phone_id;
 	}
 
-	public String getO_date() {
-		return o_date;
+	public int getO_no() {
+		return o_no;
 	}
 
-	public void setO_date(String o_date) {
-		this.o_date = o_date;
+	public void setO_no(int o_no) {
+		this.o_no = o_no;
+	}
+
+	public String getP_id() {
+		return p_id;
+	}
+
+	public void setP_id(String p_id) {
+		this.p_id = p_id;
 	}
 
 	public String getCc_name() {
@@ -75,6 +88,14 @@ public class OrderInfoDTO {
 		this.o_price = o_price;
 	}
 
+	public String getO_date() {
+		return o_date;
+	}
+
+	public void setO_date(String o_date) {
+		this.o_date = o_date;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -90,6 +111,7 @@ public class OrderInfoDTO {
 	public void setPhone_id(String phone_id) {
 		this.phone_id = phone_id;
 	}
+	
 	
 	
 	

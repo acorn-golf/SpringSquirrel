@@ -1,20 +1,28 @@
 package com.squirrel.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.annotation.Loginchk;
+import com.annotation.Loginchk.Role;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squirrel.dto.MemberDTO;
+import com.squirrel.dto.RatingUpDTO;
+import com.squirrel.dto.view.SelectRatingDTO;
 import com.squirrel.service.MemberService;
 import com.squirrel.util.jwt.JwtUtil;
 
@@ -136,6 +144,89 @@ public class MemberController {
 		}
 		
 		return json;
+	}
+	
+	@RequestMapping(value = "/applyRatingUpForm")
+	@Loginchk(role = Role.USER)
+	public String applyRatingUpForm(HttpSession session, Model data) {
+		// select ratingup table and this table data go to .jsp
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+		
+		List<RatingUpDTO> list = service.selectRatingInfo(user_no);
+		String okdate = null;
+		int num = 0;
+		for (RatingUpDTO r : list) {
+			okdate = r.getOkdate();
+			num = r.getNum();
+		}
+		System.out.println("num : "+num+"\t"+"okdate : "+okdate);
+		data.addAttribute("ratingUp", list);
+		data.addAttribute("okdate", okdate);
+		data.addAttribute("num", num);
+		return "member/applyRatingForm";
+	}
+	
+	@RequestMapping(value = "/applyRatingUp")
+	@Loginchk(role = Role.USER)
+	public String applyRatingUp(HttpSession session) {
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();	
+		int result = service.applyRatingUp(user_no);
+			
+		return "redirect:/applyRatingUpForm";
+	}
+
+	@RequestMapping(value = "/updateRatingUp")
+	@Loginchk(role = Role.USER)
+	public String updateRatingUp(@RequestParam("num") int num, HttpSession session) {
+		System.out.println(">>>>>>>>>>>"+num);
+		int result = service.updateRatingUp(num);
+		
+		return "redirect:/applyRatingUpForm";
+	}
+	
+	@RequestMapping(value = "/ratingUpConfirm")
+	@Loginchk(role = Role.ADMIN)
+	public String ratingUpConfirm(Model data) {
+		List<SelectRatingDTO> list = service.selectRatingInfo();
+		data.addAttribute("RatingInfo", list);
+		
+		return "member/ratingUpConfirm";
+	}
+	
+	@RequestMapping(value = "/confirmRatingUp", produces="text/plain;charset=UTF-8")
+	@Loginchk(role = Role.ADMIN)
+	@ResponseBody
+	public String confirmRatingUp(@RequestParam HashMap<String, Integer> map, HttpSession session) {
+		MemberDTO dto = (MemberDTO)session.getAttribute("login");
+		int admin_no = dto.getUser_no();
+		map.put("admin_no", admin_no);
+		int result = 0;
+		try {
+			result = service.updateRatinTX(map);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String mesg = "등업성공";
+		if(result == 0) {
+			mesg = "실패";
+		}
+		return mesg;
+	}
+	
+	@RequestMapping(value = "/deleteRatingTable", produces="text/plain;charset=UTF-8")
+	@Loginchk(role = Role.ADMIN)
+	@ResponseBody
+	public String deleteRatingTable(@RequestParam("num") int num) {
+		int result = service.deleteRatingTable(num);
+		String mesg = "등업 거절하였습니다.";
+		if(result == 0) {
+			mesg = "실패";
+		}
+		
+		return mesg;
 	}
 	
 }

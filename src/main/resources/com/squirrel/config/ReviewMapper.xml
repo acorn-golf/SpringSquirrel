@@ -30,4 +30,28 @@
 		delete from CCSCORE
 		where score_no=#{score_no}  
 	</delete>
+	
+	<select id="myReviewtotalRecord" parameterType="hashmap" resultType="int">
+		SELECT count(*)
+		FROM CCSCORE c join GOLFCC g on g.CC_ID = c.CC_ID join LOCATION l on l.LOC_ID = g.LOC_ID
+		where c.USER_NO=#{user_no}
+		<if test="reviewDivision != null">
+			<if test="reviewValue != null">
+				and ${reviewDivision} like '%'||#{reviewValue}||'%'
+			</if>
+		</if>
+		order by SCORE_DATE desc
+	</select>
+	
+	<select id="selectMyReview" parameterType="hashmap" resultType="MyReviewDTO">
+		SELECT c.SCORE_NO SCORE_NO,c.SCORE SCORE,c.CC_ID CC_ID,c.SCORE_DATE SCORE_DATE,c.USER_NO USER_NO,c.RV_TITLE RV_TITLE,c.RV_VCOUNT RV_VCOUNT,g.CC_NAME CC_NAME,g.CC_IMG CC_IMG,g.LOC_ID LOC_ID
+		FROM CCSCORE c join GOLFCC g on g.CC_ID = c.CC_ID join LOCATION l on l.LOC_ID = g.LOC_ID
+		where c.USER_NO=#{user_no}
+		<if test="reviewDivision != null">
+			<if test="reviewValue != null">
+				and ${reviewDivision} like '%'||#{reviewValue}||'%'
+			</if>
+		</if>
+		order by SCORE_DATE desc
+	</select>
 </mapper>

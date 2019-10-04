@@ -7,12 +7,26 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		$(".cancle").on("click",function(event){
+			
+			var o_no = $(this).attr("data-o_no");
+			$("#o_no"+o_no).attr("checked","checked");
+			console.log(o_no);
+			console.log($("#o_no"+o_no).val());
+			var cancleConfirm = confirm("상품 예약을 취소하시겠습니까?");
+			if (cancleConfirm == true) {
+				$("form[name='myForm']").attr({"action":"orderCancle","method":"post"});
+			} else if (cancleConfirm == false) {
+				event.preventDefault();
+				$("#o_no"+o_no).prop("checked",false);
+			}
+			
+		});
 	});
 </script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-<form action="orderList" method="post" class="form_main">
+<form action="orderList" method="post" class="form_main" name="myForm">
 <h3>예약 정보</h3>
 <table class="line_table">
 	<tr>
@@ -22,6 +36,7 @@
 		<th class="line_th">총 구매 가격</th>
 		<th class="line_th">구매일</th>
 		<th class="line_th">담당 매니저</th>
+		<th class="line_th"></th>
 	</tr>
 	<c:choose>
 		<c:when test="${empty orderList}">
@@ -36,6 +51,12 @@
 		<td class="line_td" align="center">${oList.o_price} 만원</td>
 		<td class="line_td" align="center">${oList.o_date}</td>
 		<td class="line_td" align="center">${oList.nickname} <font style="color:blue" size="3">☎ ${oList.phone_id}</font></td>
+		<td class="orderVal" style="border-bottom: 1px solid #444444">
+			<button class="cancle" data-o_no="${oList.o_no}">예약취소</button>
+			<input type="hidden" name="o_amount${oList.o_no}" value="${oList.o_amount}">
+			<input type="hidden" name="p_id${oList.o_no}" value="${oList.p_id}">
+			<input type="checkbox" hidden="true" id="o_no${oList.o_no}" name="o_no" value="${oList.o_no}">
+		</td>
 	</tr>
 	</c:forEach>
 	<tr>

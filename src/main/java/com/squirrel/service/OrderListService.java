@@ -70,5 +70,15 @@ public class OrderListService {
 		return pdto;
 	}
 
+	public int deleteAndUpdateTx(HashMap<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		int result = 0;
+		result = dao.deleteOrderProduct(map);
+		if(result <= 0) throw new Exception("예약취소가 불가합니다 관리자에게 문의하세요.");
+		result = dao.updateProduct(map);
+		
+		return result;
+	}
+
 
 }

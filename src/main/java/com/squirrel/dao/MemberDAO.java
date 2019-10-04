@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.MemberDTO;
+import com.squirrel.dto.RatingUpDTO;
+import com.squirrel.dto.view.SelectRatingDTO;
 
 @Repository
 public class MemberDAO {
@@ -90,6 +92,41 @@ public class MemberDAO {
 	public int kakaoMemberAdd(MemberDTO dto) {
 
 		return template.insert("kakaoMemberAdd", dto);
+	}
+
+	public int applyRatingUp(int user_no) {
+		// TODO Auto-generated method stub
+		return template.insert("MemberMapper.applyRatingUp", user_no);
+	}
+
+	public List<RatingUpDTO> selectRatingInfo(int user_no) {
+		List<RatingUpDTO> rdto = template.selectList("MemberMapper.selectRatingInfo", user_no); 
+		return rdto;
+	}
+
+	public int updateRatingUp(int num) {
+		// TODO Auto-generated method stub
+		return template.update("MemberMapper.updateRatingUp", num);
+	}
+
+	public List<SelectRatingDTO> selectRatingInfo() {
+		List<SelectRatingDTO> list = template.selectList("MemberMapper.seeRatingInfo");
+		return list;
+	}
+
+	public int updateMemberTable(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return template.update("MemberMapper.updateForRating", map);
+	}
+
+	public int selectRatingTable(HashMap<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return template.update("MemberMapper.updateRatingTable", map);
+	}
+
+	public int deleteRatingTable(int num) {
+		// TODO Auto-generated method stub
+		return template.delete("MemberMapper.deleteRatingTable",num);
 	}
 
 }

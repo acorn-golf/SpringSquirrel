@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.squirrel.dto.CcScoreDTO;
 import com.squirrel.dto.PageDTO;
+import com.squirrel.dto.view.MyReviewDTO;
+import com.squirrel.dto.view.ProductListDTO;
 import com.squirrel.dto.view.ReviewListDTO;
 
 @Repository
@@ -63,6 +65,25 @@ public class ReviewListDAO {
 	public int deleteReview( int score_no) {
 		return template.delete("ReviewMapper.deleteReview", score_no);
 		
+	}
+
+	private int myReviewtotalRecord( HashMap<String, String> map) {
+		return template.selectOne("ReviewMapper.myReviewtotalRecord",map);
+	}
+	
+	public PageDTO<MyReviewDTO> selectMyReview(HashMap<String, String> map, int curPage) {
+		PageDTO<MyReviewDTO> pdto = new PageDTO<MyReviewDTO>();
+		pdto.setPerPage(10);
+		int perPage = pdto.getPerPage();
+		int offset = (curPage)*perPage;
+		int totalRecord = myReviewtotalRecord(map);
+		List<MyReviewDTO> list = template.selectList("ReviewMapper.selectMyReview", map, new RowBounds(offset, perPage));
+		
+		pdto.setList(list);
+		pdto.setCurPage(curPage);
+		pdto.setTotalRecord(totalRecord);
+		
+		return pdto;
 	}
 	
 }
