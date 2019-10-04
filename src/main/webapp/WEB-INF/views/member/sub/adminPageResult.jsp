@@ -21,7 +21,7 @@
 				<tr>
 					<!-- 번호를 누르면 user_no를 검색 변경 -->
 					<td class="line_td"><a
-						href="/golfhi/adminModified?item=member&user_no=${mList.user_no}">${mList.phone_id}</a></td>
+						href="/golfhi/adminMemberInfo?item=member&user_no=${mList.user_no}">${mList.phone_id}</a></td>
 					<td class="line_td" style="background-color: lightblue">${mList.username}</td>
 					<td class="line_td" style="background-color: lightgreen">${mList.nickname}</td>
 					<td class="text_center line_td"

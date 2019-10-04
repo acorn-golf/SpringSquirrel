@@ -64,12 +64,12 @@
 		});
 		$("[type='button']").on("click",function(event){
 
-				location.href="/teamSquirrel/AdminPageUIServlet";
+				location.href="/golfhi/member/adminModified.jsp";
 			
 		});
 		$("#adminModified").click(function(){
 			
-				this.action="/teamSquirrel/AdminModifiedServlet";
+				this.action="adminModified";
 		});
 
 	});
@@ -77,10 +77,11 @@
 </script>
 
 <form id="adminModified" method="get" class="form_main">
+<input class="adminupdate" type="hidden" id="user_no" name="user_no" value="${userinfo.user_no}">
 <table>
 <tr>
 <th>아이디:</th>
-<td><input class="adminupdate" type="text" id="phoneid" name="phoneid" value="${userinfo.phone_id}" readonly></td>
+<td><input class="adminupdate" type="text" id="phone_id" name="phone_id" value="${userinfo.phone_id}" readonly></td>
 <td class="confirm"><span id="idchk"></span></td>
 </tr>
 <tr>
@@ -102,7 +103,7 @@
 <tr>
 <th>추가 :</th> 
 <td>
-<select class="text_center" id="Srenddate" name="Srenddate">
+<select class="text_center" id="sRenddate" name="sRenddate">
 <c:forEach var="month" begin="0" end="12">
 <option>${month} 개월</option>
 </c:forEach>

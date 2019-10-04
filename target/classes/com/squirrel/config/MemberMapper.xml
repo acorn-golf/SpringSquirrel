@@ -82,10 +82,10 @@
 	<update id="adminModified" parameterType="MemberDTO">
 		update memberList
 		set
-		username = #{username}, nickname = #{nickname}, rating = #{rating},
+		phone_id = #{phone_id}, username = #{username}, nickname = #{nickname}, rating = #{rating},
 		rstartdate = sysdate, renddate = add_months(sysdate, #{renddate}),
 		email = #{email}
-		where phone_id = #{phone_id}
+		where user_no = #{user_no}
 	</update>
 	<select id="getMemberInfo" resultType="MemberDTO"
 		parameterType="int">
