@@ -29,12 +29,12 @@ public class MemberService {
 	}
 
 	public MemberDTO myPage(int user_no) {
-
+		
 		return dao.myPage(user_no);
 	}
 
 	public int myPageUpdate(MemberDTO dto) {
-
+		
 		return dao.myPageUpdate(dto);
 	}
 

@@ -57,6 +57,7 @@ public class AdminController {
 			case "member" : 
 				List<MemberDTO> mList = aService.adminMemberSelect(map);			
 				request.setAttribute("mList", mList);
+				System.out.println(mList);
 				break;
 				
 			case "product" :
@@ -112,8 +113,38 @@ public class AdminController {
 		return "member/adminPageResult";
 	}
 	
-	public String adminModified() {
+	@Loginchk(role = Role.ADMIN)
+	@RequestMapping(value="/adminMemberInfo")	
+	public String adminModified(HttpSession session, HttpServletRequest request,
+										@RequestParam int user_no) {
 		
-		return "";
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		
+		MemberDTO userDTO = mService.myPage(user_no);		
+
+		request.setAttribute("userinfo", userDTO);	
+		session.setAttribute("login", login);
+		return "member/adminModified";
+	}
+	@Loginchk(role = Role.ADMIN)
+	@RequestMapping(value = "/adminModified")
+	public String adminMemberModified(HttpSession session, HttpServletRequest request,
+										MemberDTO mDTO) {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		System.out.println(mDTO);
+		String sRenddate = request.getParameter("sRenddate"); 
+		
+		if (sRenddate == null) { sRenddate = "0"; }		 
+	
+		mDTO.setRenddate(sRenddate.replace("개월", "").trim()); 	
+		mService.adminModified(mDTO);		
+			
+		MemberDTO userDTO = mService.myPage(mDTO.getUser_no());			
+		
+		request.setAttribute("userinfo", userDTO);	
+		session.setAttribute("login", login);		
+		
+		return "member/adminModified";
 	}
 }
