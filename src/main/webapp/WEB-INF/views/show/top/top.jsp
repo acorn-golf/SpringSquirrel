@@ -68,7 +68,7 @@ START MODULE AREA 1: header1
 	<header class="MOD_HEADER1">
 		<div data-layout="_r">
 			<div data-layout="al16 de10" class="MOD_HEADER1_Title">
-				<h1 class="MOD_HEADER1_TextLogo">GolfHi</h1>
+				<h1 class="MOD_HEADER1_TextLogo"><a href="/golfhi/" style="color: black;text-decoration:none">GolfHi</a></h1>
 				<p class="MOD_HEADER1_Slogan">
 					<c:if test="${login != null}">
 				안녕하세요 ${login.nickname} 님

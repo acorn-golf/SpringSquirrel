@@ -23,6 +23,8 @@ import com.squirrel.dto.CcScoreDTO;
 import com.squirrel.dto.LocationDTO;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
+import com.squirrel.dto.view.MyReviewDTO;
+import com.squirrel.dto.view.ProductListDTO;
 import com.squirrel.dto.view.RecommentViewDTO;
 import com.squirrel.dto.view.ReviewListDTO;
 import com.squirrel.service.LocationService;
@@ -228,6 +230,86 @@ public class ReviewController {
 	public String deleteReviewDeatil(@RequestParam("score_no") int score_no) {
 		int n = revService.deleteReview(score_no);
 		return "redirect:/reviewList";
+	}
+	
+	@RequestMapping(value = "/myReview")
+	@Loginchk
+	public ModelAndView myReview(@RequestParam Map<String, String> reqParam, HttpSession session) {
+		System.out.println(reqParam);
+		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		int user_no = user.getUser_no();
+		boolean ReSearchChk = false;
+		int curPage; // 현재페이지
+		System.out.println(reqParam.get("curPage"));
+		{
+			String curPageStr = reqParam.get("curPage");
+			if (curPageStr == null) {
+				curPage = 0;
+				ReSearchChk = true;
+			} else
+				curPage = Integer.parseInt(curPageStr) - 1;
+		}
+
+
+		if (ReSearchChk) {// 검색값 재세팅
+			if (reqParam.get("reviewDivision") == null) {
+				// 검색값을 아무것도 입력하지 않은 경우 전부검색
+				session.removeAttribute("reviewDivision");
+				session.removeAttribute("reviewValue");
+			} else {
+				// 검색값 입력 시
+				session.setAttribute("reviewDivision", reqParam.get("reviewDivision"));
+				session.setAttribute("reviewValue", reqParam.get("reviewValue"));
+			}
+		}
+
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map.put("reviewDivision", (String) session.getAttribute("reviewDivision"));
+		map.put("reviewValue", (String) session.getAttribute("reviewValue"));
+		map.put("user_no", String.valueOf(user_no));
+
+		PageDTO<MyReviewDTO> pDTO = revService.selectMyReview(map, curPage);
+		List<MyReviewDTO> list = pDTO.getList();
+		for (MyReviewDTO m : list) {
+			System.out.println(m);
+		}
+		
+		int perPage = pDTO.getPerPage();
+		int totalRecord = pDTO.getTotalRecord();
+		int totalPage = totalRecord / perPage;
+
+		if (totalRecord % (float)perPage != 0) {
+			totalPage++;
+		}
+
+		int showBlock = 5; // 보여줄 페이지 1,2,3,4,5 // 6,7,8,9,10
+		int minBlock = (curPage / (showBlock)) * showBlock;
+		int maxBlock = 0;
+		if (curPage == totalPage || totalPage < minBlock+showBlock) {
+			maxBlock = totalPage;
+		} else if (curPage < totalPage) {
+			maxBlock = minBlock + showBlock;
+		}
+		int perBlock = 0;//totalPage/showBlock;
+		if(totalPage%showBlock==0) {
+			perBlock = (totalPage/showBlock)-1;
+		}else {
+			perBlock = totalPage/showBlock;
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("perBlock", perBlock);
+		mav.addObject("minBlock", minBlock);
+		mav.addObject("maxBlock", maxBlock);
+		mav.addObject("showBlock", showBlock);
+		mav.addObject("myReviewList", list);
+		mav.addObject("reviewValue", map.get("reviewValue"));
+		mav.addObject("reviewDivision", map.get("reviewDivision"));
+		mav.addObject("totalPage", totalPage);
+		mav.addObject("curPage", curPage);
+		mav.setViewName("review/myreview");
+		return mav;
 	}
 
 }

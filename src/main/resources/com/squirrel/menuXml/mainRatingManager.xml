@@ -111,5 +111,13 @@
 	<Menu>
 		<name>마이페이지</name>
 		<url>/golfhi/myPage</url>
+		<sub_Menu>
+			<name>정보수정</name>
+			<url>/golfhi/myPage</url>
+		</sub_Menu>
+		<sub_Menu>
+			<name>나의 상품후기</name>
+			<url>/golfhi/myReview</url>
+		</sub_Menu>
 	</Menu>
 </Menus>

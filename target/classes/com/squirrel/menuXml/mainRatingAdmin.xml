@@ -82,6 +82,10 @@
 			<name>Admin Page</name>
 			<url>/golfhi/member/adminPage</url>
 		</sub_Menu>
+		<sub_Menu>
+			<name>등업관리</name>
+			<url>/golfhi/ratingUpConfirm</url>
+		</sub_Menu>
 
 	</Menu>
 </Menus>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.squirrel.dao.ReviewListDAO;
 import com.squirrel.dto.CcScoreDTO;
 import com.squirrel.dto.PageDTO;
+import com.squirrel.dto.view.MyReviewDTO;
 import com.squirrel.dto.view.ReviewListDTO;
 
 @Service
@@ -66,6 +67,14 @@ public class ReviewListService {
 
 		return dao.rv_vcount(score_no);
 
+	}
+
+	public PageDTO<MyReviewDTO> selectMyReview(HashMap<String, String> map, int curPage) {
+		PageDTO<MyReviewDTO> pdto = null;
+		
+		pdto = dao.selectMyReview(map,curPage);
+		
+		return pdto;
 	}
 
 }
