@@ -80,32 +80,33 @@
 		</c:if>
 		<c:if test="${totalRecord != 0}">
 			<tr>
-				<td colspan="4" class="text_center"><c:if
-						test="${curPage != 1}">
-						<a
-							href="adminPage?adminSelect=${adminSelect}&curPage=1&adminSearch=${adminSearch}">◀◀</a>&nbsp;&nbsp;</c:if>
+				<td colspan="4" class="text_center">
+				<div class="list_number">
+				<p><div class="list_n_menu">
+					<c:if test="${curPage != 1}">
+						<a href="adminPage?adminSelect=${adminSelect}&curPage=1&adminSearch=${adminSearch}">◀◀</a>&nbsp;&nbsp;</c:if>
 					<c:if test="${curPage-showPage >= 1}">
-						<a
-							href="adminPage?adminSelect=${adminSelect}&curPage=${beforeShow}&adminSearch=${adminSearch}">◁</a>&nbsp;&nbsp;</c:if>
+						<a href="adminPage?adminSelect=${adminSelect}&curPage=${beforeShow}&adminSearch=${adminSearch}">◁</a>&nbsp;&nbsp;</c:if>
 
 					<c:forEach var="i" begin="${startPage}" end="${lastPage}" step="1">
 						<c:choose>
 							<c:when test="${curPage eq i}">
-								<span style="color: red">${i}</span>
+								<span class="current">${i}</span>
 							</c:when>
 							<c:when test="${curPage != i}">
-								<a
-									href="adminPage?adminSelect=${adminSelect}&curPage=${i}&adminSearch=${adminSearch}">${i}</a>&nbsp;
-					</c:when>
+								<a href="adminPage?adminSelect=${adminSelect}&curPage=${i}&adminSearch=${adminSearch}">${i}</a>&nbsp;
+							</c:when>
 						</c:choose>
-					</c:forEach> <c:if
-						test="${endPage != curPage && startPage != endPage}">
-						<a
-							href="adminPage?adminSelect=${adminSelect}&curPage=${afterShow}&adminSearch=${adminSearch}">▷</a>&nbsp;&nbsp;</c:if>
+					</c:forEach> 
+					
+					<c:if test="${endPage != curPage && startPage != endPage}">
+						<a href="adminPage?adminSelect=${adminSelect}&curPage=${afterShow}&adminSearch=${adminSearch}">▷</a>&nbsp;&nbsp;</c:if>
 					<c:if test="${curPage != endPage && curPage != 0}">
-						<a
-							href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}&adminSearch=${adminSearch}">▶▶</a>
-					</c:if></td>
+						<a href="adminPage?adminSelect=${adminSelect}&curPage=${endPage}&adminSearch=${adminSearch}">▶▶</a>
+					</c:if>
+				</div></p>
+				</div>	
+				</td>
 			</tr>
 		</c:if>
 	</table>

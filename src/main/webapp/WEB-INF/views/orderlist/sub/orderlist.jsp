@@ -35,7 +35,7 @@
 	</tr>
 	<tr>
 		<td width="120" class="line_td"><img src="img/GOLFCC/${dto.loc_id}/${dto.cc_img}"
-							onerror="this.src='/teamSquirrel/GOLFCC/noimg.jpg'" border="0" align="middle" width="120" height="80" />
+							onerror="this.src='/golfhi/GOLFCC/noimg.jpg'" border="0" align="middle" width="120" height="80" />
 		</td>
 		<td class="line_td"> 
 		<table>
