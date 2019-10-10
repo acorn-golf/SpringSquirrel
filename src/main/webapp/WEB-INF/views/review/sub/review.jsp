@@ -68,32 +68,55 @@
 
 				<tr>
 					<td align="center" colspan="5">
-					<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
-					<c:set var="maxBlock" value="${maxBlock}" /> 
-					<c:set var="minBlock" value="${minBlock+1}" /> 
-					<c:if test="${curPage != 1}">
-							<a href="reviewList?curPage=1">◀◀</a>&nbsp;&nbsp;
-							<c:if test="${curPage>showBlock}">
-								<a href="reviewList?curPage=${minBlock-1}">◁</a>&nbsp;&nbsp;
-							</c:if>
-					</c:if> &nbsp;&nbsp; 
-					<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
+						<div class="list_number">
+						<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
+						<c:set var="maxBlock" value="${maxBlock}" />
+						<c:set var="minBlock" value="${minBlock+1}" /> 
+						<p><div class="list_n_menu">					
+						<c:if test="${curPage != 1}">
+							<a href="reviewList?curPage=1">〈〈</a>
+								<c:choose>
+									<c:when test="${curPage>showBlock}">
+										<a href="reviewList?curPage=${minBlock-1}">〈</a>
+									</c:when>
+									<c:otherwise>
+										<span class="disabled">〈</span>
+									</c:otherwise>
+								</c:choose>
+								
+						</c:if>
+						<c:if test="${curPage == 1}">
+							<span class="disabled">〈〈</span>
+							<span class="disabled">〈</span>
+						</c:if>
+						<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
 							<c:choose>
 								<c:when test="${curPage eq i}">
-									<span style="color: red">${i}</span>
+									<span class="current">${i}</span>
 								</c:when>
 								<c:when test="${curPage != i}">
-									<a href="reviewList?curPage=${i}">${i}</a>&nbsp;
+									<a href="reviewList?curPage=${i}">${i}</a>
 								</c:when>
 							</c:choose>
-					</c:forEach>&nbsp;
-					<c:set var="i" value="${Math.floor(totalPage/showBlock)}" />
+						</c:forEach>
+						
 						<c:if test="${curPage != totalPage}">
-							<c:if test="${curPage<=showBlock*perBlock}">
-								<a href="reviewList?curPage=${maxBlock+1}">▷</a>
-							</c:if>
-							<a href="reviewList?curPage=${totalPage}">▶▶</a>
+							<c:choose>
+								<c:when test="${curPage<=showBlock*perBlock}">
+									<a href="reviewList?curPage=${maxBlock+1}">〉</a>
+								</c:when>
+								<c:otherwise>
+									<span class="disabled">〉</span>
+								</c:otherwise>
+							</c:choose>
+							<a href="reviewList?curPage=${totalPage}">〉〉</a>
 						</c:if>
+						<c:if test="${curPage == totalPage}">
+							<span class="disabled">〉</span>
+							<span class="disabled">〉〉</span>
+						</c:if>
+						</div></p>
+						</div>
 					</td>
 				</tr>
 

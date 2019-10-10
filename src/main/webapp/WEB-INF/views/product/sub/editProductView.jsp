@@ -33,7 +33,7 @@
 		
 	});
 </script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
 <h3 style="margin-left:200px;margin-top: 15px">상품 관리</h3>
 	<table class="line_table" style="margin-left:200px">
 		<tr>
@@ -86,33 +86,55 @@
 
 				<tr>
 					<td colspan="5" align="center" style="border-bottom: 1px solid #444444">
-						<ul class="pagination justify-content-center" style="margin-top:10px">
+												<div class="list_number">
 						<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
 						<c:set var="maxBlock" value="${maxBlock}" />
 						<c:set var="minBlock" value="${minBlock+1}" /> 
+						<p><div class="list_n_menu">					
 						<c:if test="${curPage != 1}">
-							<li class="page-item"><a class="page-link" href="productList?curPage=1"><<</a></li>
-								<c:if test="${curPage>showBlock}">
-									<li class="page-item"><a class="page-link" href="productList?curPage=${minBlock-1}"><</a></li>
-								</c:if>
+							<a href="editProductView?curPage=1">〈〈</a>
+								<c:choose>
+									<c:when test="${curPage>showBlock}">
+										<a href="editProductView?curPage=${minBlock-1}">〈</a>
+									</c:when>
+									<c:otherwise>
+										<span class="disabled">〈</span>
+									</c:otherwise>
+								</c:choose>
+								
+						</c:if>
+						<c:if test="${curPage == 1}">
+							<span class="disabled">〈〈</span>
+							<span class="disabled">〈</span>
 						</c:if>
 						<c:forEach var="i" begin="${minBlock}" end="${maxBlock}" step="1">
 							<c:choose>
 								<c:when test="${curPage eq i}">
-									<li class="page-item disabled"><a class="page-link" href="productList?curPage=${i}">${i}</a></li>
+									<span class="current">${i}</span>
 								</c:when>
 								<c:when test="${curPage != i}">
-									<li class="page-item"><a class="page-link" href="productList?curPage=${i}">${i}</a></li>
+									<a href="editProductView?curPage=${i}">${i}</a>
 								</c:when>
 							</c:choose>
 						</c:forEach>
+						
 						<c:if test="${curPage != totalPage}">
-							<c:if test="${curPage<=showBlock*perBlock}">
-								<li class="page-item"><a class="page-link" href="productList?curPage=${maxBlock+1}">></a></li>
-							</c:if>
-							<li class="page-item"><a class="page-link" href="productList?curPage=${totalPage}">>></a></li>
+							<c:choose>
+								<c:when test="${curPage<=showBlock*perBlock}">
+									<a href="editProductView?curPage=${maxBlock+1}">〉</a>
+								</c:when>
+								<c:otherwise>
+									<span class="disabled">〉</span>
+								</c:otherwise>
+							</c:choose>
+							<a href="editProductView?curPage=${totalPage}">〉〉</a>
 						</c:if>
-						</ul>
+						<c:if test="${curPage == totalPage}">
+							<span class="disabled">〉</span>
+							<span class="disabled">〉〉</span>
+						</c:if>
+						</div></p>
+						</div>
 					</td>
 				</tr>
 			</c:otherwise>
