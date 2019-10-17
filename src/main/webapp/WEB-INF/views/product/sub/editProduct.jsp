@@ -157,7 +157,7 @@
 						<td colspan="2" style='padding-left: 30px'>
 							<input type="checkbox" name="p_babyn" style="width: 20px"><span>식사제공</span>&nbsp;
 							<input type="checkbox" name="p_cartyn" style="width: 20px"><span>카트제공</span>&nbsp;
-							<input type="checkbox" name="p_caddyyn" style="width: 20px"><span>캐디제공</span>&nbsp;
+							<input type="checkbox" name="p_caddyyn" style="width: 20px"><span>캐디제공</span><br>
 							<input type="radio" name="p_hole" value="18"><span>18 홀</span>&nbsp;
 							<input type="radio" name="p_hole" value="27"><span>27 홀</span>&nbsp;
 							<input type="radio" name="p_hole" value="36"><span>36 홀</span><br>

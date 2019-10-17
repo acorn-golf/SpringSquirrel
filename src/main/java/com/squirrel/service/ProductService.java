@@ -43,22 +43,6 @@ public class ProductService {
 		return pdto;
 	}
 
-	public List<ProductListDTO> adminProductSelect(HashMap<String, Object> map) {
-
-		List<ProductListDTO> dto = null;
-
-		dto = dao.adminProductSelect(map);
-
-		return dto;
-	}
-
-	public int totalRecord() {
-		int totalRecord = 0;
-
-		totalRecord = dao.totalRecord();
-
-		return totalRecord;
-	}
 
 	public PageDTO<ProductDealHistoryDTO> selectDealHistory(int user_no, int curPage) {
 		PageDTO<ProductDealHistoryDTO> pdto = null;

@@ -31,7 +31,7 @@ public class ProductDAO {
 	
 	public PageDTO<ProductListDTO> selectProduct( HashMap<String, String> map, int curPage) {
 		PageDTO<ProductListDTO> pdto = new PageDTO<ProductListDTO>();
-		pdto.setPerPage(10);
+		pdto.setPerPage(5);
 		int perPage = pdto.getPerPage();
 		int offset = (curPage)*perPage;
 		int totalRecord = totalRecord(map);
@@ -56,23 +56,14 @@ public class ProductDAO {
 		return template.update("ProductMapper.productDecrease",insertVal);
 	}
 
-	public List<ProductListDTO> adminProductSelect( HashMap<String, Object> map) {
-		/* int totalRecord = totalRecord(session); */
-		return template.selectList("ProductMapper.adminProductSelect",map);
-	}
 
-	public int totalRecord() {
-		int totalRecord = template.selectOne("ProductMapper.adminTotalRecord");
-		return totalRecord;
-	}
-
-	public int totalRecordDealHistory(int user_no) {
+	private int totalRecordDealHistory(int user_no) {
 		return template.selectOne("ProductMapper.totalRecordDealHistory",user_no);
 	}
 	
 	public PageDTO<ProductDealHistoryDTO> selectDealHistory(int user_no, int curPage) {
 		PageDTO<ProductDealHistoryDTO> pdto = new PageDTO<ProductDealHistoryDTO>();
-		pdto.setPerPage(10);
+		pdto.setPerPage(3);
 		int perPage = pdto.getPerPage();
 		int offset = (curPage)*perPage;
 		int totalRecord = totalRecordDealHistory(user_no);
@@ -85,13 +76,13 @@ public class ProductDAO {
 		return pdto;
 	}
 
-	public int totalRecordEditProduct(int user_no) {
+	private int totalRecordEditProduct(int user_no) {
 		return template.selectOne("ProductMapper.totalRecordEditProduct",user_no);
 	}
 	
 	public PageDTO<ProductListDTO> selectEditProduct(int user_no, int curPage) {
 		PageDTO<ProductListDTO> pdto = new PageDTO<ProductListDTO>();
-		pdto.setPerPage(10);
+		pdto.setPerPage(3);
 		int perPage = pdto.getPerPage();
 		int offset = (curPage)*perPage;
 		int totalRecord = totalRecordEditProduct(user_no);

@@ -13,7 +13,7 @@
 	});
 </script>
 
-<form action="updateReviewDetail" method="get" class="form_main">
+<form action="updateReviewDetail" method="post" class="form_main">
 <input type="hidden" name="score_no" value="${reviewdetail.score_no}">
 <input type="hidden" name="user_no" value="${reviewdetail.user_no}">
 <table class="line_table">
@@ -49,5 +49,5 @@
 				<td colspan="3" class="line_td"><textarea name="rv_content" cols="40" rows="3">${reviewdetail.rv_content}</textarea></td>
 			</tr>
 </table>
-<input type="button" value="이전" id="before">&nbsp;<input type="submit" value="수정하기">
+<input type="button" value="이전" id="before" style="width: 50px">&nbsp;<input type="submit" value="수정하기" style="width: 80px">
 </form>
