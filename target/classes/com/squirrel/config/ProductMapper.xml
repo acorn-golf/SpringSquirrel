@@ -13,7 +13,7 @@
 	<select id="totalRecord" parameterType="hashmap" resultType="int">
 		select count(*)
 		from PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO  JOIN LOCATION l on l.LOC_ID = g.LOC_ID
-		where P_PDATE > sysdate
+		where P_PDATE > sysdate and P_MAXPEOPLE > 0
 		<if test="emergency != null">
 			and ${emergency} <![CDATA[<=]]> 0.5
 		</if>
@@ -37,7 +37,7 @@
 		<![CDATA[case when P_PDATE-sysdate <= 0.5 then '긴급'
 		end emergency]]>
 		FROM PRODUCT p join GOLFCC g on p.CC_ID = g.CC_ID join MEMBERLIST m on p.USER_NO = m.USER_NO JOIN LOCATION l on l.LOC_ID = g.LOC_ID
-		where P_PDATE > sysdate
+		where P_PDATE > sysdate and P_MAXPEOPLE > 0
 		<if test="emergency != null">
 			and ${emergency} <![CDATA[<=]]> 0.5
 		</if>
