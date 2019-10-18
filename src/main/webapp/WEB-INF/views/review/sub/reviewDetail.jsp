@@ -47,6 +47,7 @@
 					success : function(data, status, xhr) {
 						alert(data);
 						$("#re_content").val("");
+						window.location.reload();
 					},
 					error : function(xhr, status, error) {
 						console.log(error);
@@ -181,7 +182,7 @@
 				id="deleteReviewDeatil">삭제</button>
 		</c:when>
 	</c:choose>
-	<input type="button" value="목록" id="ReviewList"> <br> <br>
+	<input type="button" value="목록" id="ReviewList" style="width: 50px"> <br> <br>
 	
 	
 </form>

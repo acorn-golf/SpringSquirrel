@@ -72,8 +72,8 @@
 			<td class="line_td"><textarea rows="20" cols="30" name="rv_content" id="rv_content"></textarea></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right" class="line_td"><input type="button" id="cancle" value="취소">&nbsp;
-			<input type="submit" value="등록"></td>
+			<td colspan="2" align="right"><input type="button" id="cancle" value="취소" style="width: 50px">&nbsp;
+			<input type="submit" value="등록" style="width: 50px"></td>
 		</tr>
 	</table>
 </form>

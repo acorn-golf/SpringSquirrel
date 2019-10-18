@@ -47,17 +47,5 @@ public class GolfccDAO {
 		return template.selectOne("GolfccMapper.getGolfccScoreOne",cc_id);
 	}
 
-	public int totalRecord() {
-		
-		int totalRecord = template.selectOne("GolfccMapper.totalRecord");
-		
-		return totalRecord;
-	}
-	public List<GolfCcDTO> adminGolfSelect(HashMap<String, Object> map) {
-		
-		List<GolfCcDTO> list = template.selectList("GolfccMapper.adminGolfSelect",map);
-		
-		return list;
-	}
 
 }

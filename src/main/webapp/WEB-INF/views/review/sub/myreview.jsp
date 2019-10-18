@@ -25,6 +25,7 @@
 </script>
 
 <form action="myReview" method="post" style="margin-left:200px;margin-top: 15px">
+<h3>나의 골프장 후기</h3>
 <%System.out.print(request.getRequestURI());  %>
 	<table class="line_table">
 		<tr>

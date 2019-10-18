@@ -42,6 +42,8 @@ public class ReviewController {
 	
 	@Autowired
 	ReCommentService recService;
+	
+	private HashMap<String, Integer> upVal = new HashMap<String, Integer>();
 
 	@RequestMapping(value = "/insertReviewForm") // 게시글 삽입 폼
 	public ModelAndView insertReviewForm() {
@@ -166,9 +168,10 @@ public class ReviewController {
 		String score_no = map.get("score_no");
 		//String score_no = "160"; // test�� �ӽ� score_no
 		String user_no = map.get("user_no");
-//		if (score_no == null && user_no == null) {
-//
-//		}
+		if (score_no == null && user_no == null) {
+			score_no = String.valueOf(upVal.get("score_no"));
+			user_no = String.valueOf(upVal.get("user_no"));
+		}
 		CcScoreDTO dto = revService.selectDetail(Integer.parseInt(score_no));
 		Cookie[] cookies = request.getCookies();
 
@@ -198,6 +201,10 @@ public class ReviewController {
 		mav.addObject("recommentList", list);
 		mav.addObject("nickname", nickname);
 		mav.setViewName("review/reviewDetail");
+		if(upVal != null) {
+			upVal.clear();
+		}
+		
 		return mav;
 	}
 	
@@ -222,6 +229,10 @@ public class ReviewController {
 		if(n==0) {
 			message = "수정실패";
 		}
+		System.out.println(">>>>>>>"+cdto.getScore_no());
+		System.out.println(">>>>>>>"+cdto.getUser_no());
+		upVal.put("score_no", cdto.getScore_no());
+		upVal.put("user_no", cdto.getUser_no());
 		ra.addFlashAttribute("message", message);
 		return "redirect:/reviewDetail";
 	}

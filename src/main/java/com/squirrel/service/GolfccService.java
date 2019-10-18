@@ -56,14 +56,5 @@ public class GolfccService {
 		
 	}
 
-	public List<GolfCcDTO> adminGolfSelect(HashMap<String, Object> map) {
-
-		return dao.adminGolfSelect(map);
-	}
-
-	public int totalRecord() {
-
-		return dao.totalRecord();
-	}
 
 }
