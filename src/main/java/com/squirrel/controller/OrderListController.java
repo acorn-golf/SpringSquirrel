@@ -9,16 +9,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.annotation.Loginchk;
 import com.annotation.Loginchk.Role;
+import com.kr.co.bootpay.javaApache.BootpayApi;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
-import com.squirrel.dto.PickListDTO;
 import com.squirrel.dto.view.IsOrderListDTO;
 import com.squirrel.dto.view.OrderInfoDTO;
 import com.squirrel.dto.view.PickOrderListDTO;
@@ -57,19 +56,36 @@ public class OrderListController {
 			mav.addObject("amount", test.get("g_amount"));
 			
 		}
+		//Runtime.getRuntime().exec("");
+		BootpayApi api = new BootpayApi(
+		        "5dafee3f5ade160030569ac1",
+		        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="
+		);
+		try {
+			String token  = api.getAccessToken();
+			mav.addObject("token", token);
+			System.out.println(token);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(api);
+		
 		mav.setViewName("orderlist/orderlist");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/addOrder")
+	@RequestMapping(value = "/addOrder", produces = "text/plain;charset=utf-8")
 	@Loginchk
+	@ResponseBody
 	public String addOrder(@RequestParam HashMap<String, Object> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 		int user_no = dto.getUser_no();
 		map.put("user_no", user_no);
 		// map.put("user_no", 3);
-		String goingPage = null;
+		String mesg = "";
 		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map 
 		if(map.get("pick_no") == null) {
 			System.out.println("占쏙옙품占쏙옙占쏙옙占쏙옙占쏙옙");
@@ -85,7 +101,7 @@ public class OrderListController {
 				map.put("o_price",(int)map.get("o_amount")*Integer.parseInt((String)map.get("p_price")));
 			}
 			
-			goingPage = "/orderConfirm"; 
+			mesg = "결제완료"; 
 			try {
 				int result = orderService.addOrderByCartTx(map);
 			} catch (Exception e) {
@@ -107,11 +123,11 @@ public class OrderListController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		goingPage = "redirect:/orderList";
+    		mesg = "결제완료";
     		
 		}
 		
-		return goingPage;
+		return mesg;
 	}
 
 	@RequestMapping(value = "/orderList")
