@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.annotation.Loginchk;
 import com.annotation.Loginchk.Role;
 import com.kr.co.bootpay.javaApache.BootpayApi;
+import com.kr.co.bootpay.javaApache.model.request.Cancel;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.view.IsOrderListDTO;
@@ -32,6 +35,46 @@ public class OrderListController {
 	
 	@Autowired
 	OrderListService orderService;
+	
+	private BootpayApi api = new BootpayApi(
+	        "5dafee3f5ade160030569ac1",  // REST Application ID
+	        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="  // 인증키 key
+	);
+	
+	@RequestMapping(value = "/getToken")
+	@ResponseBody
+	public String getToken() {
+
+		String token = "";
+		try {
+			token  = api.getAccessToken();
+			System.out.println(token);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return token;
+	}
+	
+	@RequestMapping(value = "/cancle")
+	@ResponseBody
+	public String cancle(@RequestParam HashMap<String, String> map) {
+		Cancel cancel = new Cancel();
+		cancel.receipt_id = map.get("receipt_id");
+		cancel.name = map.get("name");
+		cancel.reason = map.get("reson");
+		String result = "";
+		try {
+		    HttpResponse res = api.cancel(cancel);
+		    String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
+		    System.out.println(str);
+		    result = str;
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		return result;
+	}
 	
 	@RequestMapping(value = "/orderConfirm")
 	@ResponseBody
@@ -56,21 +99,21 @@ public class OrderListController {
 			mav.addObject("amount", test.get("g_amount"));
 			
 		}
-		//Runtime.getRuntime().exec("");
-		BootpayApi api = new BootpayApi(
-		        "5dafee3f5ade160030569ac1",
-		        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="
-		);
-		try {
-			String token  = api.getAccessToken();
-			mav.addObject("token", token);
-			System.out.println(token);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(api);
+		
+//		BootpayApi api = new BootpayApi(
+//		        "5dafee3f5ade160030569ac1",
+//		        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="
+//		);
+//		try {
+//			String token  = api.getAccessToken();
+//			mav.addObject("token", token);
+//			System.out.println(token);
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println(api);
 		
 		mav.setViewName("orderlist/orderlist");
 		return mav;
@@ -116,6 +159,7 @@ public class OrderListController {
     		System.out.println(map.get("p_id"));
     		System.out.println(map.get("o_amount"));
     		System.out.println(map.get("o_price"));
+    		System.out.println(map.get("receipt_id"));
     		
     		try {
 				int result = orderService.addOrderByCartTx(map);
@@ -131,6 +175,7 @@ public class OrderListController {
 	}
 
 	@RequestMapping(value = "/orderList")
+	@Loginchk
 	public ModelAndView orderList(@RequestParam Map<String, String> map, HttpSession session) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();

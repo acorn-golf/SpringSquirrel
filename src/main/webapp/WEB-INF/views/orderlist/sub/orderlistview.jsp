@@ -13,9 +13,47 @@
 			$("#o_no"+o_no).attr("checked","checked");
 			console.log(o_no);
 			console.log($("#o_no"+o_no).val());
+			console.log($("#receipt_id"+o_no).val());
+			var r_id = $("#receipt_id"+o_no).val();
 			var cancleConfirm = confirm("상품 예약을 취소하시겠습니까?");
 			if (cancleConfirm == true) {
 				$("form[name='myForm']").attr({"action":"orderCancle","method":"post"});
+				var token = "";
+				$.ajax({
+					type : "get",
+					url : "getToken",
+					dataType : "text",
+					async: false,
+					success : function(data, status, xhr) {
+						console.dir(data);
+						token = data;
+					},
+					error : function(xhr, status, error) {
+						console.log(error);
+						console.log(status);
+					}
+				});
+				
+				$.ajax({
+					type : "post",
+					url : "cancle",
+					headers : {"Authorization" : token},
+					data : {
+						gettoken : token,
+						name : "aa",
+						reson : "사용자 구매취소",
+						receipt_id : r_id
+					},
+					//dataType : "json",
+					success : function(data, status, xhr) {
+						
+					},
+					error : function(xhr, status, error) {
+						console.log("?>?>?>?>?>"+xhr);
+						console.log("?>?>?>?>?>"+status);
+						console.log("?>?>?>?>?>"+error);
+					}
+				});
 			} else if (cancleConfirm == false) {
 				event.preventDefault();
 				$("#o_no"+o_no).prop("checked",false);
@@ -52,10 +90,12 @@
 		<td class="line_td" align="center">${oList.o_date}</td>
 		<td class="line_td" align="center">${oList.nickname} <font style="color:blue" size="3">☎ ${oList.phone_id}</font></td>
 		<td class="orderVal" style="border-bottom: 1px solid #444444">
+			<%-- <input type="button" class="cancle" data-o_no="${oList.o_no}" value="예약취소"> --%>
 			<button class="cancle" data-o_no="${oList.o_no}">예약취소</button>
 			<input type="hidden" name="o_amount${oList.o_no}" value="${oList.o_amount}">
 			<input type="hidden" name="p_id${oList.o_no}" value="${oList.p_id}">
 			<input type="checkbox" hidden="true" id="o_no${oList.o_no}" name="o_no" value="${oList.o_no}">
+			<input type="hidden" id="receipt_id${oList.o_no}" name="receipt_id" value="${oList.receipt_id}">
 		</td>
 	</tr>
 	</c:forEach>

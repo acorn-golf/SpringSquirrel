@@ -13,8 +13,8 @@
 	</select>
 	
 	<insert id="addOrder" parameterType="hashmap">
-	INSERT INTO ORDERLIST(O_NO,O_AMOUNT,O_PRICE,P_ID,USER_NO) VALUES
-	(O_NO_SQ.NEXTVAL,#{o_amount},#{o_price},#{p_id},#{user_no})
+	INSERT INTO ORDERLIST(O_NO,O_AMOUNT,O_PRICE,P_ID,USER_NO,RECEIPT_ID) VALUES
+	(O_NO_SQ.NEXTVAL,#{o_amount},#{o_price},#{p_id},#{user_no},#{receipt_id})
 	</insert>
 	
 	<select id="totalRecord" parameterType="int" resultType="int">
@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="selectOrderList" resultType="OrderInfoDTO" parameterType="int">
-		SELECT o.O_NO,o.P_ID,cc_name,p_price,o_amount,o_price,o_date,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID
+		SELECT o.O_NO,o.P_ID,cc_name,p_price,o_amount,o_price,o_date,receipt_id,nickname,substr(PHONE_ID,1,3)||'-'||substr(PHONE_ID,4,4)||'-'||substr(PHONE_ID,8,4) PHONE_ID
 		FROM ORDERLIST o join PRODUCT p on p.P_ID = o.P_ID join GOLFCC g on p.CC_ID=g.CC_ID join MEMBERLIST m on p.USER_NO=m.USER_NO
 		where o.USER_NO=#{user_no} and sysdate <![CDATA[<]]> p.P_PDATE
 		order by o_date

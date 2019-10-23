@@ -79,19 +79,39 @@
 			    // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
 			    console.log(data);
 			}).done(function (data) {
-				
+				console.dir(data)
 				//결제가 정상적으로 완료되면 수행됩니다
 				//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
-				console.log("${token}");
+				var token = "";
+				$.ajax({
+					type : "get",
+					url : "getToken",
+					/* data : {
+						restApplicationID : "5dafee3f5ade160030569ac1",
+						key : "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw=",
+					}, */
+					dataType : "text",
+					async: false,
+					success : function(tdata, status, xhr) {
+						token = tdata;
+					},
+					error : function(xhr, status, error) {
+						console.log(error);
+						console.log(status);
+					}
+				});
+				//alert("#########"+token);
+				
+				
 				$.ajax({
 					type : "get",
 					url : "https://api.bootpay.co.kr/receipt/"+data.receipt_id,
-					headers : {"Authorization" : "${token}"},
+					headers : {"Authorization" : token},
 					//dataType : "json",
 					success : function(data, status, xhr) {
-						alert(data);
+						//alert(data);
 						console.dir(data);
-						console.log(data.data.payment_data.p / 10000);
+						
 						$.ajax({
 							type : "get",
 							url : "addOrder",
@@ -99,12 +119,13 @@
 								pick_no : data.data.order_id,
 								p_id : "${dto.p_id}",
 								o_amount : $("#amount").val(),
-								o_price : data.data.payment_data.p / 10000
+								o_price : data.data.payment_data.p / 10000,
+								receipt_id : data.data.receipt_id
 							},
 							dataType : "text",
 							success : function(data, status, xhr) {
 								alert(data);
-								location.href="http://192.168.0.2:8090/golfhi/orderList"
+								location.href="http://localhost:8090/golfhi/orderList"
 							},
 							error : function(xhr, status, error) {
 								console.log(error);
@@ -168,7 +189,7 @@
 	</tr>
 	<tr>
 		<td align="right" colspan="5">
-			<button id="cancle">취소</button> <input type="button" value="구매" id="order"><!-- <button>구매하기</button> --><!-- <input type="submit" value="구매하기"> -->
+			<button id="cancle">취소</button> <input type="button" style="width: 50px" value="구매" id="order"><!-- <button>구매하기</button> --><!-- <input type="submit" value="구매하기"> -->
 		</td>
 	</tr>
 </table>
