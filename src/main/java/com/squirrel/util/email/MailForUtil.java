@@ -21,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.ApplicationScope;
@@ -130,13 +132,16 @@ public class MailForUtil {
 		String iscode = testMD5(enco+"golfHi"); // isCode : 해쉬값(암호값 + 별도문자)
 		System.out.println(">>>암호화"+enco+"\n 길이 : "+enco.length());
 		System.out.println(">>>해시화"+iscode+"\n 길이 : "+iscode.length());
+		
+		enco = enco.replace("/", "^");
+		System.out.println("%%%%암호화값 : "+enco);
 				
 		String setfrom = "tlakffja@naver.com";
 		String tomail = user.getEmail();
 		String title = "GolfHi 이메일 인증";
 		String content = "<h2>안녕하세요 MS :p GolfHi 입니다!</h2><br><br>" + "<h3>" + username + "님</h3>"
 				+"<p>인증하기 버튼을 누르시면 비밀번호 분실 시 이메일을 통해 확인할 수 있습니다</p>"
-				+"<a href='localhost:8090/golfhi/emailCheck?isTime="+enco+"&isCode="+iscode+"'>인증하기</a>"
+				+"<a href='localhost:8090/golfhi/emailCheck/isTime/"+enco+"&/isCode/"+iscode+"'>인증하기</a>"
 				+ "(혹시 잘못 전달된 메일이라면 이 이메일을 무시하셔도 됩니다)";
 
 		try {
@@ -156,13 +161,16 @@ public class MailForUtil {
 		return "email/sendEmail";
 	}
 
-	@RequestMapping(value = "/emailCheck")
-	public String emailCheck(@RequestParam("isTime") String isTime,
-			@RequestParam("isCode") String isCode, HttpSession session,
+	@RequestMapping(value = "/emailCheck/isTime/{enco}/isCode/{iscode}", method = RequestMethod.GET)
+	public String emailCheck(@PathVariable("enco") String isTime,
+			@PathVariable("iscode") String isCode, HttpSession session,
 			RedirectAttributes redData) {
 		System.out.println(">>>인증한 암호화값>>>"+isTime);
 		System.out.println(">>>인증한 해쉬값>>>"+isCode);
-		isTime = isTime.replace(" ", "+");		
+		isTime = isTime.replace(" ", "+");
+		isTime = isTime.replace("^", "/");
+		isTime = isTime.replace("&", "");
+		isTime.trim();
 		String compareHash = isTime;
 		isTime = aesManager.deCodeText("email", isTime); // 복호화
 		System.out.println(">>>받은 암호화"+compareHash+"/암호길이"+compareHash.length());
