@@ -18,7 +18,7 @@
 
 		if (validityF()) {
 			if (action == 'order') {
-				myform.action = "addOrder";
+				myform.action = "orderConfirm";
 			} else if (action == 'cart') {
 				myform.action = "insertPickList";
 			}
@@ -50,7 +50,6 @@
 
 <FORM name="productForm" method="GET" action="#">
 <input type="hidden" name="p_id" value="${productDTO.p_id}">
-<input type="hidden" name="p_price" value="${productDTO.p_price}">
 
 	<table width="100%" cellspacing="0" cellpadding="0" border="0">
 		<tr>

@@ -5,14 +5,12 @@
 <mapper namespace="ReviewViewMapper"> <!-- 알아서 유일값 주면 된다 -->
 	<select id="reviewList" parameterType="hashmap"
 		resultType="ReviewListDTO">
-		select g.cc_name cc_name,c.score score,c.rv_title rv_title,m.nickname
+		select g.cc_name cc_name,c.score score,c.rv_title rv_title,c.rv_vcount rv_vcount,m.nickname
 		nickname,c.score_date score_date,c.score_no score_no,c.user_no user_no
 		from ccscore c join golfcc g on g.cc_id = c.cc_id join memberlist m on
 		c.user_no=m.user_no
 		where '1'='1'
-		<if test="cc_id != null">
-			and g.cc_id='${cc_id}'
-		</if>
+		
 		<if test="searchName != null">
 			<if test="searchValue != null">
 					<choose>
@@ -34,6 +32,9 @@
 					<when test='orderby.equals("score")'>
 						order by score desc
 					</when>
+					<when test='orderby.equals("rv_vcount")'>
+						order by rv_vcount desc
+					</when>
 				</choose>
 			</when>
 			<otherwise>
@@ -48,9 +49,7 @@
 		from ccscore c join golfcc g on g.cc_id = c.cc_id join
 		memberlist m on c.user_no=m.user_no
 		where '1'='1'
-		<if test="cc_id != null">
-			and g.cc_id=#{cc_id}
-		</if>
+		
 		<choose>
 			<when test="searchName != null">
 				<if test="searchValue != null">

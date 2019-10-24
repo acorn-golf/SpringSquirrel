@@ -3,6 +3,7 @@ package com.squirrel.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -128,14 +129,15 @@ public class OrderListController {
 			//
 		}else {
 			// neet to p_id, g_amount
-			HashMap<String, String> test = new HashMap<String, String>();
-			test.put("p_id", "p71"); //이거 2개만 넣으면 됨.
-			test.put("g_amount", "2"); // for test
-			IsOrderListDTO dto = orderService.selectIsOrder(test);
+//			HashMap<String, String> test = new HashMap<String, String>();
+//			test.put("p_id", "p71"); //이거 2개만 넣으면 됨.
+//			test.put("g_amount", "2"); // for test
+			IsOrderListDTO dto = orderService.selectIsOrder(map);
 			
 			mav.addObject("dto", dto);
-			mav.addObject("pick_no", null);
-			mav.addObject("amount", test.get("g_amount"));
+			Random r = new Random();
+			mav.addObject("pick_no", dto.getManager_user_no()+(int)r.nextInt(9));
+			mav.addObject("amount", map.get("g_amount"));
 			
 		}
 		

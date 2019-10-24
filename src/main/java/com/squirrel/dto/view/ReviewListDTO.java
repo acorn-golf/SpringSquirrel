@@ -13,14 +13,15 @@ public class ReviewListDTO {
 	private String score_date;
 	private int score_no;
 	private int user_no;
-
-
+	private int rv_vcount;
+	
 	public ReviewListDTO() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public ReviewListDTO(String cc_name, int score, String rv_title, String nickname, String score_date, int score_no,
-			int user_no) {
+			int user_no, int rv_vcount) {
 		super();
 		this.cc_name = cc_name;
 		this.score = score;
@@ -29,6 +30,7 @@ public class ReviewListDTO {
 		this.score_date = score_date;
 		this.score_no = score_no;
 		this.user_no = user_no;
+		this.rv_vcount = rv_vcount;
 	}
 
 	public String getCc_name() {
@@ -86,12 +88,20 @@ public class ReviewListDTO {
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
-	
-	
+
+	public int getRv_vcount() {
+		return rv_vcount;
+	}
+
+	public void setRv_vcount(int rv_vcount) {
+		this.rv_vcount = rv_vcount;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewListDTO [cc_name=" + cc_name + ", score=" + score + ", rv_title=" + rv_title + ", nickname="
-				+ nickname + ", score_date=" + score_date + ", score_no=" + score_no + ", user_no=" + user_no + "]";
+				+ nickname + ", score_date=" + score_date + ", score_no=" + score_no + ", user_no=" + user_no
+				+ ", rv_vcount=" + rv_vcount + "]";
 	}
 	
 	

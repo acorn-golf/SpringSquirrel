@@ -12,7 +12,7 @@
 	<%-- <jsp:include page="common/top.jsp" flush="true" /><br>
 <jsp:include page="common/menu.jsp" flush="true" /> --%>
 	<jsp:include page="../show/main.jsp" flush="false" />
-	
+	<jsp:include page="sub/review.jsp" flush="true" />
 	<c:if test="${Golfcc != null}">
 		<jsp:include page="../GOLFCC/sub/golfccRetrieve.jsp" flush="false" />
 		<jsp:include page="sub/review.jsp" flush="true" />

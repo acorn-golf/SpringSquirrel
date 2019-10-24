@@ -9,7 +9,7 @@
 	$(document).ready(function(){
 		$("#cancle").on("click",function(){
 			/* $("form").attr("action","ReviewListServlet"); // 아마 골프장 자세히보기로 가야되지 싶다 */
-			location.href="ReviewListServlet";
+			window.history.back();
 		});
 		
 		$("#loc").on("change",function(){

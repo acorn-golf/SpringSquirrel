@@ -8,7 +8,8 @@
 	<script src="https://cdn.bootpay.co.kr/js/bootpay-3.0.6.min.js" type="application/javascript"></script>
 <script>
 	$(document).ready(function(){
-		
+		var productKey = "${pick_no}";
+
 		$("#cancle").on("click",function(event){
 			event.preventDefault();
 			history.back();
@@ -30,7 +31,7 @@
 					{
 						item_name: '${dto.cc_name}', //상품명
 						qty: Number($("#amount").val()), //수량
-						unique: '${pick_no}', //해당 상품을 구분짓는 primary key
+						unique: productKey, //해당 상품을 구분짓는 primary key
 						price: Number('${dto.p_price}'), //상품 단가
 						cat1: 'TOP', // 대표 상품의 카테고리 상, 50글자 이내
 						cat2: '티셔츠', // 대표 상품의 카테고리 중, 50글자 이내
@@ -140,7 +141,7 @@
 							dataType : "text",
 							success : function(data, status, xhr) {
 								alert(data);
-								location.href="http://192.168.0.2:8090/golfhi/orderList"
+								location.href="http://localhost:8090/golfhi/orderList"
 							},
 							error : function(xhr, status, error) {
 								console.log(error);
@@ -181,8 +182,7 @@
 		<th class="line_th">총 결제금액</th>
 	</tr>
 	<tr>
-		<td width="120" class="line_td"><img src="img/GOLFCC/${dto.loc_id}/${dto.cc_img}"
-							onerror="this.src='/golfhi/GOLFCC/noimg.jpg'" border="0" align="middle" width="120" height="80" />
+		<td width="120" class="line_td"><img src="img/GOLFCC/${pList.loc_id}/${pList.cc_img}" onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'" border="0" align="middle" width="120" height="80" />
 		</td>
 		<td class="line_td"> 
 		<table>

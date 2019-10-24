@@ -9,7 +9,7 @@
 	$(document).ready(function() {
 		$("#insertReview").on("click", function() {
 			$("form").attr({
-				"action" : "InsertReviewFormServlet",
+				"action" : "insertReviewForm",
 				"method" : "post"
 			});
 		});
@@ -25,19 +25,25 @@
 	});
 </script>
 
-<form name="ReviewListForm" action="reviewList" method="get">
+<form name="ReviewListForm" action="reviewList" method="get" style="margin-left: 200px;margin-top: 15px">
 	<input type="hidden" name="cc_id" value="${cc_id}">
 	<!-- 후기글쓰기 할 때 갖고갈 파라미터 -->
 
-	<input type="radio" name="orderby" value="score_date" class="radio">최신순&nbsp;&nbsp;
-	<input type="radio" name="orderby" value="score" class="radio">평점순<br>
-	<table class="line_table">
+	
+	<table>
 		<tr>
-			<td colspan="5" class="line_th"><select name="searchName">
+			<td colspan="6" align="right">
+				<input type="radio" name="orderby" value="score_date" class="radio" style="width: 20px">최신순&nbsp;&nbsp;
+				<input type="radio" name="orderby" value="score" class="radio" style="width: 20px">평점순&nbsp;&nbsp;
+				<input type="radio" name="orderby" value="rv_vcount" class="radio" style="width: 20px">조회순<br>
+			</td>	
+		</tr>
+		<tr>
+			<td colspan="6" class="line_th" align="center" ><select name="searchName">
 					<option value="rv_title">제목</option>
 					<option value="nickname">작성자</option>
 			</select> <input type="text" name="searchValue" size="40"> <input
-				type="submit" value="검색"></td>
+				type="submit" value="검색" style="width: 50px"></td>
 		</tr>
 		<tr>
 			<th class="line_th">골프장</th>
@@ -45,11 +51,12 @@
 			<th class="line_th">제목</th>
 			<th class="line_th">작성자</th>
 			<th class="line_th">작성일</th>
+			<th class="line_th">조회수</th>
 		</tr>
 		<c:choose>
 			<c:when test="${empty reviewList}">
 				<tr>
-					<td colspan="5" align="center"><h3 style="color: #665b5f">게시글이
+					<td colspan="6" align="center"><h3 style="color: #665b5f">게시글이
 							없습니다</h3></td>
 				</tr>
 			</c:when>
@@ -62,12 +69,13 @@
 							href="reviewDetail?score_no=${dto.score_no}&user_no=${dto.user_no}">${dto.rv_title}</a></td>
 						<td class="line_td">${dto.nickname}</td>
 						<td class="line_td">${dto.score_date}</td>
+						<td class="line_td">${dto.rv_vcount}</td>
 					</tr>
 
 				</c:forEach>
 
 				<tr>
-					<td align="center" colspan="5">
+					<td align="center" colspan="6">
 						<div class="list_number">
 						<c:set var="curPage" value="${curPage+1}" /> <%-- 1 --%> 
 						<c:set var="maxBlock" value="${maxBlock}" />

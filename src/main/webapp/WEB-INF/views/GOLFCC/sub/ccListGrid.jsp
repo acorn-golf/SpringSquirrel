@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script type="text/javascript" src="/teamSquirrel/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -95,7 +95,7 @@ $(document).ready(function() {
 					</c:forEach>
 					<!-- 반복끝-->
 				</tr>
-				<tr>
+				<%-- <tr>
 
 					<c:if test="${CCminBlock != 0}">
 						<a href="ReviewListServlet?GolfCCcurPage=0"> ◀◀ </a>
@@ -128,7 +128,7 @@ $(document).ready(function() {
 							▶▶ </a>
 					</c:if>
 
-				</tr>
+				</tr> --%>
 			</table>
 		</td>
 	</tr>

@@ -64,8 +64,7 @@
 				<c:forEach var="pList" items="${productList}">
 					<tr>
 						<td width="120" style="border-bottom: 1px solid #444444"><img
-							src="img/GOLFCC/${pList.loc_id}/${pList.cc_img}"
-							onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'" border="0"
+							src="img/GOLFCC/${pList.loc_id}/${pList.cc_img}" onerror="this.src='<c:url value="img/GOLFCC/noimg.jpg"/>'" border="0"
 							align="middle" width="120" height="80" /></td>
 						<td style="border-bottom: 1px solid #444444">
 							<table>
