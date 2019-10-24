@@ -6,19 +6,21 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.annotation.Loginchk;
 import com.annotation.Loginchk.Role;
+import com.kr.co.bootpay.javaApache.BootpayApi;
+import com.kr.co.bootpay.javaApache.model.request.Cancel;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
-import com.squirrel.dto.PickListDTO;
 import com.squirrel.dto.view.IsOrderListDTO;
 import com.squirrel.dto.view.OrderInfoDTO;
 import com.squirrel.dto.view.PickOrderListDTO;
@@ -33,6 +35,46 @@ public class OrderListController {
 	
 	@Autowired
 	OrderListService orderService;
+	
+	private BootpayApi api = new BootpayApi(
+	        "5dafee3f5ade160030569ac1",  // REST Application ID
+	        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="  // 인증키 key
+	);
+	
+	@RequestMapping(value = "/getToken")
+	@ResponseBody
+	public String getToken() {
+
+		String token = "";
+		try {
+			token  = api.getAccessToken();
+			System.out.println(token);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return token;
+	}
+	
+	@RequestMapping(value = "/cancle")
+	@ResponseBody
+	public String cancle(@RequestParam HashMap<String, String> map) {
+		Cancel cancel = new Cancel();
+		cancel.receipt_id = map.get("receipt_id");
+		cancel.name = map.get("name");
+		cancel.reason = map.get("reson");
+		String result = "";
+		try {
+		    HttpResponse res = api.cancel(cancel);
+		    String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
+		    System.out.println(str);
+		    result = str;
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		return result;
+	}
 	
 	@RequestMapping(value = "/orderConfirm")
 	@ResponseBody
@@ -57,19 +99,36 @@ public class OrderListController {
 			mav.addObject("amount", test.get("g_amount"));
 			
 		}
+		
+//		BootpayApi api = new BootpayApi(
+//		        "5dafee3f5ade160030569ac1",
+//		        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="
+//		);
+//		try {
+//			String token  = api.getAccessToken();
+//			mav.addObject("token", token);
+//			System.out.println(token);
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println(api);
+		
 		mav.setViewName("orderlist/orderlist");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/addOrder")
+	@RequestMapping(value = "/addOrder", produces = "text/plain;charset=utf-8")
 	@Loginchk
+	@ResponseBody
 	public String addOrder(@RequestParam HashMap<String, Object> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO dto = (MemberDTO)session.getAttribute("login");
 		int user_no = dto.getUser_no();
 		map.put("user_no", user_no);
 		// map.put("user_no", 3);
-		String goingPage = null;
+		String mesg = "";
 		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map 
 		if(map.get("pick_no") == null) {
 			System.out.println("占쏙옙품占쏙옙占쏙옙占쏙옙占쏙옙");
@@ -85,7 +144,7 @@ public class OrderListController {
 				map.put("o_price",(int)map.get("o_amount")*Integer.parseInt((String)map.get("p_price")));
 			}
 			
-			goingPage = "/orderConfirm"; 
+			mesg = "결제완료"; 
 			try {
 				int result = orderService.addOrderByCartTx(map);
 			} catch (Exception e) {
@@ -100,6 +159,7 @@ public class OrderListController {
     		System.out.println(map.get("p_id"));
     		System.out.println(map.get("o_amount"));
     		System.out.println(map.get("o_price"));
+    		System.out.println(map.get("receipt_id"));
     		
     		try {
 				int result = orderService.addOrderByCartTx(map);
@@ -107,14 +167,15 @@ public class OrderListController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		goingPage = "redirect:/orderList";
+    		mesg = "결제완료";
     		
 		}
 		
-		return goingPage;
+		return mesg;
 	}
 
 	@RequestMapping(value = "/orderList")
+	@Loginchk
 	public ModelAndView orderList(@RequestParam Map<String, String> map, HttpSession session) {
 		MemberDTO user = (MemberDTO)session.getAttribute("login");
 		int user_no = user.getUser_no();

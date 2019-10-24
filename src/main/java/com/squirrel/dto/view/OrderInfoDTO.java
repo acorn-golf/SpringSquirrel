@@ -18,6 +18,7 @@ public class OrderInfoDTO {
 	private int o_amount;
 	private int o_price;
 	private String o_date;
+	private String receipt_id;
 	private String nickname;
 	private String phone_id;
 	
@@ -27,7 +28,7 @@ public class OrderInfoDTO {
 	}
 
 	public OrderInfoDTO(int o_no, String p_id, String cc_name, int p_price, int o_amount, int o_price, String o_date,
-			String nickname, String phone_id) {
+			String receipt_id, String nickname, String phone_id) {
 		super();
 		this.o_no = o_no;
 		this.p_id = p_id;
@@ -36,6 +37,7 @@ public class OrderInfoDTO {
 		this.o_amount = o_amount;
 		this.o_price = o_price;
 		this.o_date = o_date;
+		this.receipt_id = receipt_id;
 		this.nickname = nickname;
 		this.phone_id = phone_id;
 	}
@@ -96,6 +98,14 @@ public class OrderInfoDTO {
 		this.o_date = o_date;
 	}
 
+	public String getReceipt_id() {
+		return receipt_id;
+	}
+
+	public void setReceipt_id(String receipt_id) {
+		this.receipt_id = receipt_id;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -111,6 +121,8 @@ public class OrderInfoDTO {
 	public void setPhone_id(String phone_id) {
 		this.phone_id = phone_id;
 	}
+	
+	
 	
 	
 	

@@ -132,7 +132,7 @@ public class AdminController {
 										MemberDTO mDTO) {
 		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-		System.out.println(mDTO);
+
 		String sRenddate = request.getParameter("sRenddate"); 
 		
 		if (sRenddate == null) { sRenddate = "0"; }		 
