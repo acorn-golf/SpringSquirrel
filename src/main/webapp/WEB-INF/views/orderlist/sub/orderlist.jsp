@@ -82,17 +82,33 @@
 				console.dir(data)
 				//결제가 정상적으로 완료되면 수행됩니다
 				//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
+				/* console.log("~!~!~!~"+data.receipt_id);
+				////////////////////////////////////
+				$.ajax({
+					type : "post",
+					url : "receipt_id", 
+					data : {
+						receipt_id : data.receipt_id
+					},
+					dataType : "text",
+					success : function(tdata, status, xhr) {
+						
+					},
+					error : function(xhr, status, error) {
+						console.log(error);
+						console.log(status);
+					}
+				}); */
+				////////////////////////////////////
+				
 				var token = "";
 				$.ajax({
 					type : "get",
 					url : "getToken",
-					/* data : {
-						restApplicationID : "5dafee3f5ade160030569ac1",
-						key : "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw=",
-					}, */
 					dataType : "text",
-					async: false,
+					async : false,
 					success : function(tdata, status, xhr) {
+						alert("success");
 						token = tdata;
 					},
 					error : function(xhr, status, error) {
@@ -100,14 +116,13 @@
 						console.log(status);
 					}
 				});
-				//alert("#########"+token);
-				
-				
+						
 				$.ajax({
 					type : "get",
 					url : "https://api.bootpay.co.kr/receipt/"+data.receipt_id,
 					headers : {"Authorization" : token},
-					//dataType : "json",
+					/* dataType : "jsonp",
+					jsonpCallback : "callback", */
 					success : function(data, status, xhr) {
 						//alert(data);
 						console.dir(data);
@@ -125,7 +140,7 @@
 							dataType : "text",
 							success : function(data, status, xhr) {
 								alert(data);
-								location.href="http://localhost:8090/golfhi/orderList"
+								location.href="http://192.168.0.2:8090/golfhi/orderList"
 							},
 							error : function(xhr, status, error) {
 								console.log(error);

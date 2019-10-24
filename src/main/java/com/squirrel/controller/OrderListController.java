@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,9 @@ import com.annotation.Loginchk;
 import com.annotation.Loginchk.Role;
 import com.kr.co.bootpay.javaApache.BootpayApi;
 import com.kr.co.bootpay.javaApache.model.request.Cancel;
+import com.request.Parameter;
+import com.request.RequestHttpCallBack;
+import com.request.RequestHttpURLConnection;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.view.IsOrderListDTO;
@@ -41,21 +46,55 @@ public class OrderListController {
 	        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="  // 인증키 key
 	);
 	
+	//private String receipt_id = "";
+	
 	@RequestMapping(value = "/getToken")
+	@Loginchk
 	@ResponseBody
 	public String getToken() {
 
 		String token = "";
 		try {
 			token  = api.getAccessToken();
-			System.out.println(token);
-			
+			//System.out.println("##########"+token);
+			//httpRequest(token);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return token;
 	}
+	
+//	@RequestMapping(value = "/receipt_id")
+//	@Loginchk
+//	@ResponseBody
+//	public void receipt_id(@RequestParam("receipt_id") String r_id) {
+//		this.receipt_id = r_id;
+//	}
+	
+//	public void httpRequest(String token) {
+//		RequestHttpURLConnection con = new RequestHttpURLConnection();
+//		Parameter parm = new Parameter();
+//		parm.set("asd", "aaaa");
+//		
+//		con.requestJsone(RequestHttpURLConnection.GET, 0, "https://api.bootpay.co.kr/receipt/"+receipt_id, parm.toJson(), token, callback);
+//		
+//		
+//	}
+//	
+//	RequestHttpCallBack callback = new RequestHttpCallBack() {
+//		
+//		@Override
+//		public void callBack(int _key, JSONObject _json) {
+//			System.out.println("#>#>#>#>#$>#>#>"+receipt_id);
+//			System.out.println("#>#>#>#>#$>#>#>"+_key);
+//			System.out.println("#>#>#>#>#$>#>#>"+_json);
+//			if(_key == 0) {
+//				System.out.println("#>#>#>#>#$>#>#>"+_json);
+//			}
+//			
+//		}
+//	};
 	
 	@RequestMapping(value = "/cancle")
 	@ResponseBody
