@@ -1,11 +1,14 @@
 package com.squirrel.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
@@ -22,9 +25,6 @@ import com.annotation.Loginchk;
 import com.annotation.Loginchk.Role;
 import com.kr.co.bootpay.javaApache.BootpayApi;
 import com.kr.co.bootpay.javaApache.model.request.Cancel;
-import com.request.Parameter;
-import com.request.RequestHttpCallBack;
-import com.request.RequestHttpURLConnection;
 import com.squirrel.dto.MemberDTO;
 import com.squirrel.dto.PageDTO;
 import com.squirrel.dto.view.IsOrderListDTO;
@@ -35,20 +35,19 @@ import com.squirrel.service.PickService;
 
 @Controller
 public class OrderListController {
-	
+
 	@Autowired
 	PickService pickService;
-	
+
 	@Autowired
 	OrderListService orderService;
-	
-	private BootpayApi api = new BootpayApi(
-	        "5dafee3f5ade160030569ac1",  // REST Application ID
-	        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="  // 인증키 key
+
+	private BootpayApi api = new BootpayApi("5dafee3f5ade160030569ac1", // REST Application ID
+			"IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw=" // 인증키 key
 	);
-	
-	//private String receipt_id = "";
-	
+
+	// private String receipt_id = "";
+
 	@RequestMapping(value = "/getToken")
 	@Loginchk
 	@ResponseBody
@@ -56,23 +55,65 @@ public class OrderListController {
 
 		String token = "";
 		try {
-			token  = api.getAccessToken();
-			//System.out.println("##########"+token);
-			//httpRequest(token);
+			token = api.getAccessToken();
+			// System.out.println("##########"+token);
+			// httpRequest(token);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return token;
 	}
-	
+
+	@RequestMapping(value = "/connection", produces = "text/plain;charset=utf-8")
+	@ResponseBody
+	public StringBuilder connection(@RequestParam("receipt_id") String receipt_id, @RequestParam("getToken") String token) {
+		JSONObject jsonObject = null;
+		StringBuilder sb = new StringBuilder();
+		try {
+			
+			URL url = new URL("https://api.bootpay.co.kr/receipt/"+receipt_id);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection(); 
+			con.setConnectTimeout(5000); //서버에 연결되는 Timeout 시간 설정
+			con.setReadTimeout(5000); // InputStream 읽어 오는 Timeout 시간 설정
+			con.setRequestProperty("Authorization", token);
+			
+
+			con.setRequestMethod("GET");
+
+            //con.setDoOutput(false);
+			//URLConnection에 대한 doOutput 필드값을 지정된 값으로 설정한다. URL 연결은 입출력에 사용될 수 있다. URL 연결을 출력용으로 사용하려는 경우 DoOutput 플래그를 true로 설정하고, 그렇지 않은 경우는 false로 설정해야 한다. 기본값은 false이다.
+
+			
+			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				//Stream을 처리해줘야 하는 귀찮음이 있음. 
+				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+				String line;
+				while ((line = br.readLine()) != null) {
+					sb.append(line); //.append("\n")
+				}
+				br.close();
+				System.out.println("<><><>" + sb.toString());
+			} else {
+				System.out.println(con.getResponseMessage());
+			}
+			
+			jsonObject = new JSONObject(sb.toString());
+
+		} catch (Exception e) {
+			System.err.println(e.toString());
+		}
+		
+		return sb;
+	}
+
 //	@RequestMapping(value = "/receipt_id")
 //	@Loginchk
 //	@ResponseBody
 //	public void receipt_id(@RequestParam("receipt_id") String r_id) {
 //		this.receipt_id = r_id;
 //	}
-	
+
 //	public void httpRequest(String token) {
 //		RequestHttpURLConnection con = new RequestHttpURLConnection();
 //		Parameter parm = new Parameter();
@@ -96,7 +137,7 @@ public class OrderListController {
 //			
 //		}
 //	};
-	
+
 	@RequestMapping(value = "/cancle")
 	@ResponseBody
 	public String cancle(@RequestParam HashMap<String, String> map) {
@@ -106,41 +147,41 @@ public class OrderListController {
 		cancel.reason = map.get("reson");
 		String result = "";
 		try {
-		    HttpResponse res = api.cancel(cancel);
-		    String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
-		    System.out.println(str);
-		    result = str;
+			HttpResponse res = api.cancel(cancel);
+			String str = IOUtils.toString(res.getEntity().getContent(), "UTF-8");
+			System.out.println(str);
+			result = str;
 		} catch (Exception e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = "/orderConfirm")
 	@ResponseBody
 	public ModelAndView orderConfirm(@RequestParam HashMap<String, String> map) {
 		ModelAndView mav = new ModelAndView();
-		if(map.get("pick_no")!=null) {
+		if (map.get("pick_no") != null) {
 			PickOrderListDTO dto = pickService.selectPickofNo(map);
-			
+
 			mav.addObject("dto", dto);
 			mav.addObject("pick_no", dto.getPick_no());
 			mav.addObject("amount", dto.getPick_amount());
 			//
-		}else {
+		} else {
 			// neet to p_id, g_amount
 //			HashMap<String, String> test = new HashMap<String, String>();
 //			test.put("p_id", "p71"); //이거 2개만 넣으면 됨.
 //			test.put("g_amount", "2"); // for test
 			IsOrderListDTO dto = orderService.selectIsOrder(map);
-			
+
 			mav.addObject("dto", dto);
 			Random r = new Random();
-			mav.addObject("pick_no", dto.getManager_user_no()+(int)r.nextInt(9));
+			mav.addObject("pick_no", dto.getManager_user_no() + (int) r.nextInt(9));
 			mav.addObject("amount", map.get("g_amount"));
-			
+
 		}
-		
+
 //		BootpayApi api = new BootpayApi(
 //		        "5dafee3f5ade160030569ac1",
 //		        "IglrTcbxJHo3N6b+7FsWZaaeL1W7r9dwpE5uExZ0cjw="
@@ -155,111 +196,110 @@ public class OrderListController {
 //			e.printStackTrace();
 //		}
 //		System.out.println(api);
-		
+
 		mav.setViewName("orderlist/orderlist");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/addOrder", produces = "text/plain;charset=utf-8")
 	@Loginchk
 	@ResponseBody
 	public String addOrder(@RequestParam HashMap<String, Object> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		MemberDTO dto = (MemberDTO)session.getAttribute("login");
+		MemberDTO dto = (MemberDTO) session.getAttribute("login");
 		int user_no = dto.getUser_no();
 		map.put("user_no", user_no);
 		// map.put("user_no", 3);
 		String mesg = "";
-		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map 
-		if(map.get("pick_no") == null) {
+		// need to user_no, p_id, (pick_no), o_amount, o_price is has to map
+		if (map.get("pick_no") == null) {
 			System.out.println("占쏙옙품占쏙옙占쏙옙占쏙옙占쏙옙");
 			System.out.println(map.get("p_id"));
 			System.out.println(map.get("g_amount"));
 			System.out.println(map.get("p_price"));
-			
-			if(map.get("o_amount")==null) {
 
-				map.put("o_amount",Integer.parseInt((String)map.get("g_amount")));
+			if (map.get("o_amount") == null) {
+
+				map.put("o_amount", Integer.parseInt((String) map.get("g_amount")));
 				System.out.println(map.get("o_amount"));
-				//map.put("o_price", map.get("g_amount"));
-				map.put("o_price",(int)map.get("o_amount")*Integer.parseInt((String)map.get("p_price")));
+				// map.put("o_price", map.get("g_amount"));
+				map.put("o_price", (int) map.get("o_amount") * Integer.parseInt((String) map.get("p_price")));
 			}
-			
-			mesg = "결제완료"; 
+
+			mesg = "결제완료";
 			try {
 				int result = orderService.addOrderByCartTx(map);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-    	}else {
-    		System.out.println("占쏙옙袂占쏙옙占� 占쏙옙占쏙옙");
-    		
-    		System.out.println(map.get("pick_no"));
-    		System.out.println(map.get("p_id"));
-    		System.out.println(map.get("o_amount"));
-    		System.out.println(map.get("o_price"));
-    		System.out.println(map.get("receipt_id"));
-    		
-    		try {
+
+		} else {
+			System.out.println("占쏙옙袂占쏙옙占� 占쏙옙占쏙옙");
+
+			System.out.println(map.get("pick_no"));
+			System.out.println(map.get("p_id"));
+			System.out.println(map.get("o_amount"));
+			System.out.println(map.get("o_price"));
+			System.out.println(map.get("receipt_id"));
+
+			try {
 				int result = orderService.addOrderByCartTx(map);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		mesg = "결제완료";
-    		
+			mesg = "결제완료";
+
 		}
-		
+
 		return mesg;
 	}
 
 	@RequestMapping(value = "/orderList")
 	@Loginchk
 	public ModelAndView orderList(@RequestParam Map<String, String> map, HttpSession session) {
-		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		MemberDTO user = (MemberDTO) session.getAttribute("login");
 		int user_no = user.getUser_no();
-		//int user_no = 3; 
-		
-		int curPage; 
+		// int user_no = 3;
+
+		int curPage;
 		{
 			String curPageStr = map.get("curPage");
 			if (curPageStr == null) {
 				curPage = 0;
-			}else
-				curPage=Integer.parseInt(curPageStr)-1;
+			} else
+				curPage = Integer.parseInt(curPageStr) - 1;
 		}
-		
-		
+
 		PageDTO<OrderInfoDTO> pdto = orderService.selectOrderList(user_no, curPage);
 		List<OrderInfoDTO> list = pdto.getList();
-		
+
 		int perPage = pdto.getPerPage();
 		int totalRecord = pdto.getTotalRecord();
 		int totalPage = totalRecord / perPage;
 
-		if (totalRecord % (float)perPage != 0) {
+		if (totalRecord % (float) perPage != 0) {
 			totalPage++;
 		}
 
 		int showBlock = 5; // for show page 1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
-		if (curPage == totalPage || totalPage < minBlock+showBlock) {
+		if (curPage == totalPage || totalPage < minBlock + showBlock) {
 			maxBlock = totalPage;
 		} else if (curPage < totalPage) {
 			maxBlock = minBlock + showBlock;
 		}
-		int perBlock = 0;//totalPage/showBlock;
-		if(totalPage%showBlock==0) {
-			perBlock = (totalPage/showBlock)-1;
-		}else {
-			perBlock = totalPage/showBlock;
+		int perBlock = 0;// totalPage/showBlock;
+		if (totalPage % showBlock == 0) {
+			perBlock = (totalPage / showBlock) - 1;
+		} else {
+			perBlock = totalPage / showBlock;
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		mav.addObject("perBlock", perBlock);
 		mav.addObject("minBlock", minBlock);
 		mav.addObject("maxBlock", maxBlock);
@@ -270,51 +310,50 @@ public class OrderListController {
 		mav.setViewName("orderlist/orderlistview");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/orderListPayment")
 	public ModelAndView orderListPayment(@RequestParam Map<String, String> map, HttpSession session) {
-		MemberDTO user = (MemberDTO)session.getAttribute("login");
+		MemberDTO user = (MemberDTO) session.getAttribute("login");
 		int user_no = user.getUser_no();
-		//int user_no = 3; 
-		
-		int curPage; 
+		// int user_no = 3;
+
+		int curPage;
 		{
 			String curPageStr = map.get("curPage");
 			if (curPageStr == null) {
 				curPage = 0;
-			}else
-				curPage=Integer.parseInt(curPageStr)-1;
+			} else
+				curPage = Integer.parseInt(curPageStr) - 1;
 		}
-		
-		
+
 		PageDTO<OrderInfoDTO> pdto = orderService.selectOrderListPayment(user_no, curPage);
 		List<OrderInfoDTO> list = pdto.getList();
-		
+
 		int perPage = pdto.getPerPage();
 		int totalRecord = pdto.getTotalRecord();
 		int totalPage = totalRecord / perPage;
 
-		if (totalRecord % (float)perPage != 0) {
+		if (totalRecord % (float) perPage != 0) {
 			totalPage++;
 		}
 
 		int showBlock = 5; // for show page 1,2,3,4,5 // 6,7,8,9,10
 		int minBlock = (curPage / (showBlock)) * showBlock;
 		int maxBlock = 0;
-		if (curPage == totalPage || totalPage < minBlock+showBlock) {
+		if (curPage == totalPage || totalPage < minBlock + showBlock) {
 			maxBlock = totalPage;
 		} else if (curPage < totalPage) {
 			maxBlock = minBlock + showBlock;
 		}
-		int perBlock = 0;//totalPage/showBlock;
-		if(totalPage%showBlock==0) {
-			perBlock = (totalPage/showBlock)-1;
-		}else {
-			perBlock = totalPage/showBlock;
+		int perBlock = 0;// totalPage/showBlock;
+		if (totalPage % showBlock == 0) {
+			perBlock = (totalPage / showBlock) - 1;
+		} else {
+			perBlock = totalPage / showBlock;
 		}
-		
+
 		ModelAndView mav = new ModelAndView();
-		
+
 		mav.addObject("perBlock", perBlock);
 		mav.addObject("minBlock", minBlock);
 		mav.addObject("maxBlock", maxBlock);
@@ -325,20 +364,20 @@ public class OrderListController {
 		mav.setViewName("orderlist/orderlistviewPayment");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/orderCancle")
 	@Loginchk(role = Role.USER)
 	public String orderCancle(@RequestParam HashMap<String, Object> map) {
-		//System.out.println(map.get("o_no")+"\t"+map.get("o_amount"+map.get("o_no")));
-		map.put("o_amount", map.get("o_amount"+map.get("o_no")));
-		map.put("p_id", map.get("p_id"+map.get("o_no")));
-		System.out.println(map.get("o_no")+"\t"+map.get("o_amount")+"\t"+map.get("p_id"));
+		// System.out.println(map.get("o_no")+"\t"+map.get("o_amount"+map.get("o_no")));
+		map.put("o_amount", map.get("o_amount" + map.get("o_no")));
+		map.put("p_id", map.get("p_id" + map.get("o_no")));
+		System.out.println(map.get("o_no") + "\t" + map.get("o_amount") + "\t" + map.get("p_id"));
 		try {
 			int result = orderService.deleteAndUpdateTx(map);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "redirect:/orderList";
 	}
-	
+
 }

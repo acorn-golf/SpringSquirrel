@@ -83,24 +83,7 @@
 				console.dir(data)
 				//결제가 정상적으로 완료되면 수행됩니다
 				//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
-				/* console.log("~!~!~!~"+data.receipt_id);
-				////////////////////////////////////
-				$.ajax({
-					type : "post",
-					url : "receipt_id", 
-					data : {
-						receipt_id : data.receipt_id
-					},
-					dataType : "text",
-					success : function(tdata, status, xhr) {
-						
-					},
-					error : function(xhr, status, error) {
-						console.log(error);
-						console.log(status);
-					}
-				}); */
-				////////////////////////////////////
+				
 				
 				var token = "";
 				$.ajax({
@@ -117,15 +100,54 @@
 						console.log(status);
 					}
 				});
-						
+				
 				$.ajax({
+					type : "get",
+					url : "connection",
+					data : {
+						receipt_id : data.receipt_id,
+						getToken : token
+					},
+					dataType : "json",
+					success : function(data, status, xhr){
+						alert("data");
+						console.log("asdfasdf")
+						console.log(data);
+						console.log(data.data.order_id);
+						console.log(data.data.receipt_id);
+						console.log(data.data.payment_data.p / 10000);
+						$.ajax({
+							type : "get",
+							url : "addOrder",
+							data : {
+								pick_no : data.data.order_id,
+								p_id : "${dto.p_id}",
+								o_amount : $("#amount").val(),
+								o_price : data.data.payment_data.p / 10000,
+								receipt_id : data.data.receipt_id
+							},
+							dataType : "text",
+							success : function(data, status, xhr) {
+								alert(data);
+								location.href="http://localhost:8090/golfhi/orderList"
+							},
+							error : function(xhr, status, error) {
+								console.log(error);
+								console.log(status);
+							}
+						});
+					},
+					error : function(xhr, status, error) {
+						console.log(error);
+						console.log(status);
+					}
+				});
+				
+				/* $.ajax({
 					type : "get",
 					url : "https://api.bootpay.co.kr/receipt/"+data.receipt_id,
 					headers : {"Authorization" : token},
-					/* dataType : "jsonp",
-					jsonpCallback : "callback", */
 					success : function(data, status, xhr) {
-						//alert(data);
 						console.dir(data);
 						
 						$.ajax({
@@ -156,7 +178,7 @@
 						console.log("?>?>?>?>?>"+status);
 						console.log("?>?>?>?>?>"+error);
 					}
-				});
+				}); */
 				
 				
 				
